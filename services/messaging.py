@@ -8,18 +8,22 @@ load_dotenv()
 webhook = os.getenv("webhook")
 
 def send_teams_message(name, email, message_text):
-    webhook_url = webhook
+    webhook_url = os.getenv("webhook")
+    print("WEBHOOK URL =", webhook_url)
 
     payload = {
-        "text": f"📬 **Nouveau message reçu depuis le site**\n\n👤 *Nom* : {name}\n✉️ *Email* : {email}\n📝 *Message* :\n{message_text}"
+        "name": name,
+        "email": email,
+        "message": message_text,
     }
 
-    headers = {
-        "Content-Type": "application/json"
-    }
+    headers = {"Content-Type": "application/json"}
 
-    response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
+    try:
+        response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
+        print("STATUS =", response.status_code, "BODY =", response.text)
+    except Exception as e:
+        print("ERREUR REQUETE TEAMS =", e)
+        raise
 
-    if response.status_code != 200:
-        raise ValueError(f"Erreur Teams : {response.status_code} - {response.text}")
 
