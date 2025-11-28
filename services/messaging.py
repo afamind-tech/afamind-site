@@ -3,23 +3,23 @@ import json
 import os
 from dotenv import load_dotenv
 
-
 load_dotenv()
-webhook = os.getenv("webhook")
 
 def send_teams_message(name, email, message_text):
-    webhook_url = webhook
+    webhook_url = os.getenv("webhook")
+    if not webhook_url:
+        raise RuntimeError("Variable d'environnement 'webhook' non configurée")
 
     payload = {
-        "text": f"📬 **Nouveau message reçu depuis le site**\n\n👤 *Nom* : {name}\n✉️ *Email* : {email}\n📝 *Message* :\n{message_text}"
+        "name": name,
+        "email": email,
+        "message": message_text,
     }
 
-    headers = {
-        "Content-Type": "application/json"
-    }
+    headers = {"Content-Type": "application/json"}
 
-    response = requests.post(webhook_url, data=json.dumps(payload), headers=headers)
+    response = requests.post(webhook_url, data=json.dumps(payload), headers=headers, timeout=5)
 
-    if response.status_code != 200:
+    # Power Automate renvoie 202 (Accepted), donc on accepte 200 ET 202
+    if response.status_code not in (200, 202):
         raise ValueError(f"Erreur Teams : {response.status_code} - {response.text}")
-
