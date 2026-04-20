@@ -19,7 +19,7 @@
 
   <!-- Visuel -->
   <div class="relative z-10 flex-shrink-0 mb-6 md:mb-0 md:mr-12">
-    <img src="static/profil3.png" alt="Photo de profil"
+    <img src="static/profil4.png" alt="Photo de profil"
          class="w-32 sm:w-40 md:w-[19rem] drop-shadow-2xl rounded-full">
   </div>
 
@@ -28,20 +28,25 @@
     <h1 class="text-2xl sm:text-3xl md:text-6xl font-bold leading-tight mb-3 md:mb-4">
       Architecte Data Microsoft Fabric, Azure & Power BI
     </h1>
-    <p class="font-semibold uppercase tracking-wide mb-2" style="color:#4dd1dd">
-      Expertise
-    </p>
-    <p class="text-sm sm:text-base md:text-lg leading-relaxed text-gray-300 mb-6 md:mb-8">
+<p class="text-sm sm:text-base md:text-lg leading-relaxed text-gray-300 mb-6 md:mb-8">
       Avec <span class="font-semibold text-white">10 ans d'expertise</span> dans la data Microsoft, 
       je conçois des plateformes cloud modernes — 
       <span class="font-semibold text-white">Fabric, Azure & Power BI</span> — 
       pour répondre aux enjeux techniques et stratégiques de mes clients.
     </p>
 
-<a href="#path" class="border px-4 py-2 md:px-6 md:py-3 rounded-full transition text-sm sm:text-base"
-   style="border-color:#bb00ff; color:#bb00ff"
-   onmouseover="this.style.backgroundColor='#bb00ff'; this.style.color='white';"
-   onmouseout="this.style.backgroundColor='transparent'; this.style.color='#bb00ff';">
+<div class="flex items-center justify-center md:justify-start gap-4 md:gap-6 mb-6 md:mb-8 flex-wrap">
+  <img src="{{ url_for('static', filename='AZ900.png') }}" alt="AZ-900"
+       class="h-12 md:h-16 w-auto object-contain" />
+  <img src="{{ url_for('static', filename='DP-203.png') }}" alt="DP-203"
+       class="h-12 md:h-16 w-auto object-contain" />
+  <img src="{{ url_for('static', filename='DP600.png') }}" alt="DP-600"
+       class="h-12 md:h-16 w-auto object-contain" />
+  <img src="{{ url_for('static', filename='fabric.png') }}" alt="Fabric"
+       class="h-12 md:h-16 w-auto object-contain" />
+</div>
+
+<a href="#path" class="border border-white text-white bg-transparent px-4 py-2 md:px-6 md:py-3 rounded-full transition text-sm sm:text-base hover:bg-white hover:text-[#0A0A12]">
   Découvrir mon parcours →
 </a>
   </div>
@@ -57,7 +62,7 @@
 {% include "references.html" %}
 
 <!-- Footer -->
-<footer class="bg-[#0b0b0b] border-t border-white/10 shadow-[0_0_10px_#ffffff10] text-white py-4 md:py-8">
+<footer class="bg-[#0A0A12] text-white py-4 md:py-8">
 
   <div class="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6">
     <div class="flex items-center space-x-2">
@@ -87,59 +92,69 @@
 {% block scripts %}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const wrapper = document.getElementById('timelineWrapper');
   const slides  = [...document.querySelectorAll('.year-slide')];
-  const dotsBox = document.getElementById('yearIndicators');
+  const nav     = document.getElementById('timelineNav');
+  const wrapper = document.getElementById('timelineWrapper');
+  let current = 0;
 
-  // 1) Build the dots
-  const dots = slides.map((slide, i) => {
-    const year = slide.dataset.year ?? i + 1;
+  // Réserver la hauteur avant tout masquage
+  const timeline = document.getElementById('timeline');
+  const maxH = Math.max(...slides.map(s => s.offsetHeight));
+  timeline.style.minHeight = maxH + 'px';
+
+  // Activer le premier slide
+  slides[0].classList.add('is-active');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (window.AOS) AOS.refresh();
+  }));
+
+  // Création des boutons chevron SVG
+  function makeChevron(points, label) {
     const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.title = year;
-    btn.setAttribute('aria-label', `Aller à ${year}`);
-    btn.setAttribute('aria-current', i === 0 ? 'true' : 'false');
-    btn.addEventListener('click', () => {
-      slide.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
-    });
-    dotsBox.appendChild(btn);
+    btn.className = 'nav-arrow';
+    btn.setAttribute('aria-label', label);
+    btn.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+      <polyline points="${points}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
     return btn;
-  });
-
-  // 2) Mark a dot as active
-  function setActive(index){
-    dots.forEach((d, i) => d.setAttribute('aria-current', i === index ? 'true' : 'false'));
   }
 
-  // 3) Observe which slide is centered (most visible in wrapper)
-  const io = new IntersectionObserver((entries) => {
-    // pick the entry with the largest intersection ratio
-    const visible = entries
-      .filter(e => e.isIntersecting)
-      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+  const prevBtn = makeChevron('15 18 9 12 15 6', 'Précédent');
+  const nextBtn = makeChevron('9 18 15 12 9 6',  'Suivant');
 
-    if (!visible) return;
-    const index = slides.indexOf(visible.target);
-    if (index >= 0) setActive(index);
-  }, {
-    root: wrapper,
-    threshold: [0.5, 0.6, 0.7] // become active when ~60% visible
+  nav.insertBefore(prevBtn, wrapper);
+  nav.appendChild(nextBtn);
+
+  function updateNav() {
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+  }
+
+  prevBtn.addEventListener('click', () => { if (current > 0) goTo(current - 1); });
+  nextBtn.addEventListener('click', () => { if (current < slides.length - 1) goTo(current + 1); });
+
+  const touchWrapper = document.getElementById('timelineWrapper') || document.getElementById('timeline');
+  let touchStartX = 0;
+  touchWrapper.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  touchWrapper.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0 && !nextBtn.disabled) nextBtn.click();
+      if (diff < 0 && !prevBtn.disabled) prevBtn.click();
+    }
   });
 
-  slides.forEach(s => io.observe(s));
+  function goTo(index) {
+    if (index === current) return;
+    slides[current].classList.remove('is-active');
+    slides[index].classList.add('is-active');
+    current = index;
+    updateNav();
+  }
 
-  // 4) As a safety net for browsers with flaky IO + momentum scrolling,
-  //    refresh active dot at the end of a scroll.
-  let raf;
-  wrapper.addEventListener('scroll', () => {
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      // find the slide whose left edge is closest to wrapper.scrollLeft
-      const lefts = slides.map(s => Math.abs(s.offsetLeft - wrapper.scrollLeft));
-      const idx = lefts.indexOf(Math.min(...lefts));
-      setActive(idx);
-    });
-  }, { passive: true });
+  updateNav();
 });
 </script>
 

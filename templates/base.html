@@ -29,29 +29,200 @@
 <style>
   body{ margin:0; padding:0; overflow-x:hidden; }
 
-  .bg-container{ position:fixed; inset:0; z-index:-1; }
-  .bg-container img{ width:100%; height:100%; object-fit:cover; }
 
-  /* Scroll / snap */
-  #timeline{ scroll-behavior:smooth; }
-  #timelineWrapper{
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    scroll-behavior:smooth;
-    touch-action:pan-x pan-y;
-    overscroll-behavior-x:contain;
+  /* Navigation flèches timeline */
+  #timelineNav{ display:flex; align-items:center; gap:1.5rem; }
+  .nav-arrow{
+    background:none;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    flex-shrink:0;
+    line-height:0;
   }
-  .year-slide{ scroll-snap-align:center; }
+  .nav-arrow svg polyline{ stroke:rgba(255,255,255,0.35); transition:stroke .2s ease; }
+  .nav-arrow:hover svg polyline{ stroke:rgba(255,255,255,0.9); }
+  .nav-arrow:disabled{ opacity:.15; cursor:default; pointer-events:none; }
 
-  /* Cacher la scrollbar horizontale */
-  #timelineWrapper::-webkit-scrollbar{ display:none; }
-
-  /* Dots – version aria-current */
-  #yearIndicators button{
-    width:.75rem; height:.75rem; border-radius:9999px;
-    opacity:.5; background:#fff; transition:transform .2s, opacity .2s;
+  /* Timeline – carte */
+  .timeline-card{
+    position:relative;
+    background:rgba(255,255,255,0.03);
+    border:.5px solid rgba(255,255,255,0.07);
+    border-radius:12px;
+    padding:2.5rem 3rem;
+    overflow:hidden;
+    transition:border-color .3s ease;
   }
-  #yearIndicators button[aria-current="true"]{ opacity:1; transform:scale(1.2); }
+  .timeline-card:hover{ border-color:rgba(255,255,255,0.15); }
+
+  /* Watermark année */
+  .year-watermark{
+    position:absolute;
+    bottom:-10px;
+    right:-5px;
+    font-size:180px;
+    font-weight:700;
+    color:#fff;
+    opacity:0.10;
+    line-height:1;
+    pointer-events:none;
+    user-select:none;
+  }
+
+  /* Badge techno */
+  .tech-badge{
+    display:inline-block;
+    padding:5px 14px;
+    border-radius:999px;
+    border:.5px solid;
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:.03em;
+  }
+
+  /* Typographie carte */
+  .card-title{ font-size:22px; font-weight:500; color:#fff; margin:.75rem 0 .5rem; }
+  .card-text{ font-size:15px; line-height:1.8; color:rgba(255,255,255,0.88); }
+  .card-text strong{ color:#ffffff; font-weight:500; }
+
+  /* Hero – mobile */
+  @media (max-width: 768px) {
+    img[alt="Photo de profil"]{ width:180px !important; height:180px !important; }
+    header h1{ font-size:1.75rem !important; line-height:1.2 !important; }
+    header > div:last-child{ padding-left:20px !important; padding-right:20px !important; }
+    header p{ font-size:1.05rem !important; line-height:1.6 !important; }
+  }
+
+  /* Sections contenu – mobile */
+  @media (max-width: 768px) {
+    section h2{ font-size:22px !important; }
+    section{ padding-top:2.5rem !important; padding-bottom:2.5rem !important; }
+    section p, section li{ font-size:13px !important; }
+    section .grid{ gap:12px !important; }
+  }
+
+  /* Services & Technos – mobile */
+  @media (max-width: 768px) {
+    .services-section h2{ font-size:20px !important; }
+    .technos-section > div{ box-sizing:border-box !important; width:100% !important; padding-left:1rem !important; padding-right:1rem !important; }
+    .technos-section .grid{ padding-left:1rem !important; padding-right:1rem !important; }
+    .technos-section h2, .technos-section > div > p{
+      width:100% !important; text-align:center !important;
+      padding-left:0 !important; padding-right:0 !important;
+      margin-left:0 !important; margin-right:0 !important;
+    }
+    .technos-section div.card{ margin-left:auto !important; margin-right:auto !important; width:calc(100% - 2rem) !important; }
+    div.card{ margin-left:1rem !important; margin-right:1rem !important; }
+    div.card h3{ font-size:14px !important; }
+    div.card p{ font-size:13px !important; }
+  }
+
+  /* Références logos – mobile */
+  @media (max-width: 768px) {
+    .ref-logos-grid{ display:grid !important; grid-template-columns:repeat(3, 1fr) !important; gap:16px 8px !important; padding:0 8px !important; align-items:center !important; }
+    .ref-logos-grid img{ max-width:100% !important; max-height:45px !important; width:auto !important; height:auto !important; object-fit:contain !important; margin:0 auto !important; display:block !important; }
+    .ref-logos-grid img[alt="Middleway"]{ width:120px !important; max-width:120px !important; height:auto !important; max-height:none !important; }
+    .ref-logos-grid img[alt="Gerflor"]{ max-width:120px !important; max-height:120px !important; width:120px !important; }
+    .ref-logos-grid img[alt="Gineys"]{ max-height:45px !important; }
+    .ref-logos-grid img[alt="Entoria"]{ max-height:30px !important; max-width:80px !important; }
+    .ref-logos-grid img[alt="Alliade"]{ max-height:55px !important; max-width:130px !important; }
+    .ref-logos-grid img[alt="alliade"]{ grid-column:2 !important; }
+  }
+
+  /* Certifications – mobile */
+  @media (max-width: 768px) {
+    .certif-grid{ display:grid !important; grid-template-columns:1fr 1fr !important; gap:12px !important; padding-left:1rem !important; padding-right:1rem !important; box-sizing:border-box !important; }
+    .certif-grid a.card{ margin-left:auto !important; margin-right:auto !important; width:100% !important; }
+    .certif-grid .w-14{ width:55px !important; height:55px !important; }
+    .certif-grid h3{ font-size:12px !important; }
+    .certif-grid p{ font-size:11px !important; }
+  }
+
+  /* Burger + logo navbar – mobile */
+  @media (max-width: 768px) {
+    #fabButton{ width:28px; height:28px; padding:4px !important; font-size:14px; }
+    a[href="/"] img{ height:32px; width:auto; }
+  }
+
+  /* Drawer menu – mobile */
+  @media (max-width: 768px) {
+    #sideMenu{ width:180px; min-width:160px; padding:16px; border-radius:10px; min-height:unset; }
+    #sideMenu > * + *{ margin-top:6px !important; }
+    #sideMenu a + a{ margin-top:2px !important; }
+    #sideMenu a{ font-size:13px; padding:4px 0; }
+    #sideMenu svg.w-6{ width:20px; height:20px; }
+  }
+
+  /* Timeline – mobile */
+  @media (max-width: 768px) {
+    .timeline-card{ padding:1.25rem; width:calc(100% - 1rem) !important; margin-left:auto !important; margin-right:auto !important; }
+    .timeline-card img{ display:none; }
+    .card-title{ font-size:18px; }
+    .card-text{ font-size:13px; }
+    .year-watermark{ font-size:90px; }
+    #timeline{ min-height:unset !important; position:relative; }
+    #timelineWrapper{ overflow:hidden; flex:1 !important; min-width:0 !important; }
+    #timelineNav{ gap:4px !important; }
+    .nav-arrow{ width:20px !important; flex-shrink:0 !important; }
+    #path{ padding-bottom:2rem; }
+    .year-slide.is-active{
+      opacity:1 !important;
+      visibility:visible !important;
+      position:relative !important;
+      min-height:unset !important;
+    }
+  }
+
+  /* Transitions entre slides – aucun re-layout */
+  #timeline{ position:relative; }
+  .year-slide{
+    position:absolute;
+    top:0; left:0; width:100%;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .25s ease;
+  }
+  .year-slide.is-active{
+    opacity:1;
+    visibility:visible;
+  }
+
+  /* Cartes */
+  .card{
+    background:rgba(255,255,255,0.03);
+    border:.5px solid rgba(255,255,255,0.07);
+    border-radius:1rem;
+    transition:border-color .3s ease;
+  }
+  .card:hover{ border-color:rgba(255,255,255,0.15); }
+
+  /* Logos références */
+  .ref-logo{
+    filter:brightness(0) invert(1);
+    opacity:.55;
+    transition:all .3s ease;
+  }
+  .ref-logo:hover{ filter:none; opacity:1; }
+
+  /* Logos à fond sombre/transparent — rester en blanc au hover */
+  .ref-logo-inverted{
+    filter:brightness(0) invert(1);
+    opacity:.55;
+    transition:all .3s ease;
+  }
+  .ref-logo-inverted:hover{ filter:brightness(0) invert(1); opacity:1; }
+  .ref-logos-grid img[alt="Erasteel"]{ max-height:14px !important; }
+
+  /* Listes avec checkmarks */
+  .check-list{ list-style:none; padding-left:0; }
+  .check-list li::before{
+    content:'✓';
+    color:rgba(255,255,255,0.5);
+    font-size:.8em;
+    font-weight:400;
+    margin-right:.5rem;
+  }
 
   /* Burger au-dessus de tout */
   .site-header{ position:fixed; top:0; left:0; right:0; z-index:9999; pointer-events:auto; isolation:isolate; }
@@ -66,25 +237,13 @@
 </head>
 
 
-<body class="bg-black text-white font-sans">
-
-  <!-- Image de fond responsive -->
-  <div class="bg-container">
-    <picture>
-      <!-- Version mobile portrait -->
-      <source media="(max-width: 768px)" srcset="/static/4-mobile.jpg" type="image/jpeg">
-      <!-- Version desktop paysage -->
-      <source media="(min-width: 769px)" srcset="/static/4.jpg" type="image/jpeg">
-      <!-- Fallback -->
-      <img src="/static/4.jpg" alt="Fond décoratif">
-    </picture>
-  </div>
+<body class="bg-[#0A0A12] text-white font-sans">
 
 
 
 <!-- Bouton hamburger / close -->
 <div id="fabContainer" class="fixed top-5 right-3 z-50">
-  <button id="fabButton" class="w-9 h-9 md:w-12 md:h-12 flex items-center justify-center border border-white text-white text-lg md:text-2xl bg-transparent hover:bg-white hover:text-black transition">
+  <button id="fabButton" class="flex items-center justify-center text-white text-base md:text-lg bg-transparent hover:bg-white hover:text-black transition" style="padding:6px 10px; border:1.5px solid white;">
     <span id="hamburgerIcon">☰</span>
     <span id="closeIcon" style="display:none;">×</span>
   </button>
@@ -92,7 +251,7 @@
 
 
 <div id="sideMenu"  
-     class="fixed top-20 right-0 h-auto min-h-[160px] w-56 text-white transform translate-x-full transition-transform duration-300 z-40 flex flex-col items-start p-4 space-y-4 shadow-lg rounded-l-xl bg-gradient-to-br from-[#1f004d]/90 to-[#0a0f2c]/90 backdrop-blur-md">
+     class="fixed top-20 right-0 h-auto min-h-[160px] w-56 text-white z-40 flex flex-col items-start p-4 space-y-4 rounded-l-xl" style="transform:translateX(100%);transition:transform 300ms;background:rgba(255,255,255,0.03);border:.5px solid rgba(255,255,255,0.07);backdrop-filter:blur(12px);">
 
   <!-- Liens -->
   <a href="/" 
@@ -131,26 +290,18 @@ const closeIcon = document.getElementById('closeIcon');
 const sideMenu = document.getElementById('sideMenu');
 
 // Quand on clique sur le bouton principal
-fabButton.addEventListener('click', (e) => {
-  e.stopPropagation();
-  const menuOuvert = !sideMenu.classList.contains('translate-x-full');
-  if (menuOuvert) {
-    sideMenu.classList.add('translate-x-full');
-    hamburgerIcon.style.display = '';
-    closeIcon.style.display = 'none';
-  } else {
-    sideMenu.classList.remove('translate-x-full');
-    hamburgerIcon.style.display = 'none';
-    closeIcon.style.display = '';
-  }
+let menuOpen = false;
+
+fabButton.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  sideMenu.style.transform = menuOpen ? 'translateX(0)' : 'translateX(100%)';
 });
 
 // Fermer en cliquant hors du menu
 document.addEventListener('click', (event) => {
   if (!sideMenu.contains(event.target) && !fabButton.contains(event.target)) {
-    sideMenu.classList.add('translate-x-full');
-    hamburgerIcon.style.display = '';
-    closeIcon.style.display = 'none';
+    menuOpen = false;
+    sideMenu.style.transform = 'translateX(100%)';
   }
 });
 
@@ -159,5 +310,7 @@ document.addEventListener('click', (event) => {
 
   {% block content %}{% endblock %}
   {% block scripts %}{% endblock %}
+
+
 </body>
 </html>

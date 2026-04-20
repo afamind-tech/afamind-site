@@ -1,131 +1,91 @@
-<section id="path" class="relative w-full py-20 overflow-hidden bg-black bg-opacity-20">
-  <!--<div class="relative z-10 max-w-7xl mx-auto px-4"> -->
-    <h2 class="text-center text-3xl md:text-4xl font-bold text-white mb-12 drop-shadow-lg">Mon Parcours</h2>
+<section id="path" class="relative w-full py-20 bg-transparent">
+  <h2 class="text-center text-3xl md:text-4xl font-bold text-white mb-10">Mon Parcours</h2>
 
-    <!-- Navigation -->
-<!-- Pagination avec des points -->
-<div class="flex justify-center items-center gap-3 mb-10" id="yearIndicators">
-  <!-- Points injectés en JS -->
-</div>
+  <div style="max-width:1040px; margin:0 auto; width:100%; padding:0 1rem;">
+  <div id="timelineNav">
+    <!-- prevBtn injecté par JS -->
+    <div id="timelineWrapper" style="flex:1;">
+    <div id="timeline">
 
-    <!-- Conteneur de timeline -->
-<div id="timelineWrapper" class="overflow-x-auto scroll-smooth w-screen">
-  <div id="timeline" class="flex snap-x snap-mandatory gap-12 w-max">      <!-- Éléments de timeline (1 par année) -->
-        <div class="year-slide snap-start shrink-0 w-screen max-w-full px-4 md:px-10" data-year="2016">
-                  <div class="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-4 md:gap-6 mb-16" data-aos="fade-up">
-          <!-- Colonne Année -->
-          <div class="flex md:justify-end items-start pt-2">
-            <span class="text-base md:text-lg font-bold text-white/70">2016</span>
-          </div>
-          <!-- Colonne Contenu + ligne -->
-          <div class="relative md:pl-6 md:border-l-4" style="border-color: #e81123">
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
-              <img src="{{ url_for('static', filename='/svg/sqlserver.svg') }}" 
-                   alt="SQL Server" 
-                   class="w-16 h-16 md:w-24 md:h-24 object-contain rounded-lg shadow-lg" />
-              <div>
-                <span class="text-sm font-semibold" style="color: #e81123;">SQL Server</span>
-                <h3 class="text-lg md:text-2xl font-bold text-white mt-1">Le classique de la Business Intelligence</h3>
-                <p class="text-gray-300 mt-2 text-sm md:text-lg"> C’est en <strong>2016</strong>, au sein d’une <strong>ESN</strong>, que j’ai fait mes premiers pas dans la <strong>Business Intelligence</strong>. J’ai participé à des projets d’intégration, d’analyse de données et de reporting dans des environnements <strong>on-premise</strong>, en m’appuyant sur l’écosystème <strong>Microsoft BI traditionnel</strong> : <strong>SSIS</strong> pour les flux ETL, <strong>SSAS</strong> pour l’analyse OLAP, et <strong>SSRS</strong> pour la diffusion des rapports. Ces premières années m’ont permis d’acquérir une base technique solide, mais aussi une vraie capacité d’adaptation grâce à la diversité des contextes clients. </p>
-              </div>
+      <!-- 2016 -->
+      <div class="year-slide" data-year="2016">
+        <div class="timeline-card">
+          <span class="year-watermark">2016</span>
+          <div class="flex items-center gap-8">
+            <img src="{{ url_for('static', filename='/svg/sqlserver.svg') }}" alt="SQL Server" class="w-12 h-12 object-contain shrink-0" />
+            <div>
+              <span class="tech-badge" style="color:#e81123;border-color:#e81123;background:rgba(232,17,35,0.08)">SQL Server</span>
+              <h3 class="card-title">Le classique de la Business Intelligence</h3>
+              <p class="card-text">C'est en <strong>2016</strong>, au sein d'une <strong>ESN</strong>, que j'ai fait mes premiers pas dans la <strong>Business Intelligence</strong>. J'ai participé à des projets d'intégration, d'analyse de données et de reporting dans des environnements <strong>on-premise</strong>, en m'appuyant sur l'écosystème <strong>Microsoft BI traditionnel</strong> : <strong>SSIS</strong> pour les flux ETL, <strong>SSAS</strong> pour l'analyse OLAP, et <strong>SSRS</strong> pour la diffusion des rapports. Ces premières années m'ont permis d'acquérir une base technique solide, mais aussi une vraie capacité d'adaptation grâce à la diversité des contextes clients.</p>
             </div>
           </div>
         </div>
-        </div>
-        <div class="year-slide snap-start shrink-0 w-screen max-w-full px-4 md:px-10" data-year="2018">
-                  <div class="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-4 md:gap-6 mb-16" data-aos="fade-up">
-          <!-- Colonne Année -->
-          <div class="flex md:justify-end items-start pt-2">
-            <span class="text-base md:text-lg font-bold text-white/70">2018</span>
-          </div>
-          <!-- Contenu + ligne bleue -->
-          <div class="relative md:pl-6 md:border-l-4 border-blue-500">
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
-              <img src="{{ url_for('static', filename='svg/adf.svg') }}" 
-                   alt="Azure" 
-                   class="w-16 h-16 md:w-24 md:h-24 object-contain rounded-lg shadow-lg" />
-              <div>
-                <span class="text-sm text-blue-400 font-semibold">Azure & Power BI</span>
-                <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-white mt-1">
-  Premiers pas vers le Cloud
-</h3>
-                <p class="text-gray-300 mt-2 text-sm md:text-lg"> Architecture hybride Cloud / on-prem, combinant Azure Data Factory, Azure SQL Database et des machines virtuelles Azure hébergeant SSIS pour les transformations complexes. Côté reporting, Power BI prend progressivement le relais de SSRS, apportant des visualisations dynamiques et interactives adaptées aux usages métier. </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
+      </div>
 
-        <div class="year-slide snap-start shrink-0 w-screen max-w-full px-4 md:px-10" data-year="2023">
-        <div class="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-4 md:gap-6 mb-16" data-aos="fade-up">
-          <!-- Colonne Année -->
-          <div class="flex md:justify-end items-start pt-2">
-            <span class="text-base md:text-lg font-bold text-white/70">2023</span>
-          </div>
-          <!-- Contenu + ligne bleue -->
-          <div class="relative md:pl-6 border-l-0 md:border-l-4" style="border-color: #FFD700;">
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
-              <img src="{{ url_for('static', filename='setup.jpg') }}" 
-                   alt="Setup Freelance" 
-                   class="transition-transform duration-500 ease-in-out transform hover:scale-105 md:w-[500px] max-w-full rounded-xl shadow-2xl" />
-              <div class="max-w-2xl">
-                <span class="text-sm font-semibold" style="color: #FFD700;">Freelance</span>
-                <h3 class="text-lg md:text-2xl font-bold text-white mt-1">Le tournant de l'indépendance</h3>
-                <p class="text-gray-300 mt-2 text-sm md:text-lg">
-                  <strong>2023</strong> marque un tournant majeur : je choisis de devenir <strong>freelance</strong>. Et j’ai eu le privilège de commencer cette nouvelle aventure avec une belle preuve de confiance : <strong>mon ancien employeur m’a confié ma première mission</strong>. Depuis, j’accompagne mes clients avec autonomie et engagement dans la conception de <strong>plateformes data modernes</strong>.
-                </p>
-                <p class="text-gray-300 mt-2 text-sm md:text-lg"> Être indépendant, c’est aussi faire le choix de la liberté technique et de l’adaptabilité. Cela me permet de rester connecté à l’innovation tout en cultivant une relation de proximité avec les enjeux concrets du terrain. </p>
-              </div>
+      <!-- 2018 -->
+      <div class="year-slide" data-year="2018">
+        <div class="timeline-card">
+          <span class="year-watermark">2018</span>
+          <div class="flex items-center gap-8">
+            <img src="{{ url_for('static', filename='svg/adf.svg') }}" alt="Azure" class="w-12 h-12 object-contain shrink-0" />
+            <div>
+              <span class="tech-badge" style="color:#3b82f6;border-color:#3b82f6;background:rgba(59,130,246,0.08)">Azure & Power BI</span>
+              <h3 class="card-title">Premiers pas vers le Cloud</h3>
+              <p class="card-text">Architecture hybride Cloud / on-prem, combinant <strong>Azure Data Factory</strong>, <strong>Azure SQL Database</strong> et des machines virtuelles Azure hébergeant <strong>SSIS</strong> pour les transformations complexes. Côté reporting, <strong>Power BI</strong> prend progressivement le relais de SSRS, apportant des visualisations dynamiques et interactives adaptées aux usages métier.</p>
             </div>
           </div>
-          </div>
-          </div>
+        </div>
+      </div>
 
-          <div class="year-slide snap-start shrink-0 w-screen max-w-full px-4 md:px-10" data-year="2024">
-          <div class="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-4 md:gap-6 mb-16" data-aos="fade-up">
-          <!-- Colonne Année -->
-          <div class="flex md:justify-end items-start pt-2">
-            <span class="text-base md:text-lg font-bold text-white/70">2024</span>
-          </div>
-          <!-- Contenu + ligne bleue -->
-          <div class="relative md:pl-6 border-l-0 md:border-l-4 border-blue-500">
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
-              <img src="{{ url_for('static', filename='svg/synapse.svg') }}" 
-              alt="Synapse" 
-              class="w-16 h-16 md:w-24 md:h-24 object-contain rounded-lg shadow-lg" />
-              <div>
-                <span class="text-sm text-blue-400 font-semibold">Plateformes Cloud</span>
-                <h3 class="text-lg md:text-2xl font-bold text-white mt-1">Le 100 % Cloud</h3>
-                <p class="text-gray-300 mt-2 text-sm md:text-lg"> À partir de <strong>2024</strong>, je commence à intervenir sur des <strong>plateformes Data entièrement cloud</strong>, combinant des approches <strong>ETL</strong> et <strong>ELT</strong>. Mise en œuvre de solutions basées sur <strong>Azure Synapse Analytics</strong>, <strong>Data Lake Storage</strong> et <strong>Power BI</strong>, pour des pipelines de données plus industrialisés, évolutifs et orientés self-service. </p>
-              </div>
+      <!-- 2023 -->
+      <div class="year-slide" data-year="2023">
+        <div class="timeline-card">
+          <span class="year-watermark">2023</span>
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <img src="{{ url_for('static', filename='setup.jpg') }}" alt="Setup Freelance" class="rounded-xl w-full md:w-56 object-cover shrink-0" />
+            <div>
+              <span class="tech-badge" style="color:#FFD700;border-color:#FFD700;background:rgba(255,215,0,0.08)">Freelance</span>
+              <h3 class="card-title">Le tournant de l'indépendance</h3>
+              <p class="card-text"><strong>2023</strong> marque un tournant majeur : je choisis de devenir <strong>freelance</strong>. Et j'ai eu le privilège de commencer cette nouvelle aventure avec une belle preuve de confiance : <strong>mon ancien employeur m'a confié ma première mission</strong>. Depuis, j'accompagne mes clients avec autonomie et engagement dans la conception de <strong>plateformes data modernes</strong>.</p>
+              <p class="card-text mt-3">Être indépendant, c'est aussi faire le choix de la liberté technique et de l'adaptabilité. Cela me permet de rester connecté à l'innovation tout en cultivant une relation de proximité avec les enjeux concrets du terrain.</p>
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        <div class="year-slide snap-start shrink-0 w-screen max-w-full px-4 md:px-10" data-year="2024">
-          <div class="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-4 md:gap-6 mb-16" data-aos="fade-up">
-          <!-- Colonne Année -->
-          <div class="flex md:justify-end items-start pt-2">
-            <span class="text-base md:text-lg font-bold text-white/70">2025</span>
-          </div>
-          <!-- Contenu + ligne bleue -->
-          <div class="relative md:pl-6 border-l-0 md:border-l-4" style="border-color: #28C77B;">
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
-              <img src="{{ url_for('static', filename='/svg/fabric.svg') }}" 
-              alt="Microsoft Fabric" 
-              class="w-16 h-16 md:w-24 md:h-24 object-contain rounded-lg shadow-lg" />
-              <div>
-                <span class="text-sm font-semibold" style="color: #28C77B;">Microsoft Fabric</span>
-                <h3 class="text-lg md:text-2xl font-bold text-white mt-1">La plateforme unifiée de demain</h3>
-                <p class="text-gray-300 mt-2 text-sm md:text-lg"> En 2025, je participe activement à l’adoption de <strong>Microsoft Fabric</strong>, une <strong>plateforme SaaS unifiée</strong> pensée pour centraliser tous les besoins analytiques : ingestion, transformation, modélisation et visualisation. Grâce à <strong>OneLake</strong> et au modèle <strong>Médaillon</strong> (Bronze, Silver, Gold), je conçois des architectures data modulaires, évolutives et gouvernées. <br class="hidden md:block" /> Je m’appuie sur des technologies telles que <strong>Lakehouse</strong>, <strong>Warehouse</strong>, <strong>Power BI</strong>, <strong>Python</strong> et <strong>PySpark</strong> pour couvrir un large éventail de cas d’usage métier. </p>
-              </div>
+      <!-- 2024 -->
+      <div class="year-slide" data-year="2024">
+        <div class="timeline-card">
+          <span class="year-watermark">2024</span>
+          <div class="flex items-center gap-8">
+            <img src="{{ url_for('static', filename='svg/synapse.svg') }}" alt="Synapse" class="w-12 h-12 object-contain shrink-0" />
+            <div>
+              <span class="tech-badge" style="color:#3b82f6;border-color:#3b82f6;background:rgba(59,130,246,0.08)">Plateformes Cloud</span>
+              <h3 class="card-title">Le 100 % Cloud</h3>
+              <p class="card-text">À partir de <strong>2024</strong>, je commence à intervenir sur des <strong>plateformes Data entièrement cloud</strong>, combinant des approches <strong>ETL</strong> et <strong>ELT</strong>. Mise en œuvre de solutions basées sur <strong>Azure Synapse Analytics</strong>, <strong>Data Lake Storage</strong> et <strong>Power BI</strong>, pour des pipelines de données plus industrialisés, évolutifs et orientés self-service.</p>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- 2025 -->
+      <div class="year-slide" data-year="2025">
+        <div class="timeline-card">
+          <span class="year-watermark">2025</span>
+          <div class="flex items-center gap-8">
+            <img src="{{ url_for('static', filename='/svg/fabric.svg') }}" alt="Microsoft Fabric" class="w-12 h-12 object-contain shrink-0" />
+            <div>
+              <span class="tech-badge" style="color:#28C77B;border-color:#28C77B;background:rgba(40,199,123,0.08)">Microsoft Fabric</span>
+              <h3 class="card-title">La plateforme unifiée de demain</h3>
+              <p class="card-text">En 2025, je participe activement à l'adoption de <strong>Microsoft Fabric</strong>, une <strong>plateforme SaaS unifiée</strong> pensée pour centraliser tous les besoins analytiques : ingestion, transformation, modélisation et visualisation. Grâce à <strong>OneLake</strong> et au modèle <strong>Médaillon</strong> (Bronze, Silver, Gold), je conçois des architectures data modulaires, évolutives et gouvernées. Je m'appuie sur des technologies telles que <strong>Lakehouse</strong>, <strong>Warehouse</strong>, <strong>Power BI</strong>, <strong>Python</strong> et <strong>PySpark</strong> pour couvrir un large éventail de cas d'usage métier.</p>
+            </div>
+          </div>
         </div>
-        </div>
-        </div>
+      </div>
+
     </div>
   </div>
+    <!-- nextBtn injecté par JS -->
+  </div><!-- /timelineNav -->
+  </div><!-- /max-width wrapper -->
 </section>
