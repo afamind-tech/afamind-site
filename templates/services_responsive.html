@@ -1,48 +1,120 @@
-<section class="services-section relative py-12 md:py-24">
-  <!-- Contenu -->
-  <div class="relative max-w-7xl mx-auto px-4 md:px-24">
-    <h2 class="text-xl sm:text-2xl md:text-4xl font-bold text-center text-white mb-6 md:mb-12">
-      Ce que je peux faire pour vous
-    </h2>
+<section id="services" class="relative w-full py-16 md:py-20 bg-transparent">
+  <div style="max-width:1200px; margin:0 auto; padding:0 1rem;">
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12" data-aos="fade-up">
-      
-<!-- Carte 1 -->
-<div class="card p-4 md:p-6">
+    <div style="text-align:center;margin-bottom:40px;">
+      <h2 class="text-white" style="font-size:clamp(1.75rem,4vw,2.25rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:10px;">
+        Ce que je peux faire pour vous
+      </h2>
+      <div style="color:#64748b;font-size:15px;">Une expertise 360° sur l'écosystème Data Microsoft.</div>
+    </div>
 
-        <h3 class="text-base sm:text-lg md:text-xl font-bold mb-3" style="color:#ffffff">
-          Modernisation des plateformes BI/Data
-        </h3>
-        <p class="text-gray-300 text-sm sm:text-base md:text-lg mb-4">
-          Passez d’un SI traditionnel on-prem ou hybride à une plateforme Data moderne, robuste et agile.
-        </p>
-        <p class="text-white font-semibold mb-2">Inclut :</p>
-        <ul class="check-list text-gray-300 text-xs sm:text-sm md:text-base space-y-1">
-          <li>Gouvernance & Sécurité</li>
-          <li>Audit de l’existant</li>
-          <li>Conception d'une architecture cible adaptée à vos enjeux</li>
-          <li>Migration étape par étape</li>
-          <li>Accompagnement au changement</li>
-        </ul>
+    <div class="services-grid" style="display:grid;grid-template-columns:repeat(4, 1fr);gap:14px;align-items:stretch;">
+
+      <!-- CARTE 1 : Architecture -->
+      <div class="service-card" style="background:transparent;border-radius:16px;padding:30px 26px;border:1px solid rgba(255,255,255,0.08);border-top:3px solid #3b82f6;display:flex;flex-direction:column;min-height:360px;">
+        <div style="width:46px;height:46px;border-radius:10px;background:rgba(59,130,246,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <div style="color:#fff;font-size:17px;font-weight:700;line-height:1.25;margin-bottom:10px;">Architecture & Stratégie</div>
+        <div style="color:#94a3b8;font-size:13px;line-height:1.5;margin-bottom:14px;">Conseil et gouvernance pour aligner votre plateforme avec vos enjeux.</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:auto;">
+          <div style="color:#cbd5e1;font-size:12px;">· Médaillon Bronze/Silver/Gold</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Audit & architecture cible</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Gouvernance & Sécurité</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Roadmap de migration</div>
+        </div>
       </div>
 
-<!-- Carte 2 -->
-<div class="card p-4 md:p-6">
-        <h3 class="text-base sm:text-lg md:text-xl font-bold mb-3" style="color:#ffffff">
-          Industrialisation & automatisation
-        </h3>
-        <p class="text-gray-300 text-sm sm:text-base md:text-lg mb-4">
-          De l'ingestion à la restitution, vos flux deviennent fiables, surveillés et reproductibles. Fini les traitements manuels, place à l'efficacité.
-        </p>
-        <p class="text-white font-semibold mb-2">Inclut :</p>
-        <ul class="check-list text-gray-300 text-xs sm:text-sm md:text-base space-y-1">
-          <li>Conception de pipelines optimisés</li>
-          <li>Monitoring & Alertes</li>
-          <li>Optimisation des coûts (Finops)</li>
-          <li>Documentation & transfert de compétences</li>
-        </ul>
+      <!-- CARTE 2 : Ingénierie -->
+      <div class="service-card" style="background:transparent;border-radius:16px;padding:30px 26px;border:1px solid rgba(255,255,255,0.08);border-top:3px solid #10b981;display:flex;flex-direction:column;min-height:360px;">
+        <div style="width:46px;height:46px;border-radius:10px;background:rgba(16,185,129,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v6m0 10v6m11-11h-6M7 12H1"/>
+          </svg>
+        </div>
+        <div style="color:#fff;font-size:17px;font-weight:700;line-height:1.25;margin-bottom:10px;">Ingénierie & Industrialisation</div>
+        <div style="color:#94a3b8;font-size:13px;line-height:1.5;margin-bottom:14px;">Pipelines fiables, monitorés et reproductibles de bout en bout.</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:auto;">
+          <div style="color:#cbd5e1;font-size:12px;">· Pipelines ETL/ELT optimisés</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Frameworks réutilisables</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Monitoring & alerting</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Optimisation FinOps</div>
+        </div>
+      </div>
+
+      <!-- CARTE 3 : Power BI -->
+      <div class="service-card" style="background:transparent;border-radius:16px;padding:30px 26px;border:1px solid rgba(255,255,255,0.08);border-top:3px solid #F5A623;display:flex;flex-direction:column;min-height:360px;">
+        <div style="width:46px;height:46px;border-radius:10px;background:rgba(245,166,35,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="12" width="5" height="9"/>
+            <rect x="10" y="6" width="5" height="15"/>
+            <rect x="17" y="3" width="5" height="18"/>
+          </svg>
+        </div>
+        <div style="color:#fff;font-size:17px;font-weight:700;line-height:1.25;margin-bottom:10px;">Power BI & Visualisation</div>
+        <div style="color:#94a3b8;font-size:13px;line-height:1.5;margin-bottom:14px;">Dashboards pertinents et self-service maîtrisé.</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:auto;">
+          <div style="color:#cbd5e1;font-size:12px;">· Modélisation tabulaire & DAX</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Dashboards métiers & KPI</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Reporting externe</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Gouvernance self-service</div>
+        </div>
+      </div>
+
+      <!-- CARTE 4 : DevOps -->
+      <div class="service-card" style="background:transparent;border-radius:16px;padding:30px 26px;border:1px solid rgba(255,255,255,0.08);border-top:3px solid #a78bfa;display:flex;flex-direction:column;min-height:360px;">
+        <div style="width:46px;height:46px;border-radius:10px;background:rgba(167,139,250,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div style="color:#fff;font-size:17px;font-weight:700;line-height:1.25;margin-bottom:10px;">DevOps & Transmission</div>
+        <div style="color:#94a3b8;font-size:13px;line-height:1.5;margin-bottom:14px;">Automatisation et autonomie durable des équipes.</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:auto;">
+          <div style="color:#cbd5e1;font-size:12px;">· CI/CD Azure DevOps</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Bonnes pratiques & standards</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Documentation technique</div>
+          <div style="color:#cbd5e1;font-size:12px;">· Montée en compétence</div>
+        </div>
       </div>
 
     </div>
   </div>
+
+  <style>
+    .service-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    }
+
+    /* Mobile : carrousel horizontal */
+    @media (max-width: 768px) {
+      .services-grid {
+        display: flex !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        gap: 14px !important;
+        padding-bottom: 20px !important;
+        padding-left: 4px !important;
+        padding-right: 20px !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        grid-template-columns: none !important;
+      }
+      .services-grid::-webkit-scrollbar {
+        display: none !important;
+      }
+      .service-card {
+        flex: 0 0 80% !important;
+        scroll-snap-align: start !important;
+      }
+    }
+  </style>
 </section>

@@ -36,6 +36,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 <style>
+  body, html{ font-family:'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; }
+  *{ font-family:inherit; }
   body{ margin:0; padding:0; overflow-x:hidden; }
 
 
@@ -148,6 +150,12 @@
     .certif-grid p{ font-size:11px !important; }
   }
 
+  /* Menu drawer */
+  #sideMenu{ width:280px !important; background:#0f1419 !important; border-left:1px solid rgba(255,255,255,0.08) !important; padding:90px 28px 28px 28px !important; box-shadow:-10px 0 30px rgba(0,0,0,0.5) !important; }
+  .menu-link{ font-size:17px !important; padding:14px 0 !important; }
+  .menu-link:hover{ color:#fff !important; }
+  .menu-link.active{ color:#fff !important; }
+
   /* Burger + logo navbar – mobile */
   @media (max-width: 768px) {
     #fabButton{ width:28px; height:28px; padding:4px !important; font-size:14px; }
@@ -156,11 +164,8 @@
 
   /* Drawer menu – mobile */
   @media (max-width: 768px) {
-    #sideMenu{ width:180px; min-width:160px; padding:16px; border-radius:10px; min-height:unset; }
-    #sideMenu > * + *{ margin-top:6px !important; }
-    #sideMenu a + a{ margin-top:2px !important; }
-    #sideMenu a{ font-size:13px; padding:4px 0; }
-    #sideMenu svg.w-6{ width:20px; height:20px; }
+    #sideMenu{ width:75% !important; max-width:280px !important; padding:80px 24px 24px 24px !important; }
+    .menu-link{ font-size:16px !important; padding:12px 0 !important; }
   }
 
   /* Timeline – mobile */
@@ -243,6 +248,9 @@
   }
 </style>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 
@@ -253,32 +261,39 @@
 <!-- Bouton hamburger / close -->
 <div id="fabContainer" class="fixed top-5 right-3 z-50">
   <button id="fabButton" class="flex items-center justify-center text-white text-base md:text-lg bg-transparent hover:bg-white hover:text-black transition" style="padding:6px 10px; border:1.5px solid white;">
-    <span id="hamburgerIcon">☰</span>
-    <span id="closeIcon" style="display:none;">×</span>
+    <svg id="iconBurger" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+    <svg id="iconClose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none;">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
   </button>
 </div>
 
 
-<div id="sideMenu"  
-     class="fixed top-20 right-0 h-auto min-h-[160px] w-56 text-white z-40 flex flex-col items-start p-4 space-y-4 rounded-l-xl" style="transform:translateX(100%);transition:transform 300ms;background:rgba(255,255,255,0.03);border:.5px solid rgba(255,255,255,0.07);backdrop-filter:blur(12px);">
+<div id="menuOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:30;opacity:0;pointer-events:none;transition:opacity 300ms;"></div>
 
-  <!-- Liens -->
-  <a href="/" 
-     class="relative text-base font-medium tracking-wide text-white no-underline transition duration-300 ease-out hover:text-gray-200">
-    Accueil
-    <span class="absolute left-0 -bottom-0.5 w-0 h-[1px] bg-gray-200 transition-all duration-300 hover:w-full"></span>
-  </a>
+<div id="sideMenu"
+     class="fixed top-0 right-0 text-white z-40 flex flex-col items-start" style="height:100vh;transform:translateX(100%);transition:transform 300ms;backdrop-filter:blur(12px);">
 
-  <a href="{{ url_for('contact') }}" 
-     class="relative text-base font-medium tracking-wide text-white no-underline transition duration-300 ease-out hover:text-gray-200">
-    Contactez-moi
-    <span class="absolute left-0 -bottom-0.5 w-0 h-[1px] bg-gray-200 transition-all duration-300 hover:w-full"></span>
-  </a>
+  <div style="color:#64748b;font-size:10px;letter-spacing:1.5px;margin-bottom:10px;font-weight:600;">NAVIGATION</div>
 
-  <!-- Icône LinkedIn -->
-  <div class="mt-1">
+  <nav id="sideMenuNav" style="display:flex;flex-direction:column;">
+    <a href="/" class="menu-link" style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);color:#fff;font-size:15px;font-weight:500;text-decoration:none;">
+      Accueil
+    </a>
+    <a href="/contact" class="menu-link" style="padding:12px 0;color:#cbd5e1;font-size:15px;text-decoration:none;">
+      Contactez-moi
+    </a>
+  </nav>
+
+  <div style="margin-top:20px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);">
+    <div style="color:#64748b;font-size:10px;letter-spacing:1.5px;margin-bottom:10px;font-weight:600;">RÉSEAUX</div>
     <a href="https://www.linkedin.com/in/anas-fata-28212a85/" target="_blank" aria-label="LinkedIn" class="hover:opacity-80">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" style="color: #f5f3f5;" fill="currentColor" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" style="color: #f5f3f5;" fill="currentColor" viewBox="0 0 24 24">
         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.795-1.75-1.732s.784-1.732 1.75-1.732 1.75.795 1.75 1.732-.784 1.732-1.75 1.732zm13.5 11.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-10h3v1.43c1.396-2.586 7-2.777 7 2.476v6.094z"/>
       </svg>
     </a>
@@ -294,23 +309,32 @@
   AOS.init({ duration: 1000, once: true });
 
 const fabButton = document.getElementById('fabButton');
-const hamburgerIcon = document.getElementById('hamburgerIcon');
-const closeIcon = document.getElementById('closeIcon');
 const sideMenu = document.getElementById('sideMenu');
-
-// Quand on clique sur le bouton principal
 let menuOpen = false;
 
 fabButton.addEventListener('click', () => {
   menuOpen = !menuOpen;
   sideMenu.style.transform = menuOpen ? 'translateX(0)' : 'translateX(100%)';
+  const overlay = document.getElementById('menuOverlay');
+  overlay.style.opacity = menuOpen ? '1' : '0';
+  overlay.style.pointerEvents = menuOpen ? 'auto' : 'none';
+  document.getElementById('iconBurger').style.display = menuOpen ? 'none' : 'block';
+  document.getElementById('iconClose').style.display = menuOpen ? 'block' : 'none';
 });
 
-// Fermer en cliquant hors du menu
-document.addEventListener('click', (event) => {
-  if (!sideMenu.contains(event.target) && !fabButton.contains(event.target)) {
-    menuOpen = false;
-    sideMenu.style.transform = 'translateX(100%)';
+document.getElementById('menuOverlay').addEventListener('click', () => {
+  menuOpen = false;
+  sideMenu.style.transform = 'translateX(100%)';
+  document.getElementById('menuOverlay').style.opacity = '0';
+  document.getElementById('menuOverlay').style.pointerEvents = 'none';
+  document.getElementById('iconBurger').style.display = 'block';
+  document.getElementById('iconClose').style.display = 'none';
+});
+
+// Marquer le lien actif selon l'URL
+document.querySelectorAll('#sideMenuNav .menu-link').forEach(link => {
+  if (link.getAttribute('href') === window.location.pathname) {
+    link.classList.add('active');
   }
 });
 

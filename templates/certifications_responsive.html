@@ -1,61 +1,88 @@
-<section class="relative py-12 md:py-24">
-  <!-- Contenu -->
-  <div class="relative max-w-7xl mx-auto px-4 md:px-24">
-    <h2 class="text-xl sm:text-2xl md:text-4xl font-bold text-center text-white mb-6 md:mb-12">
-      Mes Certifications
-    </h2>
+<section class="relative py-16 md:py-20">
+  <div style="max-width:1200px; margin:0 auto; padding:0 1rem;">
 
-    <div class="certif-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12" data-aos="fade-up">
+    <div style="text-align:center;margin-bottom:40px;">
+      <h2 class="text-white" style="font-size:clamp(1.75rem,4vw,2.25rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:10px;">
+        Mes certifications
+      </h2>
+      <div style="color:#64748b;font-size:15px;">Certifications officielles Microsoft en cours de validité.</div>
+    </div>
 
-      <!-- Carte AZ-900 -->
-      <a class="card max-w-xs w-full mx-auto p-5 flex flex-col items-center text-center"
+    <div class="certif-grid" style="display:grid;grid-template-columns:repeat(4, 1fr);gap:14px;">
+
+      <!-- AZ-900 -->
+      <a class="certif-card"
          href="https://learn.microsoft.com/api/credentials/share/en-us/AnasFATA-1846/4F9E74F9108CCCA0?sharingId"
-         target="_blank" rel="noopener noreferrer">
-
-        <img src="static/AZ900.png" alt="Microsoft Azure" class="w-14 h-14 mb-4">
-        <h3 class="text-sm sm:text-lg md:text-xl font-bold text-white mb-2 text-center">
-          Microsoft Azure Notions fondamentales
-        </h3>
-        <p class="text-gray-400 text-xs sm:text-sm">AZ-900</p>
+         target="_blank" rel="noopener noreferrer"
+         style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;transition:transform 0.3s;">
+        <div style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <img src="{{ url_for('static', filename='AZ900.png') }}" alt="AZ-900" style="width:80px;height:80px;object-fit:contain;" />
+        </div>
+        <div style="color:#60a5fa;font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:6px;">AZ-900</div>
+        <div style="color:#fff;font-size:14px;font-weight:600;line-height:1.3;">Azure Fundamentals</div>
       </a>
 
-      <!-- Carte DP-203 -->
-      <a class="card max-w-xs w-full mx-auto p-5 flex flex-col items-center text-center"
+      <!-- DP-203 -->
+      <a class="certif-card"
          href="https://learn.microsoft.com/api/credentials/share/en-us/AnasFATA-1846/103C560C2B96F30C?sharingId"
-         target="_blank" rel="noopener noreferrer">
-
-        <img src="static/DP-203.png" alt="Microsoft Azure" class="w-14 h-14 mb-4">
-        <h3 class="text-sm sm:text-lg md:text-xl font-bold text-white mb-2 text-center">
-          Microsoft Azure Ingénierie de données
-        </h3>
-        <p class="text-gray-400 text-xs sm:text-sm">DP-203</p>
+         target="_blank" rel="noopener noreferrer"
+         style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;transition:transform 0.3s;">
+        <div style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <img src="{{ url_for('static', filename='DP-203.png') }}" alt="DP-203" style="width:80px;height:80px;object-fit:contain;" />
+        </div>
+        <div style="color:#60a5fa;font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:6px;">DP-203</div>
+        <div style="color:#fff;font-size:14px;font-weight:600;line-height:1.3;">Azure Data Engineer</div>
       </a>
 
-      <!-- Carte DP-700 -->
-      <a class="card max-w-xs w-full mx-auto p-5 flex flex-col items-center text-center"
+      <!-- DP-700 -->
+      <a class="certif-card"
          href="https://learn.microsoft.com/api/credentials/share/en-us/AnasFATA-1846/58430A6D78B79B23?sharingId"
-         target="_blank" rel="noopener noreferrer">
-
-        <img src="static/fabric.png" alt="Microsoft Fabric" class="w-14 h-14 mb-4">
-        <h3 class="text-sm sm:text-lg md:text-xl font-bold text-white mb-2 text-center">
-          Microsoft Fabric Ingénierie de données
-        </h3>
-        <p class="text-gray-400 text-xs sm:text-sm">DP-700</p>
+         target="_blank" rel="noopener noreferrer"
+         style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;transition:transform 0.3s;">
+        <div style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <img src="{{ url_for('static', filename='fabric.png') }}" alt="DP-700" style="width:80px;height:80px;object-fit:contain;" />
+        </div>
+        <div style="color:#6ee7b7;font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:6px;">DP-700</div>
+        <div style="color:#fff;font-size:14px;font-weight:600;line-height:1.3;">Fabric Data Engineer</div>
       </a>
 
-
-            <!-- Carte DP-600 -->
-      <a class="card max-w-xs w-full mx-auto p-5 flex flex-col items-center text-center"
+      <!-- DP-600 -->
+      <a class="certif-card"
          href="https://learn.microsoft.com/en-us/users/AnasFATA-1846/credentials/6EE64B210434A6DF?ref=https%3a%2f%2fwww.linkedin.com%2f"
-         target="_blank" rel="noopener noreferrer">
-
-        <img src="static/fabric.png" alt="Microsoft Fabric" class="w-14 h-14 mb-4">
-        <h3 class="text-sm sm:text-lg md:text-xl font-bold text-white mb-2 text-center">
-          Microsoft Fabric Ingénierie Analytique
-        </h3>
-        <p class="text-gray-400 text-xs sm:text-sm">DP-600</p>
+         target="_blank" rel="noopener noreferrer"
+         style="padding:28px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;transition:transform 0.3s;">
+        <div style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <img src="{{ url_for('static', filename='DP600.png') }}" alt="DP-600" style="width:80px;height:80px;object-fit:contain;" />
+        </div>
+        <div style="color:#6ee7b7;font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:6px;">DP-600</div>
+        <div style="color:#fff;font-size:14px;font-weight:600;line-height:1.3;">Fabric Analytics Engineer</div>
       </a>
 
     </div>
   </div>
+
+  <style>
+    .certif-card:hover {
+      transform: translateY(-4px);
+    }
+
+    @media (max-width: 768px) {
+      .certif-grid {
+        display: flex !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        gap: 8px !important;
+        padding-bottom: 20px !important;
+        scrollbar-width: none !important;
+        grid-template-columns: none !important;
+      }
+      .certif-grid::-webkit-scrollbar {
+        display: none !important;
+      }
+      .certif-card {
+        flex: 0 0 50% !important;
+        scroll-snap-align: start !important;
+      }
+    }
+  </style>
 </section>

@@ -1,83 +1,113 @@
-<section class="technos-section relative py-10 md:py-20">
-  <!-- Contenu -->
-  <div class="relative max-w-7xl mx-auto px-4 md:px-24">
-    <h2 class="text-2xl md:text-4xl font-bold text-center text-white mb-2 md:mb-4">
-      Technologies
-    </h2>
-    <p class="text-center text-gray-300 max-w-2xl mx-auto mb-8 md:mb-14 leading-relaxed">
-      Mon écosystème de prédilection autour de la stack Microsoft.
-    </p>
+<section class="technos-section relative py-16 md:py-20">
+  <div style="max-width:1200px; margin:0 auto; padding:0 1rem;">
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
+    <div style="text-align:center;margin-bottom:40px;">
+      <h2 class="text-white" style="font-size:clamp(1.75rem,4vw,2.25rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:10px;">
+        Technologies
+      </h2>
+      <div style="color:#64748b;font-size:15px;">Mon écosystème de prédilection autour de la stack Microsoft.</div>
+    </div>
 
-      <!-- Microsoft Azure -->
-      <div class="card p-5 md:p-8 max-w-xl w-full mx-auto"
-           data-aos="fade-up">
-        <div class="flex items-center gap-3 mb-3">
-          <img src="static/svg/azure.svg" alt="Microsoft Azure" class="w-8 h-8 md:w-10 md:h-10">
-          <h3 class="text-xl md:text-2xl font-bold text-white">Microsoft Azure</h3>
+    <div class="technos-grid" style="display:grid;grid-template-columns:1.2fr 1.2fr 1fr;gap:16px;">
+
+      <!-- MICROSOFT FABRIC (principal, en premier) -->
+      <div class="techno-card" style="background:linear-gradient(145deg,#064e3b,#065f46);border-radius:18px;padding:28px 24px;position:relative;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;padding:8px;">
+            <img src="{{ url_for('static', filename='svg/fabric.svg') }}" alt="Microsoft Fabric" style="width:100%;height:100%;object-fit:contain;" />
+          </div>
+          <div style="color:#fff;font-size:18px;font-weight:700;">Microsoft Fabric</div>
         </div>
-        <p class="text-gray-300 text-sm md:text-base mb-4 leading-relaxed">
-          Services managés pour l’ingestion, le stockage, le traitement et la gouvernance des données.
-        </p>
-
-        <!-- chips -->
-        <div class="grid grid-cols-2 gap-2 sm:gap-3 md:flex md:flex-wrap">
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure Data Factory</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure Synapse Analytics</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure Functions</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure SQL</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure Storage / ADLS Gen2</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure Virtual Machine</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure Automation</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure Key Vault</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Azure DevOps</span>
-        </div>
-      </div>
-
-      <!-- Microsoft Fabric -->
-      <div class="card p-5 md:p-8 max-w-xl w-full mx-auto"
-           data-aos="fade-up" data-aos-delay="100">
-        <div class="flex items-center gap-3 mb-3">
-          <img src="static/svg/fabric.svg" alt="Microsoft Fabric" class="w-8 h-8 md:w-10 md:h-10">
-          <h3 class="text-xl md:text-2xl font-bold text-white">Microsoft Fabric</h3>
-        </div>
-        <p class="text-gray-300 text-sm md:text-base mb-4 leading-relaxed">
-          Plateforme unifiée de data engineering, data warehousing et BI avec OneLake au cœur.
-        </p>
-
-        <div class="grid grid-cols-2 gap-2 sm:gap-3 md:flex md:flex-wrap">
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Pipeline</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Python &amp; PySpark</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">T-SQL</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Warehouse</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Lakehouse</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Power BI</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Modèle sémantique</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Notebook</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Sécurité</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">Gouvernance</span>
+        <div style="display:inline-block;padding:3px 10px;border-radius:10px;background:rgba(110,231,183,0.2);color:#6ee7b7;font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:12px;">PRINCIPAL</div>
+        <div style="color:#d1fae5;font-size:13px;line-height:1.55;margin-bottom:16px;">Plateforme unifiée de data engineering, warehousing et BI avec OneLake au cœur.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Lakehouse</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Warehouse</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Pipeline</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Notebook</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Python & PySpark</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">T-SQL</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Power BI</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Modèle sémantique</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Sécurité</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Gouvernance</span>
         </div>
       </div>
 
-      <!-- Microsoft BI -->
-      <div class="card p-5 md:p-8 max-w-xl w-full mx-auto"
-           data-aos="fade-up" data-aos-delay="200">
-        <div class="flex items-center gap-3 mb-3">
-          <img src="static/svg/sqlserver.svg" alt="Microsoft BI" class="w-8 h-8 md:w-10 md:h-10">
-          <h3 class="text-xl md:text-2xl font-bold text-white">Microsoft BI (on-prem)</h3>
+      <!-- MICROSOFT AZURE -->
+      <div class="techno-card" style="background:linear-gradient(145deg,#1e3a8a,#1e40af);border-radius:18px;padding:28px 24px;position:relative;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;padding:8px;">
+            <img src="{{ url_for('static', filename='svg/azure.svg') }}" alt="Microsoft Azure" style="width:100%;height:100%;object-fit:contain;" />
+          </div>
+          <div style="color:#fff;font-size:18px;font-weight:700;">Microsoft Azure</div>
         </div>
-        <p class="text-gray-300 text-sm md:text-base mb-4 leading-relaxed">
-          Expertise sur les solutions BI historiques de Microsoft, pour accompagner des projets de migration, de modernisation ou d'évolution vers des plateformes data plus récentes.
-        </p>
+        <div style="display:inline-block;padding:3px 10px;border-radius:10px;background:rgba(96,165,250,0.2);color:#93c5fd;font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:12px;">CLOUD DATA</div>
+        <div style="color:#dbeafe;font-size:13px;line-height:1.55;margin-bottom:16px;">Services managés pour l'ingestion, le stockage, le traitement et la gouvernance des données.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Data Factory</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Synapse</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">SQL</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">ADLS Gen2</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Functions</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">DevOps</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Key Vault</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Automation</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,0.12);color:#fff;font-size:11px;font-weight:500;">Virtual Machine</span>
+        </div>
+      </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:flex md:flex-wrap">
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">SQL Server Integration Services (SSIS)</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">SQL Server Analysis Services (SSAS)</span>
-          <span class="px-3 py-2 rounded-xl bg-white/10 text-gray-200 text-xs md:text-sm">SQL Server Reporting Services (SSRS)</span>
+      <!-- MICROSOFT BI (LEGACY) -->
+      <div class="techno-card" style="background:#f5f5f7;border-radius:18px;padding:28px 24px;position:relative;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(232,17,35,0.1);display:flex;align-items:center;justify-content:center;padding:8px;">
+            <img src="{{ url_for('static', filename='svg/sqlserver.svg') }}" alt="Microsoft BI" style="width:100%;height:100%;object-fit:contain;" />
+          </div>
+          <div style="color:#1d1d1f;font-size:18px;font-weight:700;">Microsoft BI</div>
+        </div>
+        <div style="display:inline-block;padding:3px 10px;border-radius:10px;background:rgba(232,17,35,0.1);color:#E81123;font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:12px;">MIGRATION & LEGACY</div>
+        <div style="color:#424245;font-size:13px;line-height:1.55;margin-bottom:16px;">Expertise sur les solutions BI historiques pour accompagner la modernisation de votre plateforme.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(0,0,0,0.05);color:#1d1d1f;font-size:11px;font-weight:500;border:1px solid rgba(0,0,0,0.08);">SSIS</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(0,0,0,0.05);color:#1d1d1f;font-size:11px;font-weight:500;border:1px solid rgba(0,0,0,0.08);">SSAS</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(0,0,0,0.05);color:#1d1d1f;font-size:11px;font-weight:500;border:1px solid rgba(0,0,0,0.08);">SSRS</span>
+          <span style="padding:5px 10px;border-radius:8px;background:rgba(0,0,0,0.05);color:#1d1d1f;font-size:11px;font-weight:500;border:1px solid rgba(0,0,0,0.08);">SQL Server</span>
         </div>
       </div>
 
     </div>
   </div>
+
+  <style>
+    .techno-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .techno-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    }
+
+    /* Mobile : carrousel horizontal */
+    @media (max-width: 768px) {
+      .technos-grid {
+        display: flex !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        gap: 14px !important;
+        padding-bottom: 20px !important;
+        padding-left: 4px !important;
+        padding-right: 20px !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        grid-template-columns: none !important;
+      }
+      .technos-grid::-webkit-scrollbar {
+        display: none !important;
+      }
+      .techno-card {
+        flex: 0 0 85% !important;
+        scroll-snap-align: start !important;
+      }
+    }
+  </style>
 </section>
