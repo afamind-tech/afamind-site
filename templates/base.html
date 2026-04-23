@@ -36,9 +36,52 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 <style>
-  body, html{ font-family:'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; }
-  *{ font-family:inherit; }
-  body{ margin:0; padding:0; overflow-x:hidden; }
+html, body{
+  font-family:'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+  min-height:100%;
+  background-color:#08101f;
+}
+
+*{ font-family:inherit; }
+
+body{
+  position:relative;
+  color:white;
+  background:
+    radial-gradient(circle at 18% 38%, rgba(124, 58, 237, 0.18), transparent 24%),
+    radial-gradient(circle at 72% 24%, rgba(59, 130, 246, 0.08), transparent 20%),
+    #08101f;
+}
+
+/* grille pointillée globale */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image: radial-gradient(rgba(148,163,184,0.18) 1px, transparent 1px);
+  background-size:34px 34px;
+  opacity:.35;
+  pointer-events:none;
+  z-index:-2;
+}
+
+/* voile global très léger */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(8,16,31,0.08),
+    rgba(8,16,31,0.03) 30%,
+    rgba(8,16,31,0.16)
+  );
+  pointer-events:none;
+  z-index:-1;
+}
 
 
   /* Navigation flèches timeline */
@@ -131,13 +174,13 @@
 
   /* Références logos – mobile */
   @media (max-width: 768px) {
-    .ref-logos-grid{ display:grid !important; grid-template-columns:repeat(3, 1fr) !important; gap:16px 8px !important; padding:0 8px !important; align-items:center !important; }
+    .ref-logos-grid{ display:grid !important; grid-template-columns:repeat(3, 1fr) !important; gap:16px 8px !important; padding:0 8px !important; align-items:center !important; max-width:100% !important; overflow:hidden !important; }
     .ref-logos-grid img{ max-width:100% !important; max-height:45px !important; width:auto !important; height:auto !important; object-fit:contain !important; margin:0 auto !important; display:block !important; }
-    .ref-logos-grid img[alt="Middleway"]{ width:120px !important; max-width:120px !important; height:auto !important; max-height:none !important; }
-    .ref-logos-grid img[alt="Gerflor"]{ max-width:120px !important; max-height:120px !important; width:120px !important; }
+    .ref-logos-grid img[alt="Middleway"]{ max-width:90px !important; width:90px !important; height:auto !important; max-height:none !important; }
+    .ref-logos-grid img[alt="Gerflor"]{ max-width:90px !important; max-height:90px !important; width:90px !important; }
     .ref-logos-grid img[alt="Gineys"]{ max-height:45px !important; }
     .ref-logos-grid img[alt="Entoria"]{ max-height:30px !important; max-width:80px !important; }
-    .ref-logos-grid img[alt="Alliade"]{ max-height:55px !important; max-width:130px !important; }
+    .ref-logos-grid img[alt="Alliade"]{ max-height:55px !important; max-width:120px !important; }
     .ref-logos-grid img[alt="alliade"]{ grid-column:2 !important; }
   }
 
@@ -151,7 +194,7 @@
   }
 
   /* Menu drawer */
-  #sideMenu{ width:280px !important; background:#0f1419 !important; border-left:1px solid rgba(255,255,255,0.08) !important; padding:90px 28px 28px 28px !important; box-shadow:-10px 0 30px rgba(0,0,0,0.5) !important; }
+  #sideMenu{ width:280px !important; background:linear-gradient(160deg, rgba(10,18,40,0.97) 0%, rgba(6,13,26,0.98) 100%) !important; border-left:1px solid rgba(124,58,237,0.2) !important; padding:90px 28px 28px 28px !important; box-shadow:-20px 0 60px rgba(0,0,0,0.6), inset 1px 0 0 rgba(124,58,237,0.08) !important; backdrop-filter:blur(24px) !important; -webkit-backdrop-filter:blur(24px) !important; }
   .menu-link{ font-size:17px !important; padding:14px 0 !important; }
   .menu-link:hover{ color:#fff !important; }
   .menu-link.active{ color:#fff !important; }
@@ -254,7 +297,7 @@
 </head>
 
 
-<body class="bg-[#0A0A12] text-white font-sans">
+<body class="text-white font-sans">
 
 
 
@@ -277,7 +320,10 @@
 <div id="menuOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:30;opacity:0;pointer-events:none;transition:opacity 300ms;"></div>
 
 <div id="sideMenu"
-     class="fixed top-0 right-0 text-white z-40 flex flex-col items-start" style="height:100vh;transform:translateX(100%);transition:transform 300ms;backdrop-filter:blur(12px);">
+     class="fixed top-0 right-0 text-white z-40 flex flex-col items-start" style="height:100vh;transform:translateX(100%);transition:transform 300ms;backdrop-filter:blur(24px);">
+
+  <!-- accent top gradient bar -->
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(124,58,237,0.7),rgba(59,130,246,0.5),transparent);pointer-events:none;"></div>
 
   <div style="color:#64748b;font-size:10px;letter-spacing:1.5px;margin-bottom:10px;font-weight:600;">NAVIGATION</div>
 

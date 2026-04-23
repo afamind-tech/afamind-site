@@ -1,28 +1,168 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWQY17K8G2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EWQY17K8G2');
+  </script>
+  <meta charset="UTF-8">
+  <title>Message envoyé – Afamind</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="5; url={{ url_for('home') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-      <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EWQY17K8G2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <style>
+    *, body { font-family: 'Manrope', sans-serif; }
 
-  gtag('config', 'G-EWQY17K8G2');
-</script>
-    <meta charset="UTF-8">
-    <title>Message envoyé</title>
-    <meta http-equiv="refresh" content="5; url={{ url_for('home') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
+    body {
+      background-color: #08101f;
+      background-image:
+        radial-gradient(circle at 20% 35%, rgba(124,58,237,0.16), transparent 28%),
+        radial-gradient(circle at 78% 18%, rgba(59,130,246,0.09), transparent 22%),
+        radial-gradient(circle at 55% 75%, rgba(124,58,237,0.08), transparent 25%);
+      background-image:
+        radial-gradient(circle at 20% 35%, rgba(124,58,237,0.16), transparent 28%),
+        radial-gradient(circle at 78% 18%, rgba(59,130,246,0.09), transparent 22%),
+        radial-gradient(circle at 55% 75%, rgba(124,58,237,0.08), transparent 25%),
+        radial-gradient(rgba(148,163,184,0.10) 1px, transparent 1px);
+      background-size: auto, auto, auto, 34px 34px;
+    }
 
-  <body class="bg-[#0A0A12] text-white flex items-center justify-center min-h-screen px-4">
-    <div class="bg-[#13131E] p-6 rounded-xl shadow-lg max-w-md w-full text-center border border-white/10">
-      <h1 class="text-2xl font-bold text-purple-400 mb-4">✅ Merci {{ name }} !</h1>
-      <p class="text-gray-300 mb-4">Votre message a bien été envoyé. <br>Nous vous répondrons dès que possible. </p>
-      <p class="text-sm text-gray-500">Redirection automatique vers l’accueil dans quelques secondes...</p>
-      <a href="{{ url_for('home') }}" class="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow transition"> Retour immédiat </a>
+    .confirm-card {
+      background: rgba(255,255,255,0.03);
+      border: 0.5px solid rgba(255,255,255,0.09);
+      border-radius: 1.25rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 40px 32px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* top accent line */
+    .confirm-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.5), rgba(59,130,246,0.35), transparent);
+    }
+
+    /* animated checkmark circle */
+    .check-ring {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(59,130,246,0.15));
+      border: 1px solid rgba(124,58,237,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      animation: popIn .4s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .progress-bar {
+      height: 2px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 24px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, rgba(124,58,237,0.7), rgba(59,130,246,0.6));
+      border-radius: 2px;
+      animation: countdown 5s linear forwards;
+      transform-origin: left;
+    }
+    @keyframes countdown {
+      from { width: 100%; }
+      to   { width: 0%; }
+    }
+
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: #fff;
+      text-decoration: none;
+      background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(59,130,246,0.2));
+      border: 1px solid rgba(124,58,237,0.35);
+      transition: all .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-return::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(59,130,246,0.4));
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .btn-return:hover::before { opacity: 1; }
+    .btn-return span { position: relative; z-index: 1; }
+  </style>
+</head>
+
+<body class="text-white min-h-screen flex items-center justify-center px-4">
+
+  <div class="confirm-card">
+
+    <!-- Icon -->
+    <div class="check-ring">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(124,200,237,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
     </div>
-  </body>
+
+    <!-- Title -->
+    <p style="font-size:11px;letter-spacing:2px;font-weight:600;color:rgba(124,58,237,0.8);margin-bottom:8px;text-transform:uppercase;">Message envoyé</p>
+    <h1 style="font-size:1.6rem;font-weight:800;letter-spacing:-0.03em;margin:0 0 12px;">Merci {{ name }}&nbsp;!</h1>
+
+    <!-- Body -->
+    <p style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;margin:0;">
+      Votre message a bien été reçu.<br>
+      Je vous répondrai dès que possible.
+    </p>
+
+    <!-- Progress countdown -->
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <p style="color:rgba(255,255,255,0.22);font-size:12px;margin:8px 0 0;letter-spacing:0.02em;">
+      Redirection automatique dans quelques secondes…
+    </p>
+
+    <!-- Button -->
+    <a href="{{ url_for('home') }}" class="btn-return">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1;"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Retour immédiat</span>
+    </a>
+
+  </div>
+
+</body>
 </html>

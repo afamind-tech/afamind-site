@@ -1,43 +1,39 @@
-<section style="background:transparent !important;" class="py-6 px-4">
+<section style="background:transparent !important;" class="py-10 px-4">
   <h2 class="text-2xl md:text-3xl font-bold text-center text-white mb-8 md:mb-12">
     Ils m'ont fait confiance
   </h2>
 
-  <div class="ref-logos-grid flex flex-wrap justify-center gap-8 items-center">
-    <!-- Entoria -->
+  <div class="ref-logos-grid" style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4, 1fr);gap:24px 16px;align-items:center;justify-items:center;">
     <img src="{{ url_for('static', filename='references/entoria.png') }}"
-         alt="Entoria"
-         class="max-h-4 md:max-h-6 w-auto object-contain ref-logo" />
-
-    <!-- Erasteel -->
+         alt="Entoria" class="ref-logo" style="max-height:28px;width:auto;object-fit:contain;" />
     <img src="{{ url_for('static', filename='references/erasteel.png') }}"
-         alt="Erasteel"
-         class="max-h-3 md:max-h-4 w-auto object-contain ref-logo-inverted" />
-
-    <!-- Middleway -->
+         alt="Erasteel" class="ref-logo-inverted" style="max-height:18px;width:auto;object-fit:contain;" />
     <img src="{{ url_for('static', filename='references/mw.png') }}"
-         alt="Middleway"
-         class="object-contain ref-logo-inverted" style="width:150px; height:auto;" />
-
-    <!-- Gineys -->
+         alt="Middleway" class="ref-logo-inverted" style="max-height:32px;width:auto;object-fit:contain;max-width:130px;" />
     <img src="{{ url_for('static', filename='references/gineys.webp') }}"
-         alt="Gineys"
-         class="max-h-10 md:max-h-12 w-auto object-contain ref-logo" />
-
-    <!-- Ingerop -->
+         alt="Gineys" class="ref-logo" style="max-height:44px;width:auto;object-fit:contain;" />
     <img src="{{ url_for('static', filename='references/ingerop.png') }}"
-         alt="Ingerop"
-         class="max-h-7 md:max-h-9 w-auto object-contain ref-logo" />
-
-     <!-- Gerflor -->
-     <img src="{{ url_for('static', filename='references/gerflor.webp') }}"
-          alt="Gerflor"
-          class="ref-logo-inverted" style="width:100px; height:100px; object-fit:contain;" />
-
-     <!-- Alliade -->
-     <img src="{{ url_for('static', filename='references/alliade.png') }}"
-         alt="alliade"
-         class="max-h-7 md:max-h-9 w-auto object-contain ref-logo" />
-
+         alt="Ingerop" class="ref-logo" style="max-height:32px;width:auto;object-fit:contain;" />
+    <img src="{{ url_for('static', filename='references/gerflor.webp') }}"
+         alt="Gerflor" class="ref-logo-inverted" style="max-height:40px;width:auto;object-fit:contain;" />
+    <img src="{{ url_for('static', filename='references/alliade.png') }}"
+         alt="Alliade" class="ref-logo" style="max-height:52px;width:auto;object-fit:contain;" />
   </div>
+
+  <style>
+    @media (max-width: 768px) {
+      .ref-logos-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px 12px !important;
+        padding: 0 8px !important;
+      }
+      .ref-logos-grid img { max-width: 100% !important; }
+    }
+    @media (max-width: 480px) {
+      .ref-logos-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 24px 16px !important;
+      }
+    }
+  </style>
 </section>

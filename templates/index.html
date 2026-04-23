@@ -3,91 +3,515 @@
 {% block title %}Accueil - Afamind{% endblock %}
 
 {% block content %}
-<header class="relative flex flex-col md:flex-row items-center justify-center px-4 md:px-6 min-h-screen overflow-hidden bg-transparent text-white">
+<style>
+.home-hero{
+  position:relative;
+  overflow:hidden;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  background:transparent;
+}
 
+.home-hero::before,
+.home-hero::after{
+  display:none;
+}
+  .hero-shell{
+    position:relative;
+    z-index:2;
+    max-width:1180px;
+    width:100%;
+    margin:0 auto;
+    padding:34px 28px 28px;
+  }
 
+  .hero-layout{
+    display:grid;
+    grid-template-columns:minmax(300px, 430px) minmax(320px, 520px);
+    gap:42px;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .hero-left{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .portrait-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+
+  .portrait-circle{
+    position:relative;
+    width:clamp(240px, 26vw, 360px);
+    aspect-ratio:1/1;
+    border-radius:999px;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(167,139,250,0.22), transparent 25%),
+      linear-gradient(145deg, #4a2497 0%, #3f1f84 55%, #34186f 100%);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04),
+      0 20px 50px rgba(0,0,0,0.28),
+      0 0 50px rgba(91,45,187,0.18);
+    overflow:hidden;
+  }
+
+  .portrait-circle img{
+    position:absolute;
+    inset:auto 0 0 0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center top;
+    transform:scale(1.01);
+  }
+
+  .badge-stack{
+    width:clamp(280px, 30vw, 420px);
+    display:flex;
+    justify-content:center;
+  }
+
+  .badge-row{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:12px;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+  }
+
+  .badge-row img{
+    height:66px;
+    width:auto;
+    object-fit:contain;
+    filter:drop-shadow(0 10px 18px rgba(0,0,0,0.24));
+    display:block;
+  }
+
+  .hero-right{
+    max-width:520px;
+  }
+
+  .hero-title{
+    font-size:clamp(2.8rem, 5.6vw, 5rem);
+    line-height:.92;
+    font-weight:800;
+    letter-spacing:-0.06em;
+    margin:0 0 20px 0;
+    color:#fff;
+  }
+
+  .hero-title .gradient{
+    display:block;
+    background:linear-gradient(90deg, #4f8cff 0%, #38bdf8 45%, #67e8c8 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:transparent;
+  }
+
+  .hero-description{
+    margin:0;
+    font-size:clamp(1rem, 1.15vw, 1.12rem);
+    line-height:1.55;
+    color:#9fb0ca;
+    max-width:470px;
+  }
+
+  .hero-description strong{
+    color:#ffffff;
+    font-weight:700;
+  }
+
+  .hero-separator{
+    width:100%;
+    height:1px;
+    background:rgba(255,255,255,0.10);
+    margin:22px 0 18px;
+  }
+
+  .hero-metrics{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:stretch;
+    gap:20px;
+    max-width:360px;
+  }
+
+  .metric{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+
+  .metric-value{
+    font-size:clamp(2.2rem, 3vw, 3.1rem);
+    line-height:1;
+    font-weight:800;
+    color:#fff;
+    letter-spacing:-0.04em;
+  }
+
+  .metric-value span{
+    color:#4f8cff;
+  }
+
+  .metric-label{
+    font-size:.95rem;
+    line-height:1.25;
+    color:#93a4bf;
+  }
+
+  .metric-divider{
+    width:1px;
+    background:rgba(255,255,255,0.10);
+  }
+
+  .hero-cta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:26px;
+  }
+
+  .btn-primary-hero,
+  .btn-secondary-hero{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:58px;
+    padding:0 24px;
+    border-radius:22px;
+    font-size:1rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .25s ease;
+  }
+
+  .btn-primary-hero{
+    background:#f8f8f7;
+    color:#0A0A12;
+    box-shadow:0 14px 28px rgba(0,0,0,0.16);
+  }
+
+  .btn-primary-hero:hover{
+    transform:translateY(-2px);
+    background:#ffffff;
+  }
+
+  .btn-secondary-hero{
+    color:#ffffff;
+    border:1px solid rgba(255,255,255,0.16);
+    background:rgba(255,255,255,0.02);
+  }
+
+  .btn-secondary-hero:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,0.06);
+  }
+
+  @media (max-width: 1100px){
+    .home-hero{
+      display:block;
+      min-height:auto;
+    }
+
+    .hero-layout{
+      grid-template-columns:1fr;
+      gap:28px;
+    }
+
+    .hero-left{
+      order:1;
+      align-items:center;
+    }
+
+    .hero-right{
+      order:2;
+      max-width:100%;
+      text-align:center;
+      margin:0 auto;
+    }
+
+    .hero-description{
+      margin:0 auto;
+    }
+
+    .hero-metrics{
+      margin:0 auto;
+    }
+
+    .hero-cta{
+      justify-content:center;
+    }
+  }
+
+@media (max-width: 768px){
+  .home-hero{
+    min-height:auto;
+    display:block;
+  }
+
+  .hero-shell{
+    padding:70px 18px 20px;
+  }
+
+  .hero-layout{
+    grid-template-columns:1fr;
+    gap:14px;
+    justify-content:initial;
+  }
+
+  .hero-left{
+    order:1;
+    align-items:center;
+  }
+
+  .portrait-wrap{
+    margin-bottom:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+  }
+
+  .portrait-circle{
+    width:min(40vw, 160px) !important;
+    max-width:160px !important;
+    margin:0 auto !important;
+    box-shadow:none !important;
+    background:transparent !important;
+    filter:none !important;
+  }
+
+  .portrait-circle img{
+    object-fit:contain;
+    object-position:center bottom;
+    transform:scale(0.92);
+  }
+
+  .badge-stack{
+    width:100%;
+    max-width:240px;
+  }
+
+  .badge-row{
+    width:100%;
+    display:flex;
+    flex-wrap:nowrap;
+    gap:6px;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .badge-row img{
+    height:38px;
+    max-width:100%;
+  }
+
+  .hero-right{
+    order:2;
+    max-width:100%;
+    text-align:center;
+    margin:0 auto;
+  }
+
+  .hero-title{
+    font-size:2rem;
+    line-height:1.05;
+    letter-spacing:-0.03em;
+    margin:0 0 10px;
+  }
+
+  .hero-title br{
+    display:none;
+  }
+
+  .hero-title .gradient{
+    display:inline;
+    background:linear-gradient(90deg, #4f8cff 0%, #38bdf8 45%, #67e8c8 100%) !important;
+    -webkit-background-clip:text !important;
+    background-clip:text !important;
+    -webkit-text-fill-color:transparent !important;
+    color:transparent !important;
+  }
+
+  .hero-description{
+    max-width:100%;
+    margin:0 auto;
+    font-size:.8rem !important;
+    line-height:1.45;
+  }
+
+  .hero-separator{
+    margin:12px 0 10px;
+  }
+
+  .hero-metrics{
+    max-width:300px;
+    margin:0 auto;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+  }
+
+  .metric{
+    align-items:center;
+    text-align:center;
+    padding:0 10px;
+  }
+
+  .metric-value{
+    font-size:1.8rem;
+  }
+
+  .metric-label{
+    font-size:.78rem;
+  }
+
+  .metric-divider{
+    display:none;
+  }
+
+  .hero-cta{
+    margin-top:12px;
+    flex-direction:row;
+    gap:8px;
+    justify-content:center;
+  }
+
+  .btn-primary-hero,
+  .btn-secondary-hero{
+    width:auto;
+    flex:0 1 auto;
+    min-height:38px;
+    padding:0 14px;
+    border-radius:14px;
+    font-size:.8rem;
+  }
+}</style>
+
+<!-- Logo remis comme avant -->
 <a href="/" class="fixed top-4 left-4 z-50 flex items-center">
-  <img src="/static/afamind.png"
-       alt="Afamind Logo"
-       class="h-6 md:h-12 w-auto">
+  <img
+    src="{{ url_for('static', filename='afamind.png') }}"
+    alt="Afamind Logo"
+    class="h-6 md:h-12 w-auto"
+  >
 </a>
 
+<header class="home-hero text-white">
+  <div class="hero-shell">
+    <div class="hero-layout">
+      <div class="hero-left">
+        <div class="portrait-wrap">
+          <div class="portrait-circle">
+            <img
+              src="{{ url_for('static', filename='profil4.png') }}"
+              alt="Photo de profil"
+            >
+          </div>
+        </div>
 
+        <div class="badge-stack">
+          <div class="badge-row">
+            <img src="{{ url_for('static', filename='AZ900.png') }}" alt="Certification AZ-900">
+            <img src="{{ url_for('static', filename='DP-203.png') }}" alt="Certification DP-203">
+            <img src="{{ url_for('static', filename='DP600.png') }}" alt="Certification DP-600">
+            <img src="{{ url_for('static', filename='fabric.png') }}" alt="Certification Microsoft Fabric">
+          </div>
+        </div>
+      </div>
 
-  <!-- Fond animé -->
-   <!--<div class="absolute inset-0 bg-[url('/static/2.jpg')] bg-cover opacity-30"></div>-->
+      <div class="hero-right">
+        <h1 class="hero-title">
+          De la<br>
+          donnée<br>
+          brute<br>
+          à la
+          <span class="gradient">décision</span>
+          <span class="gradient">éclairée.</span>
+        </h1>
 
-  <!-- Visuel -->
-  <div class="relative z-10 flex-shrink-0 mb-6 md:mb-0 md:mr-12">
-    <img src="static/profil4.png" alt="Photo de profil"
-         class="w-32 sm:w-40 md:w-[19rem] drop-shadow-2xl rounded-full">
-  </div>
+        <p class="hero-description">
+          Architecte Data <strong>Microsoft Fabric, Azure &amp; Power BI</strong>.
+          J'accompagne les organisations dans la conception et l'industrialisation
+          de plateformes data modernes.
+        </p>
 
-  <!-- Texte -->
-  <div class="relative z-10 max-w-md md:max-w-xl text-center md:text-left">
-    <h1 class="text-2xl sm:text-3xl md:text-6xl font-bold leading-tight mb-3 md:mb-4">
-      Architecte Data Microsoft Fabric, Azure & Power BI
-    </h1>
-<p class="text-sm sm:text-base md:text-lg leading-relaxed text-gray-300 mb-6 md:mb-8">
-      Avec <span class="font-semibold text-white">10 ans d'expertise</span> dans la data Microsoft, 
-      je conçois des plateformes cloud modernes — 
-      <span class="font-semibold text-white">Fabric, Azure & Power BI</span> — 
-      pour répondre aux enjeux techniques et stratégiques de mes clients.
-    </p>
+        <div class="hero-separator"></div>
 
-<div class="flex items-center justify-center md:justify-start gap-4 md:gap-6 mb-6 md:mb-8 flex-wrap">
-  <img src="{{ url_for('static', filename='AZ900.png') }}" alt="AZ-900"
-       class="h-12 md:h-16 w-auto object-contain" />
-  <img src="{{ url_for('static', filename='DP-203.png') }}" alt="DP-203"
-       class="h-12 md:h-16 w-auto object-contain" />
-  <img src="{{ url_for('static', filename='DP600.png') }}" alt="DP-600"
-       class="h-12 md:h-16 w-auto object-contain" />
-  <img src="{{ url_for('static', filename='fabric.png') }}" alt="Fabric"
-       class="h-12 md:h-16 w-auto object-contain" />
-</div>
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-value">10<span>+</span></div>
+            <div class="metric-label">Ans d'expérience</div>
+          </div>
 
-<a href="#path" class="border border-white text-white bg-transparent px-4 py-2 md:px-6 md:py-3 rounded-full transition text-sm sm:text-base hover:bg-white hover:text-[#0A0A12]">
-  Découvrir mon parcours →
-</a>
+          <div class="metric-divider"></div>
+
+          <div class="metric">
+            <div class="metric-value">4</div>
+            <div class="metric-label">Certifications Microsoft</div>
+          </div>
+        </div>
+
+        <div class="hero-separator" style="margin-top:18px;"></div>
+
+        <div class="hero-cta">
+          <a href="#path" class="btn-primary-hero">
+            Découvrir mon parcours →
+          </a>
+
+          <a href="{{ url_for('contact') }}" class="btn-secondary-hero">
+            Me contacter
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
-
-
-
 
 {% include "path.html" %}
 {% include "services_responsive.html" %}
 {% include "technos.html" %}
 {% include "certifications_responsive.html" %}
-{% include "references.html" %}
 
-<!-- Footer -->
-<footer class="bg-[#0A0A12] text-white py-4 md:py-8">
+
+<footer style="background:linear-gradient(to bottom, #08101f, #060d1a);border-top:1px solid rgba(124,58,237,0.18);position:relative;" class="text-white py-4 md:py-8">
+  <!-- subtle top glow -->
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,0.35),rgba(59,130,246,0.25),transparent);pointer-events:none;"></div>
 
   <div class="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6">
     <div class="flex items-center space-x-2">
-      <img src="/static/svg/linkedin.svg" alt="LinkedIn" class="h-5 w-5">
+      <img src="/static/svg/linkedin.svg" alt="LinkedIn" class="h-5 w-5" style="opacity:0.75;">
       <a href="https://www.linkedin.com/in/anas-fata-28212a85/"
          target="_blank"
          rel="noopener noreferrer"
-         class="text-white font-sans font-semibold tracking-tight hover:underline">
+         class="text-white font-sans font-semibold tracking-tight hover:underline"
+         style="opacity:0.75;transition:opacity .2s ease;"
+         onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'">
         LinkedIn
       </a>
     </div>
-<a href="{{ url_for('contact') }}" 
-   class="text-xs text-gray-300 transition duration-300 ease-out 
-          hover:text-white hover:-translate-y-0.5 hover:scale-105"
-   style="text-decoration: none;">
-  Contactez-moi
-</a>
+
+    <a href="{{ url_for('contact') }}"
+       class="text-xs text-gray-400 transition duration-300 ease-out hover:text-white hover:-translate-y-0.5 hover:scale-105"
+       style="text-decoration:none;">
+      Contactez-moi
+    </a>
   </div>
-  <div class="mt-4 md:mt-6 text-center text-xs text-gray-500">
+
+  <div class="mt-4 md:mt-6 text-center text-xs" style="color:rgba(255,255,255,0.25);letter-spacing:0.04em;">
     &copy; 2025 Afamind • Tous droits réservés
   </div>
 </footer>
-
-
 {% endblock %}
 
 {% block scripts %}{% endblock %}
-
