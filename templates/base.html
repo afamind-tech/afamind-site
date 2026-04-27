@@ -43,6 +43,11 @@ html, body{
   overflow-x:hidden;
   min-height:100%;
   background-color:#08101f;
+  scroll-behavior:smooth;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html { scroll-behavior:auto; }
 }
 
 *{ font-family:inherit; }
@@ -142,7 +147,6 @@ body::after{
 
   /* Hero – mobile */
   @media (max-width: 768px) {
-    img[alt="Photo de profil"]{ width:180px !important; height:180px !important; }
     header h1{ font-size:1.75rem !important; line-height:1.2 !important; }
     header > div:last-child{ padding-left:20px !important; padding-right:20px !important; }
     header p{ font-size:1.05rem !important; line-height:1.6 !important; }
@@ -194,15 +198,14 @@ body::after{
   }
 
   /* Menu drawer */
-  #sideMenu{ width:280px !important; background:linear-gradient(160deg, rgba(10,18,40,0.97) 0%, rgba(6,13,26,0.98) 100%) !important; border-left:1px solid rgba(124,58,237,0.2) !important; padding:90px 28px 28px 28px !important; box-shadow:-20px 0 60px rgba(0,0,0,0.6), inset 1px 0 0 rgba(124,58,237,0.08) !important; backdrop-filter:blur(24px) !important; -webkit-backdrop-filter:blur(24px) !important; }
+  #sideMenu{ width:280px !important; background:linear-gradient(160deg, rgba(10,18,40,0.97) 0%, rgba(6,13,26,0.98) 100%) !important; border-left:1px solid rgba(124,58,237,0.2) !important; padding:6.5rem 28px 28px 28px !important; box-shadow:-20px 0 60px rgba(0,0,0,0.6), inset 1px 0 0 rgba(124,58,237,0.08) !important; backdrop-filter:blur(24px) !important; -webkit-backdrop-filter:blur(24px) !important; }
   .menu-link{ font-size:17px !important; padding:14px 0 !important; }
   .menu-link:hover{ color:#fff !important; }
   .menu-link.active{ color:#fff !important; }
 
-  /* Burger + logo navbar – mobile */
+  /* Burger navbar – mobile */
   @media (max-width: 768px) {
     #fabButton{ width:28px; height:28px; padding:4px !important; font-size:14px; }
-    a[href="/"] img{ height:32px; width:auto; }
   }
 
   /* Drawer menu – mobile */
@@ -281,8 +284,26 @@ body::after{
     margin-right:.5rem;
   }
 
-  /* Burger au-dessus de tout */
-  .site-header{ position:fixed; top:0; left:0; right:0; z-index:9999; pointer-events:auto; isolation:isolate; }
+  /* Header fixe – logo + burger */
+  .site-header{
+    position:fixed; top:0; left:0; right:0; z-index:9999;
+    pointer-events:auto; isolation:isolate;
+    display:flex; align-items:center; justify-content:space-between;
+    height:4rem; padding:0 1rem;
+    transition:transform 0.3s ease-in-out;
+    will-change:transform;
+  }
+  @media (min-width:768px){
+    .site-header{ height:6rem; padding:0 1.5rem; }
+  }
+  .site-header--hidden{ transform:translateY(-100%); }
+
+  /* Compense le header fixe pour toutes les ancres internes */
+  section[id]{ scroll-margin-top:4rem; }
+  @media (min-width:768px){
+    section[id]{ scroll-margin-top:6rem; }
+  }
+
   #path, #timelineWrapper, #timeline{ position:relative; z-index:0; }
 
   /* Décors non cliquables */
@@ -301,20 +322,30 @@ body::after{
 
 
 
-<!-- Bouton hamburger / close -->
-<div id="fabContainer" class="fixed top-5 right-3 z-50">
-  <button id="fabButton" class="flex items-center justify-center text-white text-base md:text-lg bg-transparent hover:bg-white hover:text-black transition" style="padding:6px 10px; border:1.5px solid white;">
-    <svg id="iconBurger" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <line x1="3" y1="6" x2="21" y2="6"/>
-      <line x1="3" y1="12" x2="21" y2="12"/>
-      <line x1="3" y1="18" x2="21" y2="18"/>
-    </svg>
-    <svg id="iconClose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none;">
-      <line x1="18" y1="6" x2="6" y2="18"/>
-      <line x1="6" y1="6" x2="18" y2="18"/>
-    </svg>
-  </button>
-</div>
+<!-- Header fixe : logo + burger -->
+<header class="site-header">
+  <a href="/" class="flex items-center">
+    <img
+      src="{{ url_for('static', filename='afamind.png') }}"
+      alt="Afamind Logo"
+      class="h-14 md:h-20 w-auto"
+    >
+  </a>
+  <!-- Hamburger masqué – à réactiver quand le site aura plusieurs pages (retirer style="display:none") -->
+  <div id="fabContainer" style="display:none;">
+    <button id="fabButton" class="flex items-center justify-center text-white text-base md:text-lg bg-transparent hover:bg-white hover:text-black transition" style="padding:6px 10px; border:1.5px solid white;">
+      <svg id="iconBurger" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <svg id="iconClose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none;">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</header>
 
 
 <div id="menuOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:30;opacity:0;pointer-events:none;transition:opacity 300ms;"></div>
@@ -384,6 +415,37 @@ document.querySelectorAll('#sideMenuNav .menu-link').forEach(link => {
   }
 });
 
+// Header visible uniquement dans la zone hero
+// DOMContentLoaded requis : .home-hero est injecté par le template enfant,
+// après ce script — querySelector retournerait null sinon.
+document.addEventListener('DOMContentLoaded', function() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  const hero = document.querySelector('.home-hero');
+  if (!hero) return; // Pas de hero → header toujours visible
+
+  let ticking = false;
+
+  function updateHeader() {
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom > 0) {
+      header.classList.remove('site-header--hidden');
+    } else {
+      header.classList.add('site-header--hidden');
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateHeader();
+});
 
 </script>
 

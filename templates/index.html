@@ -11,6 +11,10 @@
   display:flex;
   align-items:center;
   background:transparent;
+  padding-top:4rem;
+}
+@media (min-width:768px){
+  .home-hero{ padding-top:6rem; }
 }
 
 .home-hero::before,
@@ -293,9 +297,9 @@
   }
 
   .portrait-circle img{
-    object-fit:contain;
-    object-position:center bottom;
-    transform:scale(0.92);
+    object-fit:cover;
+    object-position:center top;
+    transform:scale(1.01);
   }
 
   .badge-stack{
@@ -397,15 +401,6 @@
     font-size:.8rem;
   }
 }</style>
-
-<!-- Logo remis comme avant -->
-<a href="/" class="fixed top-4 left-4 z-50 flex items-center">
-  <img
-    src="{{ url_for('static', filename='afamind.png') }}"
-    alt="Afamind Logo"
-    class="h-6 md:h-12 w-auto"
-  >
-</a>
 
 <header class="home-hero text-white">
   <div class="hero-shell">

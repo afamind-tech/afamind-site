@@ -15,11 +15,17 @@ def contact():
 
 @app.route("/send-message", methods=["POST"])
 def send_message():
-    name = request.form.get("name")
-    email = request.form.get("email")
-    message = request.form.get("message")
+    name    = request.form.get("name", "").strip()
+    email   = request.form.get("email", "").strip()
+    subject = request.form.get("subject", "").strip()
+    message = request.form.get("message", "").strip()
 
-    send_teams_message(name, email, message)
+    if not name or not email or not subject or not message:
+        flash("Tous les champs obligatoires doivent être renseignés.", "error")
+        return render_template("contact.html")
+
+    message_with_subject = f"[Objet : {subject}]\n\n{message}"
+    send_teams_message(name, email, message_with_subject)
 
     flash("Votre message a bien été envoyé sur Teams. Merci !", "success")
     return render_template("confirmation.html", name=name)
