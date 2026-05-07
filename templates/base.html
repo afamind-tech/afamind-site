@@ -428,11 +428,17 @@ document.addEventListener('DOMContentLoaded', function() {
   let ticking = false;
 
   function updateHeader() {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const scrolled = window.scrollY > (isMobile ? 40 : 0);
     const heroBottom = hero.getBoundingClientRect().bottom;
-    if (heroBottom > 0) {
-      header.classList.remove('site-header--hidden');
-    } else {
+    const pastHero = heroBottom <= 0;
+
+    const shouldHide = isMobile ? scrolled : pastHero;
+
+    if (shouldHide) {
       header.classList.add('site-header--hidden');
+    } else {
+      header.classList.remove('site-header--hidden');
     }
     ticking = false;
   }
