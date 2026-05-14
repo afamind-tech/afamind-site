@@ -205,7 +205,23 @@ body::after{
 
   /* Burger navbar – mobile */
   @media (max-width: 768px) {
-    #fabButton{ width:28px; height:28px; padding:4px !important; font-size:14px; }
+    #fabButton{
+      width:32px;
+      height:32px;
+      padding:4px !important;
+      font-size:14px;
+      box-sizing:border-box;
+    }
+    #fabContainer{
+      margin-right:0;
+      margin-left:auto;
+      display:flex;
+      align-items:center;
+    }
+    .site-header{
+      padding:0 0 0 16px !important;
+      justify-content:space-between !important;
+    }
   }
 
   /* Drawer menu – mobile */
@@ -332,7 +348,7 @@ body::after{
     >
   </a>
   <!-- Hamburger masqué – à réactiver quand le site aura plusieurs pages (retirer style="display:none") -->
-  <div id="fabContainer" style="display:none;">
+  <div id="fabContainer">
     <button id="fabButton" class="flex items-center justify-center text-white text-base md:text-lg bg-transparent hover:bg-white hover:text-black transition" style="padding:6px 10px; border:1.5px solid white;">
       <svg id="iconBurger" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
         <line x1="3" y1="6" x2="21" y2="6"/>
@@ -361,6 +377,12 @@ body::after{
   <nav id="sideMenuNav" style="display:flex;flex-direction:column;">
     <a href="/" class="menu-link" style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);color:#fff;font-size:15px;font-weight:500;text-decoration:none;">
       Accueil
+    </a>
+    <a href="/a-propos" class="menu-link" style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);color:#cbd5e1;font-size:15px;text-decoration:none;">
+      À propos
+    </a>
+    <a href="/rendez-vous" class="menu-link" style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);color:#cbd5e1;font-size:15px;text-decoration:none;">
+    Prendre rendez-vous
     </a>
     <a href="/contact" class="menu-link" style="padding:12px 0;color:#cbd5e1;font-size:15px;text-decoration:none;">
       Contactez-moi

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EWQY17K8G2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EWQY17K8G2');
+  </script>
+  <meta charset="UTF-8">
+  <title>Afamind - À propos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, body { font-family: 'Manrope', sans-serif; }
+
+    .about-bg {
+      background-color: #08101f;
+      background-image:
+        radial-gradient(circle at 15% 30%, rgba(124,58,237,0.16), transparent 28%),
+        radial-gradient(circle at 80% 15%, rgba(59,130,246,0.09), transparent 22%),
+        radial-gradient(circle at 60% 80%, rgba(124,58,237,0.08), transparent 25%);
+    }
+
+    .dot-grid {
+      background-image: radial-gradient(rgba(148,163,184,0.12) 1px, transparent 1px);
+      background-size: 34px 34px;
+    }
+
+    .about-card {
+      background: rgba(255,255,255,0.03);
+      border: 0.5px solid rgba(255,255,255,0.09);
+      border-radius: 1.25rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      padding: 36px 32px;
+    }
+
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.6), rgba(59,130,246,0.4), transparent);
+      border-radius: 1.25rem 1.25rem 0 0;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      color: rgba(124,58,237,0.8);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), rgba(59,130,246,0.2), transparent);
+      margin: 8px 0 20px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all .25s ease;
+      background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(59,130,246,0.2));
+      border: 1px solid rgba(124,58,237,0.4);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(59,130,246,0.4));
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary span { position: relative; z-index: 1; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all .25s ease;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.35);
+      color: #fff;
+    }
+
+    .back-link {
+      color: rgba(255,255,255,0.35);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link:hover { color: rgba(255,255,255,0.8); }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(124,58,237,0.08);
+      border: 1px solid rgba(124,58,237,0.18);
+      font-size: 12px;
+      color: rgba(203,213,225,0.9);
+      font-weight: 500;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .about-card { padding: 28px 22px; }
+      .values-grid { grid-template-columns: 1fr; }
+      body { padding-left: 12px !important; padding-right: 12px !important; }
+    }
+
+    /* Testimonials carousel */
+    #testimonialsCarousel::-webkit-scrollbar { display: none; }
+    .testimonial-card {
+      flex: 0 0 320px;
+      scroll-snap-align: start;
+      background: rgba(255,255,255,0.025);
+      border: 0.5px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 24px 22px;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .testimonial-body::-webkit-scrollbar { width: 3px; }
+    .testimonial-body::-webkit-scrollbar-track { background: transparent; }
+    .testimonial-body::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 2px; }
+    #prevBtnTestimonials:hover,
+    #nextBtnTestimonials:hover {
+      background: rgba(124,58,237,0.6) !important;
+      border-color: rgba(124,58,237,0.9) !important;
+      transform: translateY(-50%) scale(1.08) !important;
+    }
+    @media (min-width: 769px) {
+      .testimonial-card { flex: 0 0 380px; }
+    }
+    @media (max-width: 768px) {
+      #prevBtnTestimonials,
+      #nextBtnTestimonials { display: none !important; }
+    }
+  </style>
+</head>
+
+<body class="about-bg dot-grid text-white min-h-screen flex flex-col items-center px-4 py-16">
+
+  <div style="max-width:920px;width:100%;display:flex;flex-direction:column;gap:32px;">
+
+    <!-- Header -->
+    <div style="text-align:center;padding-top:60px;">
+      <p class="eyebrow">À propos</p>
+      <h1 style="font-size:clamp(1.9rem,6vw,2.6rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin:0 0 12px;">Anas Fata, Architecte Data.</h1>
+      <p style="color:rgba(255,255,255,0.45);font-size:15px;line-height:1.6;margin:0 auto;max-width:580px;">
+        10 ans d'expertise Microsoft Data. Lyonnais, freelance.
+      </p>
+    </div>
+
+    <!-- Card 1 — Mon approche -->
+    <div class="about-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">Ma philosophie</p>
+      <h2 style="font-size:clamp(1.3rem,4.5vw,1.7rem);font-weight:800;line-height:1.2;letter-spacing:-0.02em;margin:0 0 20px;color:#fff;">L'architecture, fondation de tout projet data pérenne.</h2>
+
+      <div style="display:flex;flex-direction:column;gap:14px;color:rgba(255,255,255,0.65);font-size:14.5px;line-height:1.75;">
+        <p style="margin:0;">Une architecture mal pensée déclenche un effet cascade. Les incidents techniques se succèdent, les tickets s'accumulent, les équipes passent en mode pompier. Plus de recul possible, plus d'espace pour innover. Juste du ras-le-bol, et un système qui devient progressivement ingérable.</p>
+        <p style="margin:0;">Je crois à l'inverse : une plateforme bien conçue dès le départ tient toute seule. La maintenance devient légère, presque invisible. Les équipes retrouvent du temps pour ce qui crée réellement de la valeur.</p>
+        <p style="margin:0;">Mon obsession : poser des fondations solides. Choisir les bonnes technologies, dessiner une architecture qui anticipe l'évolution, écrire du code maintenable. C'est moins spectaculaire qu'un dashboard flashy le jour de la mise en prod, mais c'est ce qui fait la différence dans deux ans, dans cinq ans.</p>
+        <p style="margin:0;padding:16px 20px;background:rgba(124,58,237,0.06);border-left:2px solid rgba(124,58,237,0.5);border-radius:0 8px 8px 0;font-style:italic;color:rgba(196,181,253,0.9);">Je n'aime pas les usines à gaz. J'aime les solutions propres, sobres, qui résistent au temps.</p>
+      </div>
+    </div>
+
+    <!-- Card 2 — Mon parcours -->
+    <div class="about-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">Expérience</p>
+      <h2 style="font-size:clamp(1.3rem,4.5vw,1.7rem);font-weight:800;line-height:1.2;letter-spacing:-0.02em;margin:0 0 20px;color:#fff;">9 ans dans l'écosystème data Microsoft.</h2>
+
+      <div style="display:flex;flex-direction:column;gap:14px;color:rgba(255,255,255,0.65);font-size:14.5px;line-height:1.75;">
+        <p style="margin:0;">Tout commence en 2016 au sein d'une ESN, à travailler sur le stack BI Microsoft on-premise — SSIS pour les flux, SSAS pour la modélisation analytique, SSRS pour le reporting. Une école solide : de la technique, du contexte client varié, et l'apprentissage que chaque projet a ses contraintes propres.</p>
+        <p style="margin:0;">En 2018, premiers contacts sérieux avec Azure. Les architectures deviennent hybrides — Azure Data Factory, Azure SQL, Power BI prend le relais de SSRS. Le cloud n'est plus un buzzword, c'est la direction.</p>
+        <p style="margin:0;">Entre 2020 et 2023, je prends des responsabilités plus larges en CDI dans le secteur de l'assurance : Tech Lead puis responsable technique data, management d'équipe, définition d'architecture cible, structuration de la donnée à l'échelle de l'entreprise. C'est là que je mesure concrètement l'importance des fondations — ce qui est bien posé dès le départ ne revient pas comme un problème deux ans plus tard.</p>
+        <p style="margin:0;">En 2023, je choisis le freelance. La première mission m'est confiée par mon ancien employeur — un signe de confiance que je prends au sérieux. Suit en 2024 une mission de Data Engineer dans la métallurgie : pipelines Synapse, CI/CD avancé, Power BI à l'échelle industrielle.</p>
+        <p style="margin:0;">Depuis 2025, quatre missions simultanées d'architecte Microsoft Fabric — dans l'industrie, la distribution et l'ingénierie. Architecture médaillon Bronze/Silver/Gold, frameworks génériques réutilisables, accompagnement des équipes vers les bonnes pratiques. C'est le fil directeur de ce que je construis aujourd'hui.</p>
+      </div>
+    </div>
+
+    <!-- Card 3 — Valeurs -->
+    <div class="about-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">Valeurs</p>
+      <h2 style="font-size:clamp(1.3rem,4.5vw,1.7rem);font-weight:800;line-height:1.2;letter-spacing:-0.02em;margin:0 0 24px;color:#fff;">Ce qui guide ma manière de travailler.</h2>
+
+      <div class="values-grid">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(196,181,253,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+          </svg>
+          <p style="font-size:15px;font-weight:700;color:#fff;margin:0;">Exigence technique</p>
+          <p style="font-size:13px;color:rgba(255,255,255,0.55);margin:0;line-height:1.6;">La maîtrise du stack, ça ne se négocie pas. Je creuse jusqu'à comprendre, je ne me contente pas d'à-peu-près.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(196,181,253,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="20" height="4" rx="1"/><rect x="2" y="17" width="20" height="4" rx="1"/>
+          </svg>
+          <p style="font-size:15px;font-weight:700;color:#fff;margin:0;">Architecture pérenne</p>
+          <p style="font-size:13px;color:rgba(255,255,255,0.55);margin:0;line-height:1.6;">Une solution doit tenir 5 ans, pas 5 mois. Je conçois pour l'évolution, le coût maîtrisé, la stabilité.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(196,181,253,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <p style="font-size:15px;font-weight:700;color:#fff;margin:0;">Solutions propres</p>
+          <p style="font-size:13px;color:rgba(255,255,255,0.55);margin:0;line-height:1.6;">Le code simple, le design sobre, le générique réutilisable. Pas d'usine à gaz, pas de complexité gratuite.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Témoignages -->
+    <div class="about-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">Recommandations</p>
+      <h2 style="font-size:clamp(1.3rem,4.5vw,1.7rem);font-weight:800;line-height:1.2;letter-spacing:-0.02em;margin:0 0 8px;color:#fff;">Ce qu'ils en disent.</h2>
+      <p style="color:rgba(255,255,255,0.45);font-size:13px;margin:0 0 24px;line-height:1.5;">Témoignages de clients, collègues et managers.</p>
+
+      <div id="testimonialsOuter" style="position:relative;">
+        <div id="testimonialsWrap" style="overflow:hidden;">
+          <div id="testimonialsCarousel" style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:4px;">
+
+            <!-- 1. Antoine Debaisieux -->
+            <div class="testimonial-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(124,58,237,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;top:16px;right:18px;">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+              </svg>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(124,58,237,0.4),rgba(59,130,246,0.3));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;">AD</div>
+                <div>
+                  <p style="color:#fff;font-size:14px;font-weight:600;margin:0;line-height:1.3;">Antoine D</p>
+                  <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:0;line-height:1.4;">Gestionnaire ERP-BI</p>
+                </div>
+              </div>
+              <p style="color:rgba(255,255,255,0.3);font-size:11px;font-style:italic;margin:0 0 14px;">Décembre 2025 · en tant que client</p>
+              <div class="testimonial-body" style="color:rgba(255,255,255,0.78);font-size:13px;line-height:1.6;flex:1;overflow-y:auto;max-height:220px;">
+                <p style="margin:0 0 10px;">J'ai eu la chance de collaborer avec Anas en tant que client et je souhaite souligner son professionnalisme ainsi que son expertise sur l'écosystème data de Microsoft. Grâce à sa pédagogie et ses connaissances sur Fabric et Azure, il a mis en place une plateforme de données complexe tout en apportant des explications claires et adaptées à mon niveau, sachant que je n'avais jamais travaillé sur Fabric auparavant.</p>
+                <p style="margin:0 0 10px;">Sa capacité à concevoir une architecture robuste et évolutive, son sens du détail et son respect des bonnes pratiques et des délais ont été particulièrement appréciés. Anas a également fait preuve d'une grande réactivité, notamment lorsque nous avons décidé de modifier la logique de l'architecture en médaillon.</p>
+                <p style="margin:0 0 10px;">À l'issue de cette collaboration, je ressors avec des connaissances approfondies sur l'ensemble de la chaîne data dans Fabric, de la connexion aux sources jusqu'à la diffusion des rapports, en passant par la mise en place d'une architecture en médaillon.</p>
+                <p style="margin:0;">Je recommande vivement Anas à toute organisation souhaitant travailler sur Fabric ou renforcer ses compétences en data et BI. Au-delà de ses compétences techniques, Anas est une personne agréable, à l'écoute et toujours prête à aider, ce qui rend la collaboration à la fois efficace et plaisante.</p>
+              </div>
+            </div>
+
+            <!-- 2. Julien Herbaux -->
+            <div class="testimonial-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(124,58,237,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;top:16px;right:18px;">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+              </svg>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(124,58,237,0.4),rgba(59,130,246,0.3));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;">JH</div>
+                <div>
+                  <p style="color:#fff;font-size:14px;font-weight:600;margin:0;line-height:1.3;">Julien H</p>
+                  <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:0;line-height:1.4;">Consultant Data</p>
+                </div>
+              </div>
+              <p style="color:rgba(255,255,255,0.3);font-size:11px;font-style:italic;margin:0 0 14px;">Juin 2025 · dans la même équipe</p>
+              <div class="testimonial-body" style="color:rgba(255,255,255,0.78);font-size:13px;line-height:1.6;flex:1;overflow-y:auto;max-height:220px;">
+                <p style="margin:0 0 10px;">J'ai eu la chance de travailler au quotidien avec Anas sur plusieurs projets data, et c'est en collaborant étroitement avec lui que j'ai énormément appris sur le data engineering.</p>
+                <p style="margin:0 0 10px;">Anas sait partager son savoir avec clarté, patience et passion. Grâce à son expertise poussée, notamment sur l'écosystème Azure et les bonnes pratiques de data engineering, j'ai pu développer des compétences solides et rapidement applicables en entreprise.</p>
+                <p style="margin:0;">Sa capacité à vulgariser des concepts complexes, à adapter son discours selon ses interlocuteurs, et à proposer des solutions concrètes sur des sujets tels que la performance, l'architecture ou les pipelines de données, est un véritable atout. Il m'a inspiré par sa rigueur, son esprit collaboratif, et son exigence de qualité et d'impact.</p>
+              </div>
+            </div>
+
+            <!-- 3. Amel Benali -->
+            <div class="testimonial-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(124,58,237,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;top:16px;right:18px;">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+              </svg>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(124,58,237,0.4),rgba(59,130,246,0.3));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;">AB</div>
+                <div>
+                  <p style="color:#fff;font-size:14px;font-weight:600;margin:0;line-height:1.3;">Amel B <span style="color:rgba(255,255,255,0.35);font-size:10px;font-style:italic;font-weight:400;">English</span></p>
+                  <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:0;line-height:1.4;">AI Domain Architect</p>
+                </div>
+              </div>
+              <p style="color:rgba(255,255,255,0.3);font-size:11px;font-style:italic;margin:0 0 14px;">Juin 2025 · client et responsable directe</p>
+              <div class="testimonial-body" style="color:rgba(255,255,255,0.78);font-size:13px;line-height:1.6;flex:1;overflow-y:auto;max-height:220px;">
+                <p style="margin:0 0 10px;">I had the pleasure of managing Anas Fata in his role as Senior Data Engineer, and I can confidently say he was a true asset to our team. His technical expertise, combined with a strong sense of ownership and a collaborative mindset, made a significant impact on our projects and team culture.</p>
+                <p style="margin:0;">He consistently delivered great-quality work at an impressive pace, always with a focus on resource optimization and long-term maintainability. He championed coding best practices and was instrumental in elevating the technical standards across the team. His pedagogical approach made him a go-to person for mentoring junior engineers and explaining complex concepts in a clear and approachable way.</p>
+              </div>
+            </div>
+
+            <!-- 4. Clément PETIT -->
+            <div class="testimonial-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(124,58,237,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;top:16px;right:18px;">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+              </svg>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(124,58,237,0.4),rgba(59,130,246,0.3));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;">CP</div>
+                <div>
+                  <p style="color:#fff;font-size:14px;font-weight:600;margin:0;line-height:1.3;">Clément P</p>
+                  <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:0;line-height:1.4;">Consultant en Business Intelligence</p>
+                </div>
+              </div>
+              <p style="color:rgba(255,255,255,0.3);font-size:11px;font-style:italic;margin:0 0 14px;">Juin 2025 · en tant que client</p>
+              <div class="testimonial-body" style="color:rgba(255,255,255,0.78);font-size:13px;line-height:1.6;flex:1;overflow-y:auto;max-height:220px;">
+                <p style="margin:0;">Anas est un data engineer très compétent sur l'architecture Microsoft Azure et ses composants. Il trouve l'origine des problèmes et propose des solutions, qu'elles soient techniques ou fonctionnelles. Anas a permis à l'entreprise d'économiser grâce à ses optimisations FinOps. Il est parfait sur du Tech Lead et sur l'architecture Cloud — surtout si Microsoft.</p>
+              </div>
+            </div>
+
+            <!-- 5. Hicham El Azhari Daoudi -->
+            <div class="testimonial-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(124,58,237,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;top:16px;right:18px;">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+              </svg>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(124,58,237,0.4),rgba(59,130,246,0.3));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;">HE</div>
+                <div>
+                  <p style="color:#fff;font-size:14px;font-weight:600;margin:0;line-height:1.3;">Hicham E</p>
+                  <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:0;line-height:1.4;">Responsable Data</p>
+                </div>
+              </div>
+              <p style="color:rgba(255,255,255,0.3);font-size:11px;font-style:italic;margin:0 0 14px;">Novembre 2023 · en tant que client</p>
+              <div class="testimonial-body" style="color:rgba(255,255,255,0.78);font-size:13px;line-height:1.6;flex:1;overflow-y:auto;max-height:220px;">
+                <p style="margin:0 0 10px;">Anas est un atout indéniable en tant que responsable de l'équipe Data. Sa maîtrise exceptionnelle de nos solutions techniques et sa capacité à résoudre des problèmes complexes ont grandement contribué à la croissance et à la performance de notre équipe.</p>
+                <p style="margin:0 0 10px;">En tant que Tech Lead, Anas a su gérer brillamment son équipe, insufflant motivation et professionnalisme. Sa capacité à prioriser les tâches et à maintenir un niveau de professionnalisme remarquable est une inspiration.</p>
+                <p style="margin:0;">De plus, sa compréhension approfondie des aspects fonctionnels du métier lui a permis de prendre en main avec aisance la gestion des aléas, offrant des solutions efficaces et pragmatiques.</p>
+              </div>
+            </div>
+
+            <!-- 6. Emmanuel Winter -->
+            <div class="testimonial-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(124,58,237,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;top:16px;right:18px;">
+                <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/>
+                <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+              </svg>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,rgba(124,58,237,0.4),rgba(59,130,246,0.3));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;">EW</div>
+                <div>
+                  <p style="color:#fff;font-size:14px;font-weight:600;margin:0;line-height:1.3;">Emmanuel W</p>
+                  <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:0;line-height:1.4;">DSI</p>
+                </div>
+              </div>
+              <p style="color:rgba(255,255,255,0.3);font-size:11px;font-style:italic;margin:0 0 14px;">Novembre 2023 · en tant que client</p>
+              <div class="testimonial-body" style="color:rgba(255,255,255,0.78);font-size:13px;line-height:1.6;flex:1;overflow-y:auto;max-height:220px;">
+                <p style="margin:0;">Anas est une personne à l'expertise Data pointue, fiable dans les engagements qu'il prend — faisabilité technique, délai de réalisation — et capable aussi bien d'échanger avec des ressources techniques de la DSI qu'avec un utilisateur à l'origine d'un besoin data. Un très bon profil très polyvalent que je recommande chaudement.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button id="prevBtnTestimonials" aria-label="Précédent"
+                style="position:absolute;left:-24px;top:50%;transform:translateY(-50%);
+                       width:48px;height:48px;border-radius:50%;
+                       background:rgba(15,23,42,0.95);
+                       border:1px solid rgba(124,58,237,0.5);
+                       color:#fff;font-size:24px;line-height:1;cursor:pointer;
+                       backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+                       box-shadow:0 10px 28px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06) inset;
+                       display:flex;align-items:center;justify-content:center;z-index:20;
+                       transition:all .2s ease;">‹</button>
+        <button id="nextBtnTestimonials" aria-label="Suivant"
+                style="position:absolute;right:-24px;top:50%;transform:translateY(-50%);
+                       width:48px;height:48px;border-radius:50%;
+                       background:rgba(15,23,42,0.95);
+                       border:1px solid rgba(124,58,237,0.5);
+                       color:#fff;font-size:24px;line-height:1;cursor:pointer;
+                       backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+                       box-shadow:0 10px 28px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06) inset;
+                       display:flex;align-items:center;justify-content:center;z-index:20;
+                       transition:all .2s ease;">›</button>
+      </div>
+
+      <script>
+      (function() {
+        var prev = document.getElementById('prevBtnTestimonials');
+        var next = document.getElementById('nextBtnTestimonials');
+        var carousel = document.getElementById('testimonialsCarousel');
+        if (!prev || !next || !carousel) return;
+        next.addEventListener('click', function() {
+          carousel.scrollBy({ left: 396, behavior: 'smooth' });
+        });
+        prev.addEventListener('click', function() {
+          carousel.scrollBy({ left: -396, behavior: 'smooth' });
+        });
+      })();
+      </script>
+    </div>
+
+    <!-- Card 4 — Stack -->
+    <div class="about-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">Stack</p>
+      <h2 style="font-size:clamp(1.3rem,4.5vw,1.7rem);font-weight:800;line-height:1.2;letter-spacing:-0.02em;margin:0 0 20px;color:#fff;">Mon terrain de jeu.</h2>
+
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+        <span class="tag">Microsoft Fabric</span>
+        <span class="tag">Azure Data Platform</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">Azure Synapse Analytics</span>
+        <span class="tag">Azure Data Factory</span>
+        <span class="tag">SQL Server</span>
+        <span class="tag">SSIS / SSAS / SSRS</span>
+        <span class="tag">Python</span>
+        <span class="tag">PySpark</span>
+        <span class="tag">Azure DevOps</span>
+        <span class="tag">Data Vault</span>
+        <span class="tag">Architecture médaillon</span>
+      </div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.35);margin:0;">4 certifications Microsoft : AZ-900, DP-203, DP-600 et DP-700</p>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;padding-top:8px;">
+      <p style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.6;margin:0;max-width:420px;">Un projet data en tête, une plateforme à moderniser, une architecture à challenger ?</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+        <a href="/rendez-vous" class="btn-primary"><span>Prendre rendez-vous</span></a>
+        <a href="/contact" class="btn-secondary">M'écrire</a>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div style="text-align:center;padding-bottom:16px;">
+      <a href="/" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Retour à l'accueil
+      </a>
+    </div>
+
+  </div>
+</body>
+</html>

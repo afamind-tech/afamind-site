@@ -1,9 +1,15 @@
 from flask import Flask, render_template, request, flash
 from services.messaging import send_teams_message 
 import secrets
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
+
+BOOKINGS_URL = os.getenv("BOOKINGS_URL", "")
 
 @app.route("/")
 def home():
@@ -30,7 +36,18 @@ def send_message():
     flash("Votre message a bien été envoyé sur Teams. Merci !", "success")
     return render_template("confirmation.html", name=name)
 
+
+@app.route("/rendez-vous")
+def rendez_vous():
+    return render_template("rendez-vous.html", bookings_url=BOOKINGS_URL)
+
+@app.route("/a-propos")
+def a_propos():
+    return render_template("a-propos.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
+
+
 
 
