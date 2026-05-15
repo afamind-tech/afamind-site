@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Afamind - Politique de confidentialité</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, body { font-family: 'Manrope', sans-serif; }
+
+    .legal-bg {
+      background-color: #08101f;
+      background-image:
+        radial-gradient(circle at 15% 30%, rgba(124,58,237,0.16), transparent 28%),
+        radial-gradient(circle at 80% 15%, rgba(59,130,246,0.09), transparent 22%),
+        radial-gradient(circle at 60% 80%, rgba(124,58,237,0.08), transparent 25%);
+    }
+
+    .dot-grid {
+      background-image: radial-gradient(rgba(148,163,184,0.12) 1px, transparent 1px);
+      background-size: 34px 34px;
+    }
+
+    .legal-card {
+      background: rgba(255,255,255,0.03);
+      border: 0.5px solid rgba(255,255,255,0.09);
+      border-radius: 1.25rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      padding: 36px 32px;
+    }
+
+    .legal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.6), rgba(59,130,246,0.4), transparent);
+      border-radius: 1.25rem 1.25rem 0 0;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      color: rgba(124,58,237,0.8);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), rgba(59,130,246,0.2), transparent);
+      margin: 8px 0 20px;
+    }
+
+    .back-link {
+      color: rgba(255,255,255,0.35);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link:hover { color: rgba(255,255,255,0.8); }
+
+    .legal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      color: rgba(255,255,255,0.65);
+      font-size: 14.5px;
+      line-height: 1.75;
+    }
+    .legal-body p { margin: 0; }
+    .legal-body a {
+      color: rgba(196,181,253,0.9);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .legal-body a:hover { color: #fff; }
+
+    .legal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .legal-table th {
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      padding: 0 12px 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .legal-table td {
+      color: rgba(255,255,255,0.65);
+      padding: 10px 12px 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .legal-table tr:last-child td { border-bottom: none; }
+    .legal-table td:first-child { color: rgba(255,255,255,0.85); font-weight: 500; white-space: nowrap; }
+
+    .rights-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .rights-list li {
+      display: flex;
+      gap: 12px;
+      color: rgba(255,255,255,0.65);
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+    .rights-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(124,58,237,0.7);
+      margin-top: 9px;
+    }
+
+    .cookie-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 1fr;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13.5px;
+    }
+    .cookie-row:last-child { border-bottom: none; }
+    .cookie-header {
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .cookie-name {
+      font-family: 'Courier New', monospace;
+      font-size: 12.5px;
+      color: rgba(196,181,253,0.85);
+      background: rgba(124,58,237,0.07);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .notice-box {
+      padding: 16px 20px;
+      background: rgba(124,58,237,0.06);
+      border-left: 2px solid rgba(124,58,237,0.5);
+      border-radius: 0 8px 8px 0;
+      font-size: 14px;
+      color: rgba(196,181,253,0.9);
+      line-height: 1.7;
+    }
+
+    .site-footer {
+      background: rgba(4,8,16,0.85);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 16px;
+      text-align: center;
+      width: 100%;
+    }
+    .footer-link {
+      color: #64748b;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .footer-link:hover { color: #94a3b8; }
+
+    @media (max-width: 768px) {
+      .legal-table thead { display: none; }
+      .legal-table,
+      .legal-table tbody,
+      .legal-table tr,
+      .legal-table td { display: block; width: 100%; }
+      .legal-table tr {
+        background: rgba(255,255,255,0.03);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        border: 0.5px solid rgba(255,255,255,0.07);
+      }
+      .legal-table tr:last-child { margin-bottom: 0; }
+      .legal-table td {
+        border-bottom: none;
+        padding: 0 0 10px 0;
+        white-space: normal;
+      }
+      .legal-table td:last-child { padding-bottom: 0; }
+      .legal-table td:first-child { white-space: normal; }
+      .legal-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+        color: #94a3b8;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .legal-card { padding: 28px 22px; }
+      .cookie-row { grid-template-columns: 1fr; gap: 4px; }
+      .cookie-header { display: none; }
+      body { padding-left: 12px !important; padding-right: 12px !important; }
+    }
+  </style>
+</head>
+
+<body class="legal-bg dot-grid text-white min-h-screen flex flex-col items-center px-4 pt-16 pb-0">
+
+  <div style="max-width:760px;width:100%;display:flex;flex-direction:column;gap:32px;flex:1;">
+
+    <!-- Header -->
+    <div style="text-align:center;padding-top:40px;">
+      <p class="eyebrow">Protection des données</p>
+      <h1 style="font-size:clamp(1.9rem,6vw,2.6rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin:0 0 12px;">Politique de confidentialité</h1>
+      <p style="color:rgba(255,255,255,0.45);font-size:15px;line-height:1.6;margin:0 auto;max-width:520px;">
+        Conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés modifiée.
+      </p>
+    </div>
+
+    <!-- 1. Responsable du traitement -->
+    <div class="legal-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">1. Responsable du traitement</p>
+      <h2 style="font-size:clamp(1.1rem,3.5vw,1.3rem);font-weight:700;color:#fff;margin:0 0 16px;line-height:1.3;">Afamind Tech</h2>
+      <div class="legal-body">
+        <p>Le responsable du traitement des données personnelles collectées via le site afamind.com est :</p>
+        <p style="padding:14px 18px;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;line-height:1.9;">
+          <strong style="color:#fff;">Afamind Tech</strong> — EURL<br>
+          Représentée par Anas Fata, gérant<br>
+          Email : <a href="mailto:contact@afamind.com">contact@afamind.com</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. Données collectées et finalités -->
+    <div class="legal-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">2. Données collectées et finalités</p>
+      <h2 style="font-size:clamp(1.1rem,3.5vw,1.3rem);font-weight:700;color:#fff;margin:0 0 20px;line-height:1.3;">Traitements mis en oeuvre</h2>
+      <div class="legal-body">
+        <table class="legal-table">
+          <thead>
+            <tr>
+              <th style="width:30%;">Traitement</th>
+              <th style="width:35%;">Données collectées</th>
+              <th style="width:35%;">Finalité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Traitement">Formulaire de contact (/contact)</td>
+              <td data-label="Données collectées">Nom, adresse email, objet, message</td>
+              <td data-label="Finalité">Réponse aux demandes de contact ; transmission via Microsoft Teams</td>
+            </tr>
+            <tr>
+              <td data-label="Traitement">Prise de rendez-vous (/rendez-vous)</td>
+              <td data-label="Données collectées">Nom, adresse email, créneau choisi</td>
+              <td data-label="Finalité">Organisation et confirmation du rendez-vous via Microsoft Bookings</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3. Base légale -->
+    <div class="legal-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">3. Base légale des traitements</p>
+      <h2 style="font-size:clamp(1.1rem,3.5vw,1.3rem);font-weight:700;color:#fff;margin:0 0 16px;line-height:1.3;">Fondements juridiques</h2>
+      <div class="legal-body">
+        <p>Chaque traitement repose sur l'une des bases légales prévues à l'article 6 du RGPD :</p>
+        <ul class="rights-list" style="margin-top:4px;">
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Formulaire de contact</strong> — Intérêt légitime (art. 6.1.f RGPD) : traitement nécessaire pour répondre à une demande initiée par la personne concernée.</span></li>
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Prise de rendez-vous</strong> — Exécution de mesures précontractuelles (art. 6.1.b RGPD) : traitement nécessaire à la mise en place d'une relation commerciale à la demande de la personne concernée.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4. Destinataires -->
+    <div class="legal-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">4. Destinataires des données</p>
+      <h2 style="font-size:clamp(1.1rem,3.5vw,1.3rem);font-weight:700;color:#fff;margin:0 0 16px;line-height:1.3;">Sous-traitants et partenaires</h2>
+      <div class="legal-body">
+        <p>Vos données peuvent être transmises aux sous-traitants suivants, exclusivement dans le cadre des finalités décrites ci-dessus. Ces sous-traitants agissent sur instruction d'Afamind Tech et ne sont pas autorisés à les utiliser à d'autres fins.</p>
+        <table class="legal-table" style="margin-top:8px;">
+          <thead>
+            <tr>
+              <th style="width:35%;">Sous-traitant</th>
+              <th style="width:35%;">Service utilisé</th>
+              <th style="width:30%;">Pays</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Microsoft Ireland Operations Ltd</td>
+              <td>Microsoft Teams, Microsoft Bookings, Outlook</td>
+              <td>Irlande / États-Unis</td>
+            </tr>
+            <tr>
+              <td>Render, Inc.</td>
+              <td>Hébergement du site</td>
+              <td>États-Unis</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5. Transferts hors UE -->
+    <div class="legal-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">5. Transferts hors Union européenne</p>
+      <h2 style="font-size:clamp(1.1rem,3.5vw,1.3rem);font-weight:700;color:#fff;margin:0 0 16px;line-height:1.3;">Encadrement des transferts vers les États-Unis</h2>
+      <div class="legal-body">
+        <p>Certains sous-traitants mentionnés ci-dessus sont établis aux États-Unis ou y transfèrent des données. Ces transferts sont encadrés par les garanties appropriées prévues au Chapitre V du RGPD, notamment :</p>
+        <ul class="rights-list" style="margin-top:4px;">
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Microsoft</strong> (Teams, Bookings) : certification au cadre UE-États-Unis de protection des données (<a href="https://www.dataprivacyframework.gov" target="_blank" rel="noopener noreferrer">Data Privacy Framework</a>) et clauses contractuelles types (DPA Microsoft).</span></li>
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Render, Inc.</strong> (hébergement) : certification au Data Privacy Framework UE-États-Unis.</span></li>
+        </ul>
+        <div class="notice-box" style="margin-top:8px;">
+          Le Data Privacy Framework (DPF) est un accord reconnu par la Commission européenne comme offrant un niveau de protection adéquat pour les données transférées vers les États-Unis (décision d'adéquation du 10 juillet 2023).
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Durée de conservation -->
+    <div class="legal-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">6. Durée de conservation</p>
+      <h2 style="font-size:clamp(1.1rem,3.5vw,1.3rem);font-weight:700;color:#fff;margin:0 0 16px;line-height:1.3;">Rétention des données</h2>
+      <div class="legal-body">
+        <table class="legal-table">
+          <thead>
+            <tr>
+              <th style="width:35%;">Catégorie</th>
+              <th>Durée de conservation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Messages de contact</td>
+              <td>3 ans à compter du dernier échange</td>
+            </tr>
+            <tr>
+              <td>Données de rendez-vous</td>
+              <td>Durée nécessaire à la relation commerciale, puis archivage pour 5 ans (obligations légales comptables)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top:4px;">À l'issue de ces durées, les données sont supprimées ou anonymisées de manière irréversible.</p>
+      </div>
+    </div>
+
+    <!-- 7. Droits des personnes -->
+    <div class="legal-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">7. Vos droits</p>
+      <h2 style="font-size:clamp(1.1rem,3.5vw,1.3rem);font-weight:700;color:#fff;margin:0 0 16px;line-height:1.3;">Droits des personnes concernées</h2>
+      <div class="legal-body">
+        <p>Conformément au RGPD (articles 15 à 22), vous disposez des droits suivants concernant vos données personnelles :</p>
+        <ul class="rights-list" style="margin-top:4px;">
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Droit d'accès</strong> — Obtenir confirmation que vos données sont traitées et en recevoir une copie (art. 15 RGPD).</span></li>
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Droit de rectification</strong> — Faire corriger des données inexactes ou incomplètes (art. 16 RGPD).</span></li>
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Droit à l'effacement</strong> — Obtenir la suppression de vos données dans les conditions prévues par l'article 17 RGPD.</span></li>
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Droit à la limitation du traitement</strong> — Demander la suspension du traitement dans certaines circonstances (art. 18 RGPD).</span></li>
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Droit à la portabilité</strong> — Recevoir vos données dans un format structuré et couramment utilisé, applicable aux traitements fondés sur le consentement ou l'exécution d'un contrat (art. 20 RGPD).</span></li>
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Droit d'opposition</strong> — Vous opposer au traitement fondé sur l'intérêt légitime, pour des raisons tenant à votre situation particulière (art. 21 RGPD).</span></li>
+          <li><span><strong style="color:rgba(255,255,255,0.85);">Retrait du consentement</strong> — Retirer à tout moment votre consentement pour les traitements qui en dépendent, sans affecter la licéité des traitements antérieurs.</span></li>
+        </ul>
+        <p style="margin-top:4px;">Pour exercer ces droits, adressez votre demande à <a href="mailto:contact@afamind.com">contact@afamind.com</a> en précisant votre identité. Une réponse vous sera apportée dans un délai d'un mois.</p>
+        <div class="notice-box" style="margin-top:8px;">
+          Si vous estimez que le traitement de vos données ne respecte pas la réglementation, vous disposez du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) : <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Contact -->
+    <div class="legal-card">
+      <div class="divider-line"></div>
+      <p class="eyebrow">8. Contact</p>
+      <h2 style="font-size:clamp(1.1rem,3.5vw,1.3rem);font-weight:700;color:#fff;margin:0 0 16px;line-height:1.3;">Délégué à la protection des données</h2>
+      <div class="legal-body">
+        <p>Afamind Tech n'a pas l'obligation légale de désigner un délégué à la protection des données (DPO) au sens de l'article 37 du RGPD. Toute question relative à la protection des données personnelles peut être adressée directement au responsable du traitement :</p>
+        <p>Email : <a href="mailto:contact@afamind.com">contact@afamind.com</a></p>
+      </div>
+    </div>
+
+    <!-- Date de mise à jour -->
+    <div style="text-align:center;padding-top:4px;">
+      <p style="font-size:12.5px;color:rgba(255,255,255,0.25);margin:0;font-style:italic;">
+        Dernière mise à jour : 15 mai 2026
+      </p>
+    </div>
+
+    <!-- Back -->
+    <div style="text-align:center;padding-bottom:40px;">
+      <a href="/" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Retour à l'accueil
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p style="font-size:12px;color:#64748b;margin:0;line-height:1.6;">
+      &copy; 2026 Afamind Tech
+      <span style="margin:0 8px;color:#334155;">&middot;</span>
+      <a href="/mentions-legales" class="footer-link">Mentions légales</a>
+      <span style="margin:0 8px;color:#334155;">&middot;</span>
+      <a href="/confidentialite" class="footer-link">Politique de confidentialité</a>
+    </p>
+  </footer>
+
+</body>
+</html>

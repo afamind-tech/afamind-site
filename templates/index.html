@@ -478,35 +478,6 @@
 {% include "technos.html" %}
 {% include "certifications_responsive.html" %}
 
-
-<footer style="background:linear-gradient(to bottom, #08101f, #060d1a);border-top:1px solid rgba(124,58,237,0.18);position:relative;" class="text-white py-4 md:py-8">
-  <!-- subtle top glow -->
-  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,0.35),rgba(59,130,246,0.25),transparent);pointer-events:none;"></div>
-
-  <div class="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6">
-    <div class="flex items-center space-x-2">
-      <img src="/static/svg/linkedin.svg" alt="LinkedIn" class="h-5 w-5" style="opacity:0.75;">
-      <a href="https://www.linkedin.com/in/anas-fata-28212a85/"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="text-white font-sans font-semibold tracking-tight hover:underline"
-         style="opacity:0.75;transition:opacity .2s ease;"
-         onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'">
-        LinkedIn
-      </a>
-    </div>
-
-    <a href="{{ url_for('contact') }}"
-       class="text-xs text-gray-400 transition duration-300 ease-out hover:text-white hover:-translate-y-0.5 hover:scale-105"
-       style="text-decoration:none;">
-      Contactez-moi
-    </a>
-  </div>
-
-  <div class="mt-4 md:mt-6 text-center text-xs" style="color:rgba(255,255,255,0.25);letter-spacing:0.04em;">
-    &copy; 2025 Afamind • Tous droits réservés
-  </div>
-</footer>
 {% endblock %}
 
 {% block scripts %}{% endblock %}

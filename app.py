@@ -45,6 +45,14 @@ def rendez_vous():
 def a_propos():
     return render_template("a-propos.html")
 
+@app.route("/mentions-legales")
+def mentions_legales():
+    return render_template("mentions-legales.html")
+
+@app.route("/confidentialite")
+def confidentialite():
+    return render_template("confidentialite.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
 
