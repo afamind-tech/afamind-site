@@ -47,8 +47,8 @@ body{
   position:relative;
   color:white;
   background:
-    radial-gradient(circle at 18% 38%, rgba(124, 58, 237, 0.18), transparent 24%),
-    radial-gradient(circle at 72% 24%, rgba(59, 130, 246, 0.08), transparent 20%),
+    radial-gradient(circle at 18% 38%, rgba(124, 58, 237, 0.03), transparent 24%),
+    radial-gradient(circle at 72% 24%, rgba(59, 130, 246, 0.02), transparent 20%),
     #08101f;
 }
 
@@ -304,6 +304,12 @@ body::after{
     .site-header{ height:6rem; padding:0 1.5rem; }
   }
   .site-header--hidden{ transform:translateY(-100%); }
+  .site-header--scrolled{
+    background:rgba(8,16,31,0.85);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
 
   /* Compense le header fixe pour toutes les ancres internes */
   section[id]{ scroll-margin-top:4rem; }
@@ -322,6 +328,7 @@ body::after{
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  {% block head %}{% endblock %}
 </head>
 
 
@@ -428,15 +435,26 @@ document.querySelectorAll('#sideMenuNav .menu-link').forEach(link => {
   }
 });
 
-// Header visible uniquement dans la zone hero
 // DOMContentLoaded requis : .home-hero est injecté par le template enfant,
 // après ce script — querySelector retournerait null sinon.
 document.addEventListener('DOMContentLoaded', function() {
   const header = document.querySelector('.site-header');
   if (!header) return;
 
+  // Fond translucide au scroll — toutes les pages
+  function updateScrolledBg() {
+    if (window.scrollY > 10) {
+      header.classList.add('site-header--scrolled');
+    } else {
+      header.classList.remove('site-header--scrolled');
+    }
+  }
+  window.addEventListener('scroll', updateScrolledBg, { passive: true });
+  updateScrolledBg();
+
+  // Masquage du header — uniquement sur la page d'accueil (présence de .home-hero)
   const hero = document.querySelector('.home-hero');
-  if (!hero) return; // Pas de hero → header toujours visible
+  if (!hero) return;
 
   let ticking = false;
 

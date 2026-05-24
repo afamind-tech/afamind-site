@@ -1,170 +1,154 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Afamind - Prendre rendez-vous</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+{% extends "base.html" %}
 
-  <style>
-    *, body { font-family: 'Manrope', sans-serif; }
+{% block title %}Afamind - Prendre rendez-vous{% endblock %}
 
-    .booking-bg {
-      background-color: #08101f;
-      background-image:
-        radial-gradient(circle at 15% 30%, rgba(124,58,237,0.16), transparent 28%),
-        radial-gradient(circle at 80% 15%, rgba(59,130,246,0.09), transparent 22%),
-        radial-gradient(circle at 60% 80%, rgba(124,58,237,0.08), transparent 25%);
-    }
+{% block head %}
+<style>
+  .rdv-page-outer {
+    min-height: 100vh;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+  }
+  @media (min-width: 768px) {
+    .rdv-page-outer { padding-top: 7rem; }
+  }
 
-    .dot-grid {
-      background-image: radial-gradient(rgba(148,163,184,0.12) 1px, transparent 1px);
-      background-size: 34px 34px;
-    }
+  .booking-card {
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.09);
+    border-radius: 1.25rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+  }
 
-    .booking-card {
-      background: rgba(255,255,255,0.03);
-      border: 0.5px solid rgba(255,255,255,0.09);
-      border-radius: 1.25rem;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      position: relative;
-      overflow: hidden;
-    }
+  .booking-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,58,237,0.5), rgba(59,130,246,0.35), transparent);
+  }
 
-    /* accent top gradient */
-    .booking-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.5), rgba(59,130,246,0.35), transparent);
-    }
+  .divider-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), rgba(59,130,246,0.2), transparent);
+    margin: 8px 0 20px;
+  }
 
-    .divider-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), rgba(59,130,246,0.2), transparent);
-      margin: 8px 0 20px;
-    }
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 24px 0 28px;
+  }
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(59,130,246,0.15));
+    border: 1px solid rgba(124,58,237,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(196,181,253,1);
+  }
+  .step-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.7);
+    margin: 4px 0 0;
+  }
 
-    /* Liste des étapes */
-    .step-list {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin: 24px 0 28px;
-    }
-    .step-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-    .step-num {
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(59,130,246,0.15));
-      border: 1px solid rgba(124,58,237,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      color: rgba(196,181,253,1);
-    }
-    .step-text {
-      font-size: 14px;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.7);
-      margin: 4px 0 0;
-    }
+  .btn-booking {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .25s ease;
+    background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(59,130,246,0.22));
+    border: 1px solid rgba(124,58,237,0.45);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-booking::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,58,237,0.55), rgba(59,130,246,0.42));
+    opacity: 0;
+    transition: opacity .25s ease;
+  }
+  .btn-booking:hover::before { opacity: 1; }
+  .btn-booking > * { position: relative; z-index: 1; }
 
-    /* Big CTA button */
-    .btn-booking {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 16px;
-      border-radius: 10px;
-      font-family: 'Manrope', sans-serif;
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all .25s ease;
-      background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(59,130,246,0.22));
-      border: 1px solid rgba(124,58,237,0.45);
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-booking::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(124,58,237,0.55), rgba(59,130,246,0.42));
-      opacity: 0;
-      transition: opacity .25s ease;
-    }
-    .btn-booking:hover::before { opacity: 1; }
-    .btn-booking > * { position: relative; z-index: 1; }
+  .info-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(124,58,237,0.08);
+    border: 1px solid rgba(124,58,237,0.18);
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(196,181,253,0.9);
+    letter-spacing: 0.02em;
+  }
 
-    .info-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(124,58,237,0.08);
-      border: 1px solid rgba(124,58,237,0.18);
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(196,181,253,0.9);
-      letter-spacing: 0.02em;
-    }
+  .back-link {
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.8); }
 
-    .back-link {
-      color: rgba(255,255,255,0.35);
-      font-size: 13px;
-      text-decoration: none;
-      transition: color .2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .back-link:hover { color: rgba(255,255,255,0.8); }
+  .contact-fallback {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(203,213,225,1);
+    text-decoration: none;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all .2s ease;
+  }
+  .contact-fallback:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(124,58,237,0.4);
+    color: #fff;
+  }
+</style>
+{% endblock %}
 
-    .contact-fallback {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: rgba(203,213,225,1);
-      text-decoration: none;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.15);
-      transition: all .2s ease;
-    }
-    .contact-fallback:hover {
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(124,58,237,0.4);
-      color: #fff;
-    }
-  </style>
-</head>
-
-<body class="booking-bg dot-grid text-white min-h-screen flex flex-col items-center justify-center px-4 py-16">
-
+{% block content %}
+<div class="rdv-page-outer flex flex-col items-center justify-center px-4">
   <div style="max-width:560px;width:100%;display:flex;flex-direction:column;gap:32px;">
 
     <!-- Header -->
@@ -252,5 +236,7 @@
     </div>
 
   </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block scripts %}{% endblock %}

@@ -1,148 +1,120 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Afamind - Mentions légales</title>
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+{% extends "base.html" %}
 
-  <style>
-    *, body { font-family: 'Manrope', sans-serif; }
+{% block title %}Afamind - Mentions légales{% endblock %}
 
-    .legal-bg {
-      background-color: #08101f;
-      background-image:
-        radial-gradient(circle at 15% 30%, rgba(124,58,237,0.16), transparent 28%),
-        radial-gradient(circle at 80% 15%, rgba(59,130,246,0.09), transparent 22%),
-        radial-gradient(circle at 60% 80%, rgba(124,58,237,0.08), transparent 25%);
-    }
+{% block head %}
+<meta name="robots" content="noindex, nofollow">
+<style>
+  .legal-page-outer {
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+  }
+  @media (min-width: 768px) {
+    .legal-page-outer { padding-top: 8rem; }
+  }
 
-    .dot-grid {
-      background-image: radial-gradient(rgba(148,163,184,0.12) 1px, transparent 1px);
-      background-size: 34px 34px;
-    }
+  .legal-card {
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.09);
+    border-radius: 1.25rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    padding: 36px 32px;
+  }
 
-    .legal-card {
-      background: rgba(255,255,255,0.03);
-      border: 0.5px solid rgba(255,255,255,0.09);
-      border-radius: 1.25rem;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      position: relative;
-      padding: 36px 32px;
-    }
+  .legal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,58,237,0.6), rgba(59,130,246,0.4), transparent);
+    border-radius: 1.25rem 1.25rem 0 0;
+  }
 
-    .legal-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.6), rgba(59,130,246,0.4), transparent);
-      border-radius: 1.25rem 1.25rem 0 0;
-    }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    color: rgba(124,58,237,0.8);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
 
-    .eyebrow {
-      font-size: 11px;
-      letter-spacing: 2px;
-      font-weight: 600;
-      color: rgba(124,58,237,0.8);
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
+  .divider-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), rgba(59,130,246,0.2), transparent);
+    margin: 8px 0 20px;
+  }
 
-    .divider-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), rgba(59,130,246,0.2), transparent);
-      margin: 8px 0 20px;
-    }
+  .back-link {
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.8); }
 
-    .back-link {
-      color: rgba(255,255,255,0.35);
-      font-size: 13px;
-      text-decoration: none;
-      transition: color .2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .back-link:hover { color: rgba(255,255,255,0.8); }
+  .legal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: rgba(255,255,255,0.65);
+    font-size: 14.5px;
+    line-height: 1.75;
+  }
+  .legal-body p { margin: 0; }
+  .legal-body a {
+    color: rgba(196,181,253,0.9);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .legal-body a:hover { color: #fff; }
 
-    .legal-body {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      color: rgba(255,255,255,0.65);
-      font-size: 14.5px;
-      line-height: 1.75;
-    }
-    .legal-body p { margin: 0; }
-    .legal-body a {
-      color: rgba(196,181,253,0.9);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-    .legal-body a:hover { color: #fff; }
+  .legal-dl { display: flex; flex-direction: column; gap: 4px; }
+  .legal-row { display: grid; grid-template-columns: 220px 1fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .legal-row:last-child { border-bottom: none; }
+  .legal-dt {
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .legal-dd {
+    color: rgba(255,255,255,0.75);
+    font-size: 14.5px;
+    margin: 0;
+  }
 
-    .legal-dl { display: flex; flex-direction: column; gap: 4px; }
-    .legal-row { display: grid; grid-template-columns: 220px 1fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .legal-row:last-child { border-bottom: none; }
-    .legal-dt {
-      font-size: 12px;
-      letter-spacing: 0.8px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.35);
-      text-transform: uppercase;
-      padding-top: 2px;
-    }
-    .legal-dd {
-      color: rgba(255,255,255,0.75);
-      font-size: 14.5px;
-      margin: 0;
-    }
+  .placeholder {
+    color: rgba(251,191,36,0.9);
+    background: rgba(251,191,36,0.08);
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-style: italic;
+    font-size: 13px;
+    border: 1px solid rgba(251,191,36,0.2);
+  }
 
-    .placeholder {
-      color: rgba(251,191,36,0.9);
-      background: rgba(251,191,36,0.08);
-      padding: 1px 8px;
-      border-radius: 4px;
-      font-style: italic;
-      font-size: 13px;
-      border: 1px solid rgba(251,191,36,0.2);
-    }
+  @media (max-width: 640px) {
+    .legal-card { padding: 28px 22px; }
+    .legal-row { grid-template-columns: 1fr; gap: 2px; padding: 8px 0; }
+    .legal-dt { font-size: 11px; }
+  }
+</style>
+{% endblock %}
 
-    .site-footer {
-      background: rgba(4,8,16,0.85);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 24px 16px;
-      text-align: center;
-      width: 100%;
-    }
-    .footer-link {
-      color: #64748b;
-      text-decoration: none;
-      transition: color .2s ease;
-    }
-    .footer-link:hover { color: #94a3b8; }
-
-    @media (max-width: 640px) {
-      .legal-card { padding: 28px 22px; }
-      .legal-row { grid-template-columns: 1fr; gap: 2px; padding: 8px 0; }
-      .legal-dt { font-size: 11px; }
-      body { padding-left: 12px !important; padding-right: 12px !important; }
-    }
-  </style>
-</head>
-
-<body class="legal-bg dot-grid text-white min-h-screen flex flex-col items-center px-4 pt-16 pb-0">
-
-  <div style="max-width:760px;width:100%;display:flex;flex-direction:column;gap:32px;flex:1;">
+{% block content %}
+<div class="legal-page-outer flex flex-col items-center px-4">
+  <div style="max-width:760px;width:100%;display:flex;flex-direction:column;gap:32px;">
 
     <!-- Header -->
-    <div style="text-align:center;padding-top:40px;">
+    <div style="text-align:center;">
       <p class="eyebrow">Informations légales</p>
       <h1 style="font-size:clamp(1.9rem,6vw,2.6rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin:0 0 12px;">Mentions légales</h1>
       <p style="color:rgba(255,255,255,0.45);font-size:15px;line-height:1.6;margin:0 auto;max-width:500px;">
@@ -254,7 +226,7 @@
     </div>
 
     <!-- Back -->
-    <div style="text-align:center;padding-bottom:40px;">
+    <div style="text-align:center;padding-bottom:16px;">
       <a href="/" class="back-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         Retour à l'accueil
@@ -262,17 +234,7 @@
     </div>
 
   </div>
+</div>
+{% endblock %}
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p style="font-size:12px;color:#64748b;margin:0;line-height:1.6;">
-      &copy; 2026 Afamind Tech
-      <span style="margin:0 8px;color:#334155;">&middot;</span>
-      <a href="/mentions-legales" class="footer-link">Mentions légales</a>
-      <span style="margin:0 8px;color:#334155;">&middot;</span>
-      <a href="/confidentialite" class="footer-link">Politique de confidentialité</a>
-    </p>
-  </footer>
-
-</body>
-</html>
+{% block scripts %}{% endblock %}

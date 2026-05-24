@@ -1,114 +1,102 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Afamind - Contact</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+{% extends "base.html" %}
 
-  <style>
-    *, body { font-family: 'Manrope', sans-serif; }
+{% block title %}Afamind - Contact{% endblock %}
 
-    .contact-bg {
-      background-color: #08101f;
-      background-image:
-        radial-gradient(circle at 15% 30%, rgba(124,58,237,0.16), transparent 28%),
-        radial-gradient(circle at 80% 15%, rgba(59,130,246,0.09), transparent 22%),
-        radial-gradient(circle at 60% 80%, rgba(124,58,237,0.08), transparent 25%);
-    }
+{% block head %}
+<style>
+  .contact-page-outer {
+    min-height: 100vh;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+  }
+  @media (min-width: 768px) {
+    .contact-page-outer { padding-top: 7rem; }
+  }
 
-    .dot-grid {
-      background-image: radial-gradient(rgba(148,163,184,0.12) 1px, transparent 1px);
-      background-size: 34px 34px;
-    }
+  .form-card {
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.09);
+    border-radius: 1.25rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 
-    .form-card {
-      background: rgba(255,255,255,0.03);
-      border: 0.5px solid rgba(255,255,255,0.09);
-      border-radius: 1.25rem;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
+  .field-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    transition: border-color .2s ease, box-shadow .2s ease;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .field-input:focus {
+    border-color: rgba(124,58,237,0.6);
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
+  }
+  .field-input::placeholder { color: rgba(255,255,255,0.25); }
 
-    .field-input {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #fff;
-      font-family: 'Manrope', sans-serif;
-      font-size: 14px;
-      transition: border-color .2s ease, box-shadow .2s ease;
-      outline: none;
-    }
-    .field-input:focus {
-      border-color: rgba(124,58,237,0.6);
-      box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
-    }
-    .field-input::placeholder { color: rgba(255,255,255,0.25); }
+  .field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
 
-    .field-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 6px;
-      letter-spacing: 0.02em;
-    }
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all .25s ease;
+    background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(59,130,246,0.2));
+    border: 1px solid rgba(124,58,237,0.4);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(59,130,246,0.4));
+    opacity: 0;
+    transition: opacity .25s ease;
+  }
+  .btn-submit:hover::before { opacity: 1; }
+  .btn-submit span { position: relative; z-index: 1; }
 
-    .btn-submit {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      font-family: 'Manrope', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      transition: all .25s ease;
-      background: linear-gradient(135deg, rgba(124,58,237,0.25), rgba(59,130,246,0.2));
-      border: 1px solid rgba(124,58,237,0.4);
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-submit::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(59,130,246,0.4));
-      opacity: 0;
-      transition: opacity .25s ease;
-    }
-    .btn-submit:hover::before { opacity: 1; }
-    .btn-submit span { position: relative; z-index: 1; }
+  .back-link {
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.8); }
 
-    .back-link {
-      color: rgba(255,255,255,0.35);
-      font-size: 13px;
-      text-decoration: none;
-      transition: color .2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .back-link:hover { color: rgba(255,255,255,0.8); }
+  .divider-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), rgba(59,130,246,0.2), transparent);
+    margin: 8px 0 20px;
+  }
+</style>
+{% endblock %}
 
-    /* Divider gradient */
-    .divider-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), rgba(59,130,246,0.2), transparent);
-      margin: 8px 0 20px;
-    }
-  </style>
-</head>
-
-<body class="contact-bg dot-grid text-white min-h-screen flex flex-col items-center justify-center px-4 py-16">
-
+{% block content %}
+<div class="contact-page-outer flex flex-col items-center justify-center px-4">
   <div style="max-width:520px;width:100%;display:flex;flex-direction:column;gap:32px;">
 
     <!-- Header -->
@@ -205,5 +193,7 @@
     </div>
 
   </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block scripts %}{% endblock %}
