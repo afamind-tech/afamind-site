@@ -14,3 +14,4 @@ package-lock.json
 # Ignorer les fichiers système / IDE
 .DS_Store
 .vscode/
+.claude/

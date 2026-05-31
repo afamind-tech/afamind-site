@@ -1,0 +1,467 @@
+{% extends "base.html" %}
+
+{% block title %}Articles – Afamind{% endblock %}
+
+{% block head %}
+<meta name="description" content="Articles techniques sur Microsoft Fabric, Azure Data Platform, Power BI et l'architecture data cloud par Anas Fata.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://afamind.com/articles">
+<meta property="og:title" content="Articles – Afamind">
+<meta property="og:description" content="Articles techniques sur Microsoft Fabric, Azure, Power BI et l'architecture data cloud.">
+<meta property="og:image" content="https://afamind.com/static/og-image.png">
+<link rel="alternate" type="application/atom+xml" title="Afamind – Articles" href="/articles/feed.xml">
+<style>
+  .articles-outer {
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+    min-height: 100vh;
+  }
+  @media (min-width: 768px) {
+    .articles-outer { padding-top: 8rem; }
+  }
+
+  .article-card {
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.07);
+    border-radius: 1rem;
+    padding: 28px 30px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    display: block;
+  }
+  .article-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,58,237,0.5), rgba(59,130,246,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .article-card:hover { border-color: rgba(255,255,255,0.14); }
+  .article-card:hover::before { opacity: 1; }
+
+  .article-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    background: rgba(124,58,237,0.08);
+    border: 0.5px solid rgba(124,58,237,0.2);
+    font-size: 11.5px;
+    color: rgba(196,181,253,0.85);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    user-select: none;
+  }
+  .article-tag:hover,
+  .article-tag.active {
+    background: rgba(124,58,237,0.2);
+    border-color: rgba(124,58,237,0.5);
+    color: rgba(196,181,253,1);
+  }
+
+  .article-level {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    background: rgba(14,165,233,0.1);
+    border: 0.5px solid rgba(56,189,248,0.26);
+    font-size: 11.5px;
+    color: rgba(186,230,253,0.9);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    user-select: none;
+  }
+
+  .tag-separator {
+    width: 1px;
+    height: 16px;
+    background: rgba(255,255,255,0.12);
+    margin: 0 2px;
+  }
+
+  .filter-tag {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .filter-tag:hover {
+    background: rgba(124,58,237,0.1);
+    border-color: rgba(124,58,237,0.35);
+    color: rgba(196,181,253,0.9);
+  }
+  .filter-tag.active {
+    background: rgba(124,58,237,0.18);
+    border-color: rgba(124,58,237,0.5);
+    color: rgba(196,181,253,1);
+  }
+
+  .filter-tag.level-filter:hover {
+    background: rgba(14,165,233,0.08);
+    border-color: rgba(56,189,248,0.28);
+    color: rgba(186,230,253,0.9);
+  }
+  .filter-tag.level-filter.active {
+    background: rgba(14,165,233,0.14);
+    border-color: rgba(56,189,248,0.42);
+    color: rgba(186,230,253,1);
+  }
+
+  .filters-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+  .filter-label {
+    color: rgba(255,255,255,0.34);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .read-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(124,58,237,0.8);
+    text-decoration: none;
+    transition: color 0.2s ease, gap 0.2s ease;
+    letter-spacing: 0.03em;
+  }
+  .article-card:hover .read-link {
+    color: rgba(196,181,253,1);
+    gap: 9px;
+  }
+
+  .meta-dot {
+    color: rgba(255,255,255,0.15);
+    margin: 0 6px;
+  }
+
+  .start-here {
+    background: rgba(255,255,255,0.025);
+    border: 0.5px solid rgba(255,255,255,0.07);
+    border-radius: 1rem;
+    padding: 24px 26px;
+  }
+  .start-here-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .start-here-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .start-here-kicker {
+    color: rgba(255,255,255,0.34);
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .start-here-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .start-here-link {
+    min-height: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 14px 15px;
+    border-radius: 10px;
+    border: 0.5px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.025);
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .start-here-link:hover {
+    border-color: rgba(56,189,248,0.26);
+    background: rgba(14,165,233,0.055);
+  }
+  .start-here-step {
+    width: 22px;
+    height: 22px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    background: rgba(14,165,233,0.1);
+    border: 0.5px solid rgba(56,189,248,0.24);
+    color: rgba(186,230,253,0.9);
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .start-here-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+  }
+  .start-here-name {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+  .start-here-meta {
+    color: rgba(255,255,255,0.34);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 768px) {
+    .start-here { padding: 20px; }
+    .start-here-header {
+      flex-direction: column;
+      gap: 5px;
+      align-items: flex-start;
+    }
+    .start-here-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="articles-outer flex flex-col items-center px-4">
+  <div style="max-width:860px;width:100%;display:flex;flex-direction:column;gap:40px;">
+
+    <!-- Header -->
+    <div style="text-align:center;">
+      <p style="font-size:11px;letter-spacing:2px;font-weight:600;color:rgba(124,58,237,0.8);text-transform:uppercase;margin:0 0 10px;">Articles</p>
+      <h1 style="font-size:clamp(1.9rem,6vw,2.6rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin:0 0 12px;color:#fff;">Carnet d'architecture data</h1>
+      <p style="color:rgba(255,255,255,0.42);font-size:15px;line-height:1.65;margin:0 auto;max-width:520px;">
+        Retours d'expérience, patterns et bonnes pratiques autour de Microsoft Fabric et de l'écosystème data Microsoft.
+      </p>
+    </div>
+
+    {% if start_here_articles %}
+    <!-- Guided path for new readers -->
+    <section class="start-here" aria-labelledby="startHereTitle">
+      <div class="start-here-header">
+        <h2 class="start-here-title" id="startHereTitle">Nouveau sur Fabric ?</h2>
+        <p class="start-here-kicker">Trois lectures pour poser les bases, dans le bon ordre.</p>
+      </div>
+      <div class="start-here-list">
+        {% for a in start_here_articles %}
+        <a href="/articles/{{ a.slug }}" class="start-here-link">
+          <span class="start-here-step">{{ loop.index }}</span>
+          <span class="start-here-text">
+            <span class="start-here-name">{{ a.title }}</span>
+            <span class="start-here-meta">{{ a.reading_time }} min de lecture</span>
+          </span>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if all_levels or all_tags %}
+    <!-- Filters -->
+    <div class="filters-panel">
+      {% if all_levels %}
+      <div class="filter-group" id="levelFilters" aria-label="Filtrer par niveau">
+        <span class="filter-label">Niveau</span>
+        <button class="filter-tag level-filter active" data-level="__all__">Tout</button>
+        {% for level in all_levels %}
+        <button class="filter-tag level-filter" data-level="{{ level.key }}">{{ level.label }}</button>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if all_tags %}
+      <div class="filter-group" id="tagFilters" aria-label="Filtrer par sujet">
+        <span class="filter-label">Sujets</span>
+        <button class="filter-tag active" data-tag="__all__">Tout</button>
+        {% for tag in all_tags %}
+        <button class="filter-tag" data-tag="{{ tag }}">{{ tag }}</button>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Articles list -->
+    {% if articles %}
+    <div style="display:flex;flex-direction:column;gap:16px;" id="articlesList">
+      {% for a in articles %}
+      <a href="/articles/{{ a.slug }}" class="article-card" data-tags="{{ a.tags | join(' ') }}" data-level="{% if a.level %}{{ a.level.key }}{% endif %}">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <!-- Meta row -->
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;">
+            <span style="font-size:12.5px;color:rgba(255,255,255,0.32);font-weight:500;">
+              {{ a.date | date_fr(true) }}
+            </span>
+            <span class="meta-dot">&middot;</span>
+            <span style="font-size:12.5px;color:rgba(255,255,255,0.32);">{{ a.reading_time }} min de lecture</span>
+          </div>
+
+          {% if a.level or a.tags %}
+          <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;">
+            {% if a.level %}
+            <span class="article-level">{{ a.level.label }}</span>
+            {% if a.tags %}<span class="tag-separator"></span>{% endif %}
+            {% endif %}
+            {% for tag in a.tags %}
+            <span class="article-tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!-- Title -->
+          <h2 style="font-size:clamp(1.05rem,2.8vw,1.3rem);font-weight:800;color:#fff;line-height:1.25;letter-spacing:-0.02em;margin:0;">{{ a.title }}</h2>
+
+          <!-- Excerpt -->
+          {% if a.excerpt %}
+          <p style="font-size:14px;color:rgba(255,255,255,0.52);line-height:1.7;margin:0;">{{ a.excerpt }}</p>
+          {% endif %}
+
+          <!-- CTA -->
+          <div>
+            <span class="read-link">
+              Lire l'article
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </div>
+
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- Empty state (shown by JS when filter yields 0 results) -->
+    <div id="emptyState" style="display:none;text-align:center;padding:3rem 0;">
+      <p style="color:rgba(255,255,255,0.3);font-size:14px;">Aucun article pour ces filtres.</p>
+    </div>
+
+    {% else %}
+    <div style="text-align:center;padding:4rem 0;">
+      <p style="color:rgba(255,255,255,0.3);font-size:15px;">Aucun article publié pour l'instant.</p>
+    </div>
+    {% endif %}
+
+    <!-- RSS hint -->
+    <div style="text-align:center;padding-top:8px;">
+      <a href="/articles/feed.xml" style="font-size:12px;color:rgba(255,255,255,0.22);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color .2s ease;" onmouseover="this.style.color='rgba(255,255,255,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.22)'">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
+        Flux RSS / Atom
+      </a>
+    </div>
+
+    <!-- Back -->
+    <div style="text-align:center;">
+      <a href="/" style="color:rgba(255,255,255,0.3);font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color .2s ease;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Retour à l'accueil
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  const levelFilters = document.querySelectorAll('#levelFilters .filter-tag');
+  const tagFilters = document.querySelectorAll('#tagFilters .filter-tag');
+  const filters = document.querySelectorAll('.filters-panel .filter-tag');
+  const cards   = document.querySelectorAll('#articlesList .article-card');
+  const empty   = document.getElementById('emptyState');
+
+  if (!filters.length) return;
+
+  function setActive(group, btn) {
+      group.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+  }
+
+  function applyFilters() {
+      const activeLevel = document.querySelector('#levelFilters .filter-tag.active');
+      const activeTag = document.querySelector('#tagFilters .filter-tag.active');
+      const level = activeLevel ? activeLevel.dataset.level : '__all__';
+      const tag = activeTag ? activeTag.dataset.tag : '__all__';
+      let visible = 0;
+
+      cards.forEach(card => {
+        const tags = (card.dataset.tags || '').split(' ');
+        const cardLevel = card.dataset.level || '';
+        const showLevel = level === '__all__' || cardLevel === level;
+        const showTag = tag === '__all__' || tags.includes(tag);
+        const show = showLevel && showTag;
+        card.style.display = show ? 'block' : 'none';
+        if (show) visible++;
+      });
+
+      if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  levelFilters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setActive(levelFilters, btn);
+      applyFilters();
+    });
+  });
+
+  tagFilters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setActive(tagFilters, btn);
+      applyFilters();
+    });
+  });
+
+  const initialTag = new URLSearchParams(window.location.search).get('tag');
+  if (initialTag) {
+    const initialTagButton = Array.from(tagFilters).find(btn => btn.dataset.tag === initialTag);
+    const initialLevelButton = Array.from(levelFilters).find(btn => btn.dataset.level === initialTag);
+    if (initialTagButton) setActive(tagFilters, initialTagButton);
+    if (!initialTagButton && initialLevelButton) setActive(levelFilters, initialLevelButton);
+    applyFilters();
+  }
+
+  const initialLevel = new URLSearchParams(window.location.search).get('level');
+  if (initialLevel) {
+    const initialLevelButton = Array.from(levelFilters).find(btn => btn.dataset.level === initialLevel);
+    if (initialLevelButton) {
+      setActive(levelFilters, initialLevelButton);
+      applyFilters();
+    }
+  }
+})();
+</script>
+{% endblock %}

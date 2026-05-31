@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} – Afamind{% endblock %}
+
+{% block head %}
+{# SEO & OpenGraph per-article #}
+<meta name="description" content="{{ article.excerpt }}">
+<link rel="canonical" href="{{ base_url }}/articles/{{ article.slug }}">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ base_url }}/articles/{{ article.slug }}">
+<meta property="og:title" content="{{ article.title }} – Afamind">
+<meta property="og:description" content="{{ article.excerpt }}">
+{% if article.cover %}
+<meta property="og:image" content="{{ article.cover_url }}">
+{% else %}
+<meta property="og:image" content="{{ base_url }}/static/og-image.png">
+{% endif %}
+<meta property="og:locale" content="fr_FR">
+<meta property="article:published_time" content="{{ article.date.isoformat() }}">
+{% for tag in article.tags %}
+<meta property="article:tag" content="{{ tag }}">
+{% endfor %}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ article.title }} – Afamind">
+<meta name="twitter:description" content="{{ article.excerpt }}">
+
+<link rel="alternate" type="application/atom+xml" title="Afamind – Articles" href="/articles/feed.xml">
+<link rel="stylesheet" href="/static/css/article.css">
+<style>
+  .article-outer {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    min-height: 100vh;
+  }
+  @media (min-width: 768px) { .article-outer { padding-top: 8rem; } }
+
+  .article-header-card {
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.07);
+    border-radius: 1.25rem;
+    padding: 36px 38px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .article-header-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,58,237,0.6), rgba(59,130,246,0.4), transparent);
+  }
+
+  @media (max-width: 640px) {
+    .article-header-card { padding: 28px 22px; }
+    .article-body { font-size: 15px; }
+  }
+
+  .article-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    background: rgba(124,58,237,0.08);
+    border: 0.5px solid rgba(124,58,237,0.2);
+    font-size: 11.5px;
+    color: rgba(196,181,253,0.85);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+  }
+  .article-tag:hover {
+    background: rgba(124,58,237,0.18);
+    border-color: rgba(124,58,237,0.45);
+    color: rgba(196,181,253,1);
+  }
+
+  .article-level {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    background: rgba(14,165,233,0.1);
+    border: 0.5px solid rgba(56,189,248,0.26);
+    font-size: 11.5px;
+    color: rgba(186,230,253,0.9);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .tag-separator {
+    width: 1px;
+    height: 16px;
+    background: rgba(255,255,255,0.12);
+  }
+
+  .back-link {
+    color: rgba(255,255,255,0.32);
+    font-size: 13px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.75); }
+
+  .series-nav {
+    background: transparent;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 26px 0;
+  }
+
+  .series-nav-eyebrow {
+    margin: 0 0 4px;
+    color: rgba(56,189,248,0.82);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+
+  .series-nav-name {
+    margin: 0;
+    color: rgba(255,255,255,0.88);
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+
+  .series-nav-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .series-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+    padding: 15px 16px;
+    border-radius: 0.75rem;
+    background: rgba(14,165,233,0.045);
+    border: 0.5px solid rgba(56,189,248,0.16);
+    text-decoration: none;
+    transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  }
+
+  .series-nav-link:hover {
+    background: rgba(14,165,233,0.085);
+    border-color: rgba(56,189,248,0.34);
+    transform: translateY(-1px);
+  }
+
+  .series-nav-label {
+    color: rgba(186,230,253,0.9);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .series-nav-title {
+    color: rgba(255,255,255,0.78);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .series-nav-link-next {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  @media (max-width: 640px) {
+    .series-nav { padding: 22px 0; }
+    .series-nav-links { grid-template-columns: 1fr; }
+    .series-nav-link-next {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="article-outer flex flex-col items-center px-4">
+  <div style="max-width:920px;width:100%;display:flex;flex-direction:column;gap:32px;">
+
+    <!-- Back -->
+    <div>
+      <a href="/articles" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Articles
+      </a>
+    </div>
+
+    <!-- Header card -->
+    <div class="article-header-card">
+
+      <!-- Tags -->
+      {% if article.level or article.tags %}
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;align-items:center;">
+        {% if article.level %}
+        <span class="article-level">{{ article.level.label }}</span>
+        {% if article.tags %}<span class="tag-separator"></span>{% endif %}
+        {% endif %}
+        {% for tag in article.tags %}
+        <a href="/articles?tag={{ tag | urlencode }}" class="article-tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Title -->
+      <h1 style="font-size:clamp(1.55rem,5vw,2.1rem);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-0.03em;margin:0 0 16px;">{{ article.title }}</h1>
+
+      <!-- Meta -->
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px 0;color:rgba(255,255,255,0.35);font-size:13px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>{{ article.date | date_fr }}</span>
+        <span style="margin:0 10px;color:rgba(255,255,255,0.12);">&middot;</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>{{ article.reading_time }} min de lecture</span>
+      </div>
+
+    </div>
+
+    <!-- Cover image (optional) -->
+    {% if article.cover %}
+    <div style="border-radius:1rem;overflow:hidden;border:0.5px solid rgba(255,255,255,0.07);">
+      <img src="{{ article.cover }}" alt="{{ article.title }}" loading="lazy" style="width:100%;height:auto;display:block;border-radius:0;border:none;margin:0;">
+    </div>
+    {% endif %}
+
+    <!-- Article body -->
+    <div style="background:rgba(255,255,255,0.02);border:0.5px solid rgba(255,255,255,0.06);border-radius:1.25rem;padding:40px 42px;">
+      <div class="article-body" id="articleBody">
+        {{ article.body }}
+      </div>
+    </div>
+
+    {% if series_navigation %}
+    <div class="series-nav" aria-labelledby="seriesNavTitle">
+      <div>
+        <p class="series-nav-eyebrow" id="seriesNavTitle">Suite de la série</p>
+        <p class="series-nav-name">{{ series_navigation.name }}</p>
+      </div>
+      <div class="series-nav-links">
+        {% if series_navigation.previous %}
+        <a href="/articles/{{ series_navigation.previous.slug }}" class="series-nav-link series-nav-link-prev">
+          <span class="series-nav-label">← Article précédent</span>
+          <span class="series-nav-title">{{ series_navigation.previous.title }}</span>
+        </a>
+        {% endif %}
+        {% if series_navigation.next %}
+        <a href="/articles/{{ series_navigation.next.slug }}" class="series-nav-link series-nav-link-next">
+          <span class="series-nav-label">Article suivant →</span>
+          <span class="series-nav-title">{{ series_navigation.next.title }}</span>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Footer CTA -->
+    <div style="background:rgba(124,58,237,0.06);border:0.5px solid rgba(124,58,237,0.18);border-radius:1rem;padding:28px 30px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
+      <p style="font-size:11px;letter-spacing:2px;font-weight:600;color:rgba(124,58,237,0.7);text-transform:uppercase;margin:0;">Un projet data en tête ?</p>
+      <p style="font-size:14.5px;color:rgba(255,255,255,0.65);line-height:1.65;margin:0;">Architecture Fabric, migration Azure, optimisation Power BI, parlons-en.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="/rendez-vous" style="display:inline-flex;align-items:center;padding:10px 22px;border-radius:7px;background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(59,130,246,0.2));border:1px solid rgba(124,58,237,0.45);color:#fff;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s ease;" onmouseover="this.style.background='linear-gradient(135deg,rgba(124,58,237,0.5),rgba(59,130,246,0.35))'" onmouseout="this.style.background='linear-gradient(135deg,rgba(124,58,237,0.3),rgba(59,130,246,0.2))'">Prendre rendez-vous</a>
+        <a href="/articles" style="display:inline-flex;align-items:center;padding:10px 22px;border-radius:7px;background:transparent;border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.65);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s ease;" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.14)';this.style.color='rgba(255,255,255,0.65)'">← Tous les articles</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  const body = document.getElementById('articleBody');
+  if (!body) return;
+
+  /* ── 1. Wrap code blocks in a relative container + add copy button ── */
+  body.querySelectorAll('.highlight').forEach(function (block) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block-wrapper';
+    block.parentNode.insertBefore(wrapper, block);
+    wrapper.appendChild(block);
+
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.setAttribute('aria-label', 'Copier le code');
+    btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copier';
+
+    btn.addEventListener('click', function () {
+      const code = block.querySelector('pre') ? block.querySelector('pre').innerText : block.innerText;
+      navigator.clipboard.writeText(code).then(function () {
+        btn.classList.add('copied');
+        btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copié !';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copier';
+        }, 2000);
+      });
+    });
+
+    wrapper.appendChild(btn);
+  });
+
+  /* ── 2. External links: target=_blank + ↗ icon ── */
+  body.querySelectorAll('a[href^="http://"], a[href^="https://"]').forEach(function (a) {
+    if (a.hostname === window.location.hostname) return;
+    a.setAttribute('target', '_blank');
+    a.setAttribute('rel', 'noopener noreferrer');
+    if (!a.querySelector('.ext-link-icon')) {
+      const icon = document.createElement('span');
+      icon.className = 'ext-link-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = '↗';
+      a.appendChild(icon);
+    }
+  });
+
+  /* ── 3. Wrap images in <figure> with <figcaption> from alt ── */
+  body.querySelectorAll('img').forEach(function (img) {
+    if (img.closest('figure')) return;
+    const figure = document.createElement('figure');
+    img.parentNode.insertBefore(figure, img);
+    figure.appendChild(img);
+    if (img.alt) {
+      const cap = document.createElement('figcaption');
+      cap.textContent = img.alt;
+      figure.appendChild(cap);
+    }
+  });
+
+})();
+</script>
+{% endblock %}
