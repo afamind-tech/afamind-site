@@ -7,7 +7,7 @@ tags: [fabric, architecture, cicd, workspaces, onelake, retour-terrain]
 level: avance
 serie: "Industrialisation Fabric"
 serie_ordre: 2
-draft: true
+draft: false
 ---
 
 > Deuxième volet d'une série sur l'industrialisation des plateformes data dans Microsoft Fabric : concevoir, structurer, automatiser. Le premier volet posait l'architecture médaillon et le choix des artefacts à chaque étage.
@@ -15,6 +15,15 @@ draft: true
 ## Au début, un workspace suffit
 
 Quand je démarre un projet Fabric, je mets presque tout dans un seul workspace : l'architecture médaillon complète, avec ses Lakehouses Bronze et Silver, son Warehouse Gold et ses pipelines. À côté, un second workspace pour la partie analytics : semantic models et rapports Power BI.
+
+<figure class="article-figure-medium">
+  <img
+    class="article-img-medium"
+    src="/static/articles/orga-workspaces/wks-unique.png"
+    alt="Workspace Fabric avec les dossiers Bronze, Silver, Gold et orchestration."
+  >
+  <figcaption>Une organisation simple au départ : tout le médaillon dans un seul workspace.</figcaption>
+</figure>
 
 C'est simple, lisible, et ça suffit largement. Tant qu'on développe et qu'on livre à la main, cette organisation ne pose aucun problème. Elle a même le mérite de la clarté : un endroit pour la donnée, un endroit pour la restitution.
 
@@ -27,6 +36,15 @@ Dès qu'on vise un vrai cycle CI/CD, avec des environnements Dev / Recette / Pro
 Le mécanisme central de Fabric pour ça, c'est le branch-out to workspace : depuis un workspace connecté à Git, on dérive une branche et un workspace jumeau pour travailler isolément avant de réintégrer. Sur le papier, parfait.
 
 Le problème, c'est que le branch-out clone le workspace entier. Si tout vit au même endroit, brancher une simple évolution embarque aussi toute la couche d'ingestion : Lakehouses, notebooks, pipelines techniques. Des artefacts lourds, qui traînent leurs propres contraintes. (Dans une architecture hybride Lakehouse / Warehouse comme la mienne, ça va même plus loin, car les vues SQL du Warehouse dépendent des tables du Lakehouse, un ordre de dépendance que le branch-out ne gère pas, mais c'est un sujet à part entière.)
+
+<figure class="article-figure-medium">
+  <img
+    class="article-img-medium"
+    src="/static/articles/orga-workspaces/erreur-branch-out.png"
+    alt="Erreur d'import du Warehouse Gold lors d'un branch-out Fabric."
+  >
+  <figcaption>Le branch-out expose vite les dépendances entre couches : ici, le Warehouse Gold cherche encore une table du Lakehouse Silver.</figcaption>
+</figure>
 
 Autrement dit : l'organisation qui simplifiait la vie au démarrage devient le frein principal à l'industrialisation.
 
@@ -51,6 +69,15 @@ L'intérêt dépasse le seul CI/CD. Cette séparation correspond aussi à une r�
 ## Un découpage daté, pas gravé dans le marbre
 
 Une précision honnête : ce découpage est la bonne réponse au tooling d'aujourd'hui, pas une vérité éternelle. Microsoft avance vite sur le sujet. Le Selective Branching, par exemple, permet déjà de cocher les items à embarquer dans un branch-out, même s'il reste pour l'instant limité à l'UI et non scriptable proprement.
+
+<figure class="article-figure-small">
+  <img
+    class="article-img-medium"
+    src="/static/articles/orga-workspaces/item-selection.png"
+    alt="Option Select items individually en préversion dans le branch-out Fabric."
+  >
+  <figcaption>Le Selective Branching permet de ne choisir qu'une partie des items, mais reste une capacité en préversion.</figcaption>
+</figure>
 
 Le jour où ces mécanismes seront pleinement automatisables, il n'est pas impossible qu'on revienne à des organisations plus simples, voire à un workspace unique pour le médaillon. En attendant, donner à chaque couche son propre cycle de vie reste le moyen le plus fiable d'industrialiser sans douleur.
 

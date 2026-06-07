@@ -305,6 +305,21 @@
   margin: 1.75rem auto;
 }
 
+.article-body img.article-img-medium {
+  max-width: 500px;
+  width: 92%;
+}
+
+.article-body figure.article-figure-medium img {
+  max-width: 500px !important;
+  width: 92% !important;
+}
+
+.article-body figure.article-figure-small img {
+  max-width: 440px !important;
+  width: 92% !important;
+}
+
 .article-body figure {
   margin: 2rem 0;
   text-align: center;

@@ -46,7 +46,8 @@ ALLOWED_TAGS = [
 ]
 ALLOWED_ATTRS = {
     "a": ["href", "title", "rel", "target", "class", "id"],
-    "img": ["src", "alt", "title", "width", "height", "loading"],
+    "img": ["src", "alt", "title", "width", "height", "loading", "class"],
+    "figure": ["class"],
     "span": ["class"],
     "div": ["class"],
     "code": ["class"],
