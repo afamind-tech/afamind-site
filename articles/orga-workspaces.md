@@ -21,6 +21,10 @@ Quand je démarre un projet Fabric, je mets presque tout dans un seul workspace 
     class="article-img-medium"
     src="/static/articles/orga-workspaces/wks-unique.png"
     alt="Workspace Fabric avec les dossiers Bronze, Silver, Gold et orchestration."
+    width="595"
+    height="627"
+    loading="lazy"
+    decoding="async"
   >
   <figcaption>Une organisation simple au départ : tout le médaillon dans un seul workspace.</figcaption>
 </figure>
@@ -42,6 +46,10 @@ Le problème, c'est que le branch-out clone le workspace entier. Si tout vit au 
     class="article-img-medium"
     src="/static/articles/orga-workspaces/erreur-branch-out.png"
     alt="Erreur d'import du Warehouse Gold lors d'un branch-out Fabric."
+    width="857"
+    height="530"
+    loading="lazy"
+    decoding="async"
   >
   <figcaption>Le branch-out expose vite les dépendances entre couches : ici, le Warehouse Gold cherche encore une table du Lakehouse Silver.</figcaption>
 </figure>
@@ -75,6 +83,10 @@ Une précision honnête : ce découpage est la bonne réponse au tooling d'aujou
     class="article-img-medium"
     src="/static/articles/orga-workspaces/item-selection.png"
     alt="Option Select items individually en préversion dans le branch-out Fabric."
+    width="632"
+    height="800"
+    loading="lazy"
+    decoding="async"
   >
   <figcaption>Le Selective Branching permet de ne choisir qu'une partie des items, mais reste une capacité en préversion.</figcaption>
 </figure>

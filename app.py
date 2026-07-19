@@ -9,7 +9,8 @@ from logging.handlers import TimedRotatingFileHandler
 import os
 import glob as file_glob
 import re
-from datetime import datetime, timezone
+import threading
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
 from xml.etree import ElementTree as ET
 from markupsafe import Markup
@@ -24,6 +25,10 @@ from markdown.extensions.toc import TocExtension
 load_dotenv()
 
 app = Flask(__name__)
+
+# Les fichiers statiques sont mis en cache un an. Comme ils sont immuables côté
+# navigateur, leur nom doit changer dès que leur contenu change (cache busting).
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = timedelta(days=365)
 
 _secret_key = os.getenv("SECRET_KEY")
 if not _secret_key:
@@ -64,6 +69,11 @@ limiter = Limiter(
 
 @app.after_request
 def set_security_headers(response):
+    if request.endpoint == "static":
+        response.cache_control.public = True
+        response.cache_control.max_age = 31536000
+        response.cache_control.immutable = True
+
     # TECH DEBT: 'unsafe-inline' dans style-src est requis par les nombreux attributs
     # style= et blocs <style> inline dans les templates. À migrer vers des classes CSS
     # externes + nonces à terme.
@@ -119,7 +129,7 @@ ALLOWED_TAGS = [
 ]
 ALLOWED_ATTRS = {
     "a": ["href", "title", "rel", "target", "class", "id"],
-    "img": ["src", "alt", "title", "width", "height", "loading", "class"],
+    "img": ["src", "alt", "title", "width", "height", "loading", "decoding", "class"],
     "figure": ["class"],
     "span": ["class"],
     "div": ["class"],
@@ -133,6 +143,14 @@ MONTHS_FR = [
     "janvier", "février", "mars", "avril", "mai", "juin",
     "juillet", "août", "septembre", "octobre", "novembre", "décembre",
 ]
+
+_ARTICLE_CACHE = {
+    "signature": None,
+    "records": (),
+    "article_lists": {},
+    "rendered_markdown": {},
+}
+_ARTICLE_CACHE_LOCK = threading.RLock()
 
 
 @app.template_filter("date_fr")
@@ -249,21 +267,57 @@ def _render_md(content):
     return _sanitize_html(md.convert(content))
 
 
-def get_all_articles(include_drafts=False):
-    articles = []
+def _article_files_signature():
     if not os.path.isdir(ARTICLES_DIR):
-        return articles
-    for filepath in file_glob.glob(os.path.join(ARTICLES_DIR, "*.md")):
-        post = fm.load(filepath)
+        return ()
+    filepaths = sorted(file_glob.glob(os.path.join(ARTICLES_DIR, "*.md")))
+    return tuple((filepath, os.stat(filepath).st_mtime_ns) for filepath in filepaths)
+
+
+def _get_article_records():
+    signature = _article_files_signature()
+    with _ARTICLE_CACHE_LOCK:
+        if signature == _ARTICLE_CACHE["signature"]:
+            return _ARTICLE_CACHE["records"]
+
+        records = []
+        for filepath, _mtime_ns in signature:
+            post = fm.load(filepath)
+            try:
+                slug = _validate_slug(_slug_from(post, filepath))
+            except ValueError:
+                continue
+            records.append({"filepath": filepath, "slug": slug, "post": post})
+
+        _ARTICLE_CACHE.update({
+            "signature": signature,
+            "records": tuple(records),
+            "article_lists": {},
+            "rendered_markdown": {},
+        })
+        return _ARTICLE_CACHE["records"]
+
+
+def get_all_articles(include_drafts=False, records=None):
+    records = _get_article_records() if records is None else records
+    cache_key = bool(include_drafts)
+    with _ARTICLE_CACHE_LOCK:
+        cache_is_current = records is _ARTICLE_CACHE["records"]
+        cached = (
+            _ARTICLE_CACHE["article_lists"].get(cache_key)
+            if cache_is_current else None
+        )
+        if cached is not None:
+            return list(cached)
+
+    articles = []
+    for record in records:
+        post = record["post"]
         if post.metadata.get("draft", False) and not include_drafts:
-            continue
-        try:
-            slug = _validate_slug(_slug_from(post, filepath))
-        except ValueError:
             continue
         date = _parse_date(post.metadata.get("date"))
         articles.append({
-            "slug": slug,
+            "slug": record["slug"],
             "title": post.metadata.get("title", "Sans titre"),
             "date": date,
             "excerpt": post.metadata.get("excerpt", ""),
@@ -276,7 +330,10 @@ def get_all_articles(include_drafts=False):
             "draft": post.metadata.get("draft", False),
         })
     articles.sort(key=lambda a: a["date"], reverse=True)
-    return articles
+    with _ARTICLE_CACHE_LOCK:
+        if records is _ARTICLE_CACHE["records"]:
+            _ARTICLE_CACHE["article_lists"][cache_key] = tuple(articles)
+    return list(articles)
 
 
 def get_start_here_articles(articles):
@@ -284,13 +341,13 @@ def get_start_here_articles(articles):
     return [by_slug[slug] for slug in START_HERE_SLUGS if slug in by_slug]
 
 
-def get_series_navigation(current_slug, serie):
+def get_series_navigation(current_slug, serie, articles=None):
     serie = _clean_serie(serie)
     if not serie:
         return None
 
     series_articles = [
-        article for article in get_all_articles()
+        article for article in (get_all_articles() if articles is None else articles)
         if article.get("serie") == serie
     ]
     if len(series_articles) < 2:
@@ -317,22 +374,28 @@ def get_series_navigation(current_slug, serie):
     }
 
 
-def _find_article(slug):
-    if not os.path.isdir(ARTICLES_DIR):
-        return None, None
+def _find_article(slug, records=None):
     try:
         slug = _validate_slug(slug)
     except ValueError:
-        return None, None
-    for filepath in file_glob.glob(os.path.join(ARTICLES_DIR, "*.md")):
-        post = fm.load(filepath)
-        try:
-            article_slug = _validate_slug(_slug_from(post, filepath))
-        except ValueError:
+        return None, None, None
+    records = _get_article_records() if records is None else records
+    for record in records:
+        if record["slug"] != slug:
             continue
-        if article_slug == slug:
-            return filepath, post
-    return None, None
+        filepath = record["filepath"]
+        with _ARTICLE_CACHE_LOCK:
+            cache_is_current = records is _ARTICLE_CACHE["records"]
+            body_html = (
+                _ARTICLE_CACHE["rendered_markdown"].get(filepath)
+                if cache_is_current else None
+            )
+            if body_html is None:
+                body_html = Markup(_render_md(record["post"].content))
+                if cache_is_current:
+                    _ARTICLE_CACHE["rendered_markdown"][filepath] = body_html
+        return filepath, record["post"], body_html
+    return None, None, None
 
 
 # â”€â”€ Existing routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -461,13 +524,13 @@ def articles_feed():
 
 @app.route("/articles/<slug>")
 def article_detail(slug):
-    filepath, post = _find_article(slug)
+    records = _get_article_records()
+    filepath, post, body_html = _find_article(slug, records=records)
     if filepath is None or post.metadata.get("draft", False):
         abort(404)
 
     meta = post.metadata
     canonical_slug = _validate_slug(str(meta.get("slug") or slug).strip())
-    body_html = Markup(_render_md(post.content))
     date = _parse_date(meta.get("date"))
     cover = _clean_cover(meta.get("cover", ""))
     serie = _clean_serie(meta.get("serie", ""))
@@ -487,7 +550,14 @@ def article_detail(slug):
         "reading_time": _reading_time(post.content),
         "body": body_html,
     }
-    series_navigation = get_series_navigation(canonical_slug, serie)
+    series_navigation = (
+        get_series_navigation(
+            canonical_slug,
+            serie,
+            articles=get_all_articles(records=records),
+        )
+        if serie else None
+    )
     return render_template(
         "article_detail.html",
         article=article,
@@ -536,7 +606,7 @@ def sitemap():
 @app.route("/robots.txt")
 def robots_txt():
     content = "User-agent: *\nAllow: /\nSitemap: https://afamind.com/sitemap.xml\n"
-    return Response(content, mimetype="text/plain; charset=utf-8")
+    return Response(content, mimetype="text/plain")
 
 # â”€â”€ Error handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -559,4 +629,3 @@ def rate_limit_exceeded(e):
 
 if __name__ == "__main__":
     app.run(debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
-

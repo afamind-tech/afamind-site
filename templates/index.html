@@ -450,16 +450,20 @@
             <img
               src="{{ url_for('static', filename='profil.png') }}"
               alt="Photo de profil"
+              width="1254"
+              height="1254"
+              decoding="async"
+              fetchpriority="high"
             >
           </div>
         </div>
 
         <div class="badge-stack">
           <div class="badge-row">
-            <img src="{{ url_for('static', filename='AZ900.png') }}" alt="Certification AZ-900">
-            <img src="{{ url_for('static', filename='DP-203.png') }}" alt="Certification DP-203">
-            <img src="{{ url_for('static', filename='DP600.png') }}" alt="Certification DP-600">
-            <img src="{{ url_for('static', filename='fabric.png') }}" alt="Certification Microsoft Fabric">
+            <img src="{{ url_for('static', filename='AZ900.png') }}" alt="Certification AZ-900" width="600" height="600" decoding="async">
+            <img src="{{ url_for('static', filename='DP-203.png') }}" alt="Certification DP-203" width="600" height="600" decoding="async">
+            <img src="{{ url_for('static', filename='DP600.png') }}" alt="Certification DP-600" width="352" height="352" decoding="async">
+            <img src="{{ url_for('static', filename='fabric.png') }}" alt="Certification Microsoft Fabric" width="1024" height="1024" decoding="async">
           </div>
         </div>
       </div>
