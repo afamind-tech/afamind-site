@@ -15,3 +15,6 @@ package-lock.json
 .DS_Store
 .vscode/
 .claude/
+
+# Logs applicatifs (données personnelles — ne pas versionner)
+logs/

@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, flash, abort, Response
 from services.messaging import send_teams_message
-import secrets
 from dotenv import load_dotenv
+import logging
+from logging.handlers import TimedRotatingFileHandler
 import os
 import glob as file_glob
 import re
@@ -20,13 +21,38 @@ from markdown.extensions.toc import TocExtension
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)
+
+_secret_key = os.getenv("SECRET_KEY")
+if not _secret_key:
+    raise RuntimeError(
+        "La variable d'environnement SECRET_KEY est absente. "
+        "Générez-en une avec : python -c \"import secrets; print(secrets.token_hex(32))\""
+    )
+app.secret_key = _secret_key
+
+# Rotation quotidienne — 30 jours de rétention à maintenir en cohérence
+# avec la durée indiquée dans la politique de confidentialité du site.
+_logs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+os.makedirs(_logs_dir, exist_ok=True)
+_log_handler = TimedRotatingFileHandler(
+    os.path.join(_logs_dir, "app.log"),
+    when="midnight",
+    interval=1,
+    backupCount=30,
+    encoding="utf-8",
+)
+_log_handler.setFormatter(logging.Formatter(
+    "[%(asctime)s] %(levelname)s in %(module)s: %(message)s"
+))
+app.logger.addHandler(_log_handler)
+app.logger.setLevel(logging.INFO)
 
 BOOKINGS_URL = os.getenv("BOOKINGS_URL", "")
 BASE_URL = "https://afamind.com"
 ARTICLES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "articles")
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 TAG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 ARTICLE_LEVELS = {
     "decouverte": "Découverte",
     "intermediaire": "Intermédiaire",
@@ -282,13 +308,29 @@ def send_message():
     message = request.form.get("message", "").strip()
 
     if not name or not email or not subject or not message:
-        flash("Tous les champs obligatoires doivent Ãªtre renseignÃ©s.", "error")
+        flash("Tous les champs obligatoires doivent être renseignés.", "error")
+        return render_template("contact.html")
+
+    if not EMAIL_RE.fullmatch(email):
+        flash("L'adresse email saisie n'est pas valide.", "error")
         return render_template("contact.html")
 
     message_with_subject = f"[Objet : {subject}]\n\n{message}"
-    send_teams_message(name, email, message_with_subject)
+    try:
+        send_teams_message(name, email, message_with_subject)
+    except Exception:
+        app.logger.exception(
+            "Échec envoi Teams — lead : name=%r email=%r subject=%r message=%r",
+            name, email, subject, message,
+        )
+        flash(
+            "Une erreur est survenue lors de l'envoi. "
+            "Écrivez-moi directement à contact@afamind.com.",
+            "error",
+        )
+        return render_template("contact.html"), 502
 
-    flash("Votre message a bien Ã©tÃ© envoyÃ© sur Teams. Merci !", "success")
+    flash("Votre message a bien été envoyé. Merci !", "success")
     return render_template("confirmation.html", name=name)
 
 
