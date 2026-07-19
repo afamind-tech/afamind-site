@@ -532,6 +532,12 @@ def sitemap():
     xml = ET.tostring(urlset, encoding="utf-8", xml_declaration=True)
     return Response(xml, mimetype="application/xml; charset=utf-8")
 
+
+@app.route("/robots.txt")
+def robots_txt():
+    content = "User-agent: *\nAllow: /\nSitemap: https://afamind.com/sitemap.xml\n"
+    return Response(content, mimetype="text/plain; charset=utf-8")
+
 # â”€â”€ Error handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @app.errorhandler(CSRFError)
@@ -553,5 +559,4 @@ def rate_limit_exceeded(e):
 
 if __name__ == "__main__":
     app.run(debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
-
 

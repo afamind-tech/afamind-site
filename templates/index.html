@@ -2,6 +2,45 @@
 
 {% block title %}Accueil - Afamind{% endblock %}
 
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://afamind.com/#business",
+      "name": "Afamind",
+      "url": "https://afamind.com/",
+      "image": "https://afamind.com/static/og-image.png",
+      "description": "Architecture data freelance spécialisée en Microsoft Fabric, Azure et Power BI.",
+      "areaServed": [
+        { "@type": "City", "name": "Lyon" },
+        { "@type": "Country", "name": "France" }
+      ],
+      "founder": { "@id": "https://afamind.com/#anas-fata" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://afamind.com/#anas-fata",
+      "name": "Anas Fata",
+      "url": "https://afamind.com/a-propos",
+      "jobTitle": "Architecte data freelance",
+      "knowsAbout": ["Microsoft Fabric", "Microsoft Azure", "Power BI"],
+      "hasCredential": [
+        { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Azure Fundamentals", "credentialCategory": "AZ-900" },
+        { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Azure Data Engineer Associate", "credentialCategory": "DP-203" },
+        { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Fabric Analytics Engineer Associate", "credentialCategory": "DP-600" },
+        { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Fabric Data Engineer Associate", "credentialCategory": "DP-700" }
+      ],
+      "sameAs": ["https://www.linkedin.com/in/anas-fata-28212a85/"],
+      "homeLocation": { "@type": "Place", "name": "Lyon, France" }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <style>
 .home-hero{
