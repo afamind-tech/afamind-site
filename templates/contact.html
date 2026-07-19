@@ -135,6 +135,7 @@
             Nom <span style="color:#f87171;">*</span>
           </label>
           <input type="text" id="name" name="name" required
+                 maxlength="100" value="{{ form_data.get('name', '') if form_data else '' }}"
                  class="field-input" placeholder="Votre nom">
         </div>
 
@@ -144,6 +145,7 @@
             Adresse email <span style="color:#f87171;">*</span>
           </label>
           <input type="email" id="email" name="email" required
+                 value="{{ form_data.get('email', '') if form_data else '' }}"
                  class="field-input" placeholder="votre@email.com">
         </div>
 
@@ -153,6 +155,7 @@
             Objet <span style="color:#f87171;">*</span>
           </label>
           <input type="text" id="subject" name="subject" required
+                 maxlength="200" value="{{ form_data.get('subject', '') if form_data else '' }}"
                  class="field-input" placeholder="Sujet de votre message">
         </div>
 
@@ -161,9 +164,9 @@
           <label for="message" class="field-label">
             Message <span style="color:#f87171;">*</span>
           </label>
-          <textarea id="message" name="message" rows="5" required
+          <textarea id="message" name="message" rows="5" required maxlength="5000"
                     class="field-input" placeholder="Décrivez votre projet ou votre besoin…"
-                    style="resize:vertical;min-height:120px;"></textarea>
+                    style="resize:vertical;min-height:120px;">{{ form_data.get('message', '') if form_data else '' }}</textarea>
         </div>
 
         <!-- Note -->

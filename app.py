@@ -29,6 +29,7 @@ app = Flask(__name__)
 # Les fichiers statiques sont mis en cache un an. Comme ils sont immuables côté
 # navigateur, leur nom doit changer dès que leur contenu change (cache busting).
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = timedelta(days=365)
+app.config["MAX_CONTENT_LENGTH"] = 100 * 1024
 
 _secret_key = os.getenv("SECRET_KEY")
 if not _secret_key:
@@ -104,7 +105,12 @@ def set_security_headers(response):
     return response
 
 
-BOOKINGS_URL = os.getenv("BOOKINGS_URL", "")
+BOOKINGS_URL = os.getenv("BOOKINGS_URL", "").strip()
+_bookings_url = urlparse(BOOKINGS_URL)
+if _bookings_url.scheme != "https" or not _bookings_url.netloc:
+    raise RuntimeError(
+        "La variable d'environnement BOOKINGS_URL doit contenir une URL HTTPS valide."
+    )
 BASE_URL = "https://afamind.com"
 ARTICLES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "articles")
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -421,14 +427,32 @@ def send_message():
     email   = request.form.get("email", "").strip()
     subject = request.form.get("subject", "").strip()
     message = request.form.get("message", "").strip()
+    form_data = {
+        "name": name,
+        "email": email,
+        "subject": subject,
+        "message": message,
+    }
 
     if not name or not email or not subject or not message:
         flash("Tous les champs obligatoires doivent être renseignés.", "error")
-        return render_template("contact.html")
+        return render_template("contact.html", form_data=form_data)
 
     if not EMAIL_RE.fullmatch(email):
         flash("L'adresse email saisie n'est pas valide.", "error")
-        return render_template("contact.html")
+        return render_template("contact.html", form_data=form_data)
+
+    if len(name) > 100:
+        flash("Le nom ne doit pas dépasser 100 caractères.", "error")
+        return render_template("contact.html", form_data=form_data)
+
+    if len(subject) > 200:
+        flash("L'objet ne doit pas dépasser 200 caractères.", "error")
+        return render_template("contact.html", form_data=form_data)
+
+    if len(message) > 5000:
+        flash("Le message ne doit pas dépasser 5 000 caractères.", "error")
+        return render_template("contact.html", form_data=form_data)
 
     message_with_subject = f"[Objet : {subject}]\n\n{message}"
     try:
@@ -443,7 +467,7 @@ def send_message():
             "Écrivez-moi directement à contact@afamind.com.",
             "error",
         )
-        return render_template("contact.html"), 502
+        return render_template("contact.html", form_data=form_data), 502
 
     flash("Votre message a bien été envoyé. Merci !", "success")
     return render_template("confirmation.html", name=name)
@@ -613,7 +637,13 @@ def robots_txt():
 @app.errorhandler(CSRFError)
 def csrf_error(e):
     flash("Votre session a expiré, veuillez renvoyer votre message.", "error")
-    return render_template("contact.html"), 400
+    return render_template("contact.html", form_data=request.form), 400
+
+
+@app.errorhandler(413)
+def request_too_large(e):
+    flash("Votre message est trop volumineux (100 Ko maximum).", "error")
+    return render_template("contact.html"), 413
 
 
 @app.errorhandler(404)
