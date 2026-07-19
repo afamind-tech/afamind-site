@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, flash, abort, Response
 from services.messaging import send_teams_message
+from flask_wtf.csrf import CSRFProtect, CSRFError
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from dotenv import load_dotenv
 import logging
 from logging.handlers import TimedRotatingFileHandler
@@ -46,6 +49,50 @@ _log_handler.setFormatter(logging.Formatter(
 ))
 app.logger.addHandler(_log_handler)
 app.logger.setLevel(logging.INFO)
+
+csrf = CSRFProtect(app)
+
+# TECH DEBT: storage_uri="memory://" ne fonctionne pas sur Gunicorn multi-workers
+# (chaque worker a son propre compteur). Migrer vers Redis pour une vraie limite partagée.
+limiter = Limiter(
+    key_func=get_remote_address,
+    app=app,
+    default_limits=[],
+    storage_uri="memory://",
+)
+
+
+@app.after_request
+def set_security_headers(response):
+    # TECH DEBT: 'unsafe-inline' dans style-src est requis par les nombreux attributs
+    # style= et blocs <style> inline dans les templates. À migrer vers des classes CSS
+    # externes + nonces à terme.
+    # 'unsafe-inline' dans script-src est requis par les blocs <script> inline (AOS,
+    # menu burger, scroll handler). À migrer vers des fichiers JS externes + nonces.
+    csp = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' "
+            "https://cdn.tailwindcss.com "
+            "https://unpkg.com "
+            "https://static.cloudflareinsights.com; "
+        "style-src 'self' 'unsafe-inline' "
+            "https://fonts.googleapis.com "
+            "https://unpkg.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data: https:; "
+        "connect-src 'self' https://cloudflareinsights.com; "
+        "frame-ancestors 'none'; "
+        "object-src 'none'; "
+        "base-uri 'self'"
+    )
+    response.headers["Content-Security-Policy"] = csp
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "geolocation=(), camera=(), microphone=()"
+    return response
+
 
 BOOKINGS_URL = os.getenv("BOOKINGS_URL", "")
 BASE_URL = "https://afamind.com"
@@ -301,7 +348,12 @@ def contact():
 
 
 @app.route("/send-message", methods=["POST"])
+@limiter.limit("5 per hour")
 def send_message():
+    # Honeypot : champ caché rempli → bot détecté, on feint le succès sans envoyer.
+    if request.form.get("website", ""):
+        return render_template("confirmation.html", name=request.form.get("name", ""))
+
     name    = request.form.get("name", "").strip()
     email   = request.form.get("email", "").strip()
     subject = request.form.get("subject", "").strip()
@@ -482,9 +534,21 @@ def sitemap():
 
 # â”€â”€ Error handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+@app.errorhandler(CSRFError)
+def csrf_error(e):
+    flash("Votre session a expiré, veuillez renvoyer votre message.", "error")
+    return render_template("contact.html"), 400
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
+
+
+@app.errorhandler(429)
+def rate_limit_exceeded(e):
+    flash("Trop de tentatives. Veuillez réessayer dans une heure.", "error")
+    return render_template("contact.html"), 429
 
 
 if __name__ == "__main__":

@@ -115,6 +115,13 @@
 
       <form action="/send-message" method="POST" style="display:flex;flex-direction:column;gap:20px;">
 
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <!-- Honeypot : ne pas remplir — champ piège pour les bots -->
+        <div style="display:none;" aria-hidden="true">
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
         <!-- Nom -->
         <div>
           <label for="name" class="field-label">
