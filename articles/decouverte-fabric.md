@@ -1,6 +1,6 @@
 ---
 title: "Microsoft Fabric, c'est quoi ?"
-date: 2026-05-05
+date: 2026-08-07
 slug: microsoft-fabric-c-est-quoi
 excerpt: "Une plateforme data tout-en-un, en SaaS, de l'ingestion jusqu'au reporting. Voici ce qu'est Microsoft Fabric, le problème qu'elle résout, et ses briques principales, expliqués simplement."
 tags: [fabric, onelake, data, retour-terrain]
@@ -18,13 +18,22 @@ Le résultat : de la donnée dupliquée d'un service à l'autre (et donc des co�
 
 ## Ce qu'est Microsoft Fabric
 
-Fabric est la réponse de Microsoft à ce problème : une plateforme analytics unifiée, livrée en SaaS, qui couvre toute la chaîne de la donnée, de l'ingestion jusqu'au reporting Power BI.
+Fabric est la réponse de Microsoft à ce problème : une plateforme analytics unifiée, livrée en SaaS, qui couvre toute la chaîne de la donnée, de l’ingestion jusqu’au reporting Power BI, et prolonge aujourd’hui ce socle vers le temps réel, la Data Science et l’intelligence artificielle, avec des usages comme Real-Time Intelligence ou les Fabric Data Agents.
 
-L'idée centrale n'est pas d'ajouter un outil de plus, mais de réunir tous ces outils dans une seule plateforme cohérente, où ils partagent le même stockage, le même modèle de sécurité, et la même facturation. La donnée ne se déplace plus entre les systèmes, parce qu'il n'y a plus de systèmes séparés.
+L'idée centrale n'est pas d'ajouter un outil de plus, mais de réunir ces différents usages dans une même plateforme cohérente, autour d'un stockage commun avec OneLake, d'une gouvernance intégrée et de capacités de calcul mutualisées. Les différents moteurs peuvent ainsi travailler sur les mêmes données sans multiplier systématiquement les copies entre services.
 
-Concrètement, en quelques clics, on crée un Lakehouse, un Warehouse, un pipeline ou un notebook, sans provisionner ni configurer de serveurs. Ce qui prenait des jours à mettre en place sur les anciennes stacks prend désormais quelques minutes.
+Concrètement, en quelques clics, on crée un Lakehouse, un Warehouse, un pipeline ou un notebook, sans provisionner ni configurer de serveurs. Ce qui prenait des jours à mettre en place sur les anciennes stacks peut désormais être disponible en quelques minutes.
 
-Une précision utile, parce qu'on lit souvent que Fabric remplace tout l'ancien arsenal : c'est vrai pour Synapse, beaucoup moins pour Azure Data Factory. Synapse était la précédente promesse de plateforme unifiée de Microsoft ; il fait aujourd'hui doublon quasi total avec Fabric et a vocation à disparaître au profit de ce dernier. ADF, lui, garde un périmètre propre. Les nouveautés des Fabric Pipelines, comme le refresh de semantic model, la maintenance de Lakehouse ou le déclenchement de notebooks, sont natives à l'écosystème Fabric, et ADF n'en a pas besoin pour rester pertinent : il reste justifiable pour orchestrer Databricks ou Snowflake, pour des projets purement ETL, ou dans des environnements hors Fabric. Autrement dit, Fabric absorbe Synapse, mais ne rend pas ADF obsolète pour autant.
+## Quid de Synapse Analytics et Azure Data Factory ?
+
+Fabric reprend l'essentiel du périmètre de Synapse Analytics et s'impose désormais comme la plateforme analytique stratégique de Microsoft. Synapse préfigurait déjà cette convergence entre ingestion, Spark, SQL et BI ; Fabric pousse la logique beaucoup plus loin avec une plateforme entièrement SaaS, construite autour de OneLake et nativement intégrée à Power BI.
+
+La situation d'Azure Data Factory est plus progressive : ADF continue d'exister, reste supporté et aucune date de fin de vie n'est annoncée.
+
+En revanche, la trajectoire produit s'est nettement précisée. Avec les annonces de Build 2026, Microsoft concentre désormais l'essentiel de l'innovation autour de Fabric Data Factory : pipelines enrichis, Copy Job, dbt Jobs, orchestration Apache Airflow, Data Factory MCP et capacités agentiques permettant à Copilot et à d'autres agents de créer, exploiter et diagnostiquer les workloads Data Factory.
+
+ADF reste donc parfaitement légitime pour maintenir des plateformes existantes et peut continuer à coexister avec Fabric. Mais pour une nouvelle architecture, même lorsqu'elle doit orchestrer des technologies externes, son choix devient plus difficile à justifier face à Fabric Data Factory. La question n'est plus vraiment de savoir si ADF disparaît à court terme — rien ne l'indique aujourd'hui — mais plutôt où Microsoft concentre désormais ses investissements. Et sur ce point, la direction est claire : Fabric.
+
 
 ## OneLake : le cœur du réacteur
 
@@ -46,7 +55,8 @@ Fabric s'organise en workloads, des ensembles de capacités pensés pour un usag
 
 **Real-Time Intelligence** : le traitement et l'analyse de flux de données en temps réel.
 
-**Data Science** : l'entraînement et l'exécution de modèles de machine learning, intégrés au reste de la plateforme.
+**Data Science** : la Data Science, le machine learning et les usages d’intelligence artificielle, de l’entraînement de modèles jusqu’aux Fabric Data Agents.
+
 
 **Power BI** : la restitution, les rapports et la visualisation, brique historique de Microsoft désormais intégrée nativement.
 
@@ -60,6 +70,7 @@ Sur le papier, ça simplifie les choses : un seul curseur de puissance, une fact
 
 ## Ce qu'il faut en retenir
 
-Fabric n'est pas un nouvel outil de plus. C'est une tentative de réunir toute la chaîne data dans une plateforme unique, autour d'un lac de données partagé. Le progrès est réel par rapport aux anciennes stacks Microsoft, et c'est probablement la plateforme data la plus ambitieuse du marché aujourd'hui.
+Fabric n'est pas un nouvel outil de plus. C'est l'aboutissement de la stratégie de Microsoft pour réunir toute la chaîne data dans une plateforme unique, autour d'un lac de données partagé. Le progrès est réel par rapport aux anciennes stacks Microsoft, et c'est probablement la plateforme data la plus ambitieuse du marché aujourd'hui.
 
 C'est aussi une plateforme jeune, qui évolue très vite. Ce qui en fait sa force, et parfois sa contrainte.
+
